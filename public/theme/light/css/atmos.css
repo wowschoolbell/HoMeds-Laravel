@@ -14753,13 +14753,11 @@ a:hover
     height: 40px;
     margin-top: auto;
     margin-bottom: auto;
-    margin-left: auto;
 
     text-align: center;
     vertical-align: middle;
 
-    border-radius: .25rem; 
-    background: rgba(255, 255, 255, .22);
+    border-radius: .25rem;
 }
 .admin-sidebar .menu .menu-item .menu-link .menu-icon .icon-placeholder
 {
@@ -15225,7 +15223,7 @@ a:hover
 
 .p-l-70
 {
-    padding-left: 70px;
+    /* padding-left: 70px; */
 }
 
 .p-b-70
@@ -15960,7 +15958,7 @@ body
     .admin-main,
     .admin-header
     {
-        padding-left: 70px;
+        /* padding-left: 70px; */
     }
     body.sidebar-pinned .admin-header,
     body.sidebar-pinned .admin-main

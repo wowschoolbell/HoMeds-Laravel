@@ -8899,6 +8899,7 @@
 
 .mdi-monitor-dashboard:before {
   content: "\FA06";
+  color: white;
 }
 
 .mdi-monitor-multiple:before {
@@ -12015,6 +12016,7 @@
 
 .mdi-store:before {
   content: "\F4DC";
+  color: white;
 }
 
 .mdi-store-24-hour:before {

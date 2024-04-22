@@ -1165,6 +1165,19 @@ form.popup_form {
     background: #ff3a41;
     border-color: #ff3a41;
 }
+
+.btn-lavender-dark {
+    background: white;
+    border-color: white;
+    color: #B57EDC;
+    height: 45px;
+}
+.btn-lavender-dark:hover {
+    background: #7D5CA8;
+    border-color: #7D5CA8;
+    color: white;
+}
+
 .custom-pattern {
     /* background: url("../../public/images/password-bg.jpg") #ffffff; */
     background: url('../theme/light/img/password-bg.png') #ffffff;
@@ -1219,5 +1232,5 @@ form.popup_form {
 }
 
 .admin-sidebar-brand {
-    color: #00cc99;
+    color: white;
 }

@@ -4,7 +4,7 @@
 <main class="admin-main">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-4 bg-white">
+            <div class="col-lg-4" style="background-color:#B57EDC;">
                 <div class="row align-items-center m-h-100">
                     <div class="mx-auto col-md-8">
                         <div class="p-b-20 text-center">
@@ -56,7 +56,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-block btn-lg btn-red-dark">
+                            <button type="submit" class="btn btn-primary btn-block btn-lg btn-lavender-dark">
                                 {{ __('Login') }}
                             </button>
                         </form>
