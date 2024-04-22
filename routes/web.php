@@ -23,4 +23,5 @@ Auth::routes();
 
 Route::group(['middleware' => ['web', 'auth'], 'as' => 'admin.'], function() {
     Route::resource('app_status', 'Admin\AppStatusController');
+    Route::resource('store', 'Admin\StoreController');
 });

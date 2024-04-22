@@ -17,3 +17,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::get('/migrate', function() {
+   Artisan::call('migrate');
+   return "migrate!";
+
+});
+
+Route::get('/makemodel', function() {
+   Artisan::call('make:model store -mc');
+   return "migrate!";
+
+});
