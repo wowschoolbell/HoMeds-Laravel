@@ -1,14 +1,15 @@
-<header class="admin-header">
-    <a href="#" class="sidebar-toggle" data-toggleclass="sidebar-open" data-target="body"> </a>
-
-    <nav class=" ml-auto">
+<header class="admin-header bg-dark row" style="margin-left: 10%;">
+    <a href="#" class="col-md-1" id="left-control" style="color:white;font-size: 22px;text-align: left;"><i class="mdi mdi-format-indent-decrease"></i> </a>
+    <div class="d-flex align-items-center col-md-10" style="font-size: 20px; color: white;text-align: right;justify-content: center;">
+        <span class="fw-bold" >{{ $title }}</span>
+    </div>
+    <nav class=" ml-auto col-md-1" style="text-align: right;">
         <ul class="nav align-items-center">
-            
             <li class="nav-item">
                 <div class="dropdown">
-                    <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-24px mdi-bell-outline"></i>
+                    <!-- <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-24px mdi-bell-outline"></i>
                         {{-- <span class="notification-counter"></span> --}}
-                    </a>
+                    </a> -->
                     <div class="dropdown-menu notification-container dropdown-menu-right">
                         <div class="d-flex p-all-15 bg-white justify-content-between border-bottom ">
                             <a href="#" class="mdi mdi-18px mdi-settings text-muted"></a>
@@ -44,7 +45,7 @@
             <li class="nav-item dropdown ">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="avatar avatar-sm avatar-online">
-                        <span class="avatar-title rounded-circle bg-dark">
+                        <span class="avatar-title rounded-circle" style="background-color:#B57EDC;">
                             {{ Auth::user()->name[0] }}
                         </span>
                     </div>
@@ -64,4 +65,22 @@
             </li>
         </ul>
     </nav>
+    @push('scripts')
+    <script>
+        $(document).ready(function () {
+            $('#left-control').click(function () {
+                if ($('.admin-sidebar').is(":visible")) {
+                    $('.admin-sidebar').hide();
+                    $('.admin-header').css('margin-left','0%');
+                    $('.admin-main').css('margin-left','0%');
+                    
+                } else {
+                    $('.admin-sidebar').show();
+                    $('.admin-header').css('margin-left','10%');
+                    $('.admin-main').css('margin-left','10%');
+                }
+            });
+        });
+    </script>
+    @endpush
 </header>

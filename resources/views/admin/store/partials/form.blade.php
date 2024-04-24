@@ -1,7 +1,7 @@
 <div id="category-render">
     <div class="modal-header">
         <h5 class="modal-title" id="slideRightModalLabel"> {{ $title }} </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close data-dismiss" data-dismiss="modal">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -90,7 +90,7 @@
             </div>
             <div class="form-group text-right">
                 <button class="btn btn-primary">{{ @$model['store']->id ? 'Update' : 'Create'}}</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary data-dismiss" data-dismiss="modal">Close</button>
             </div>
         {{ Form::close() }}
     </div>

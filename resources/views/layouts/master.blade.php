@@ -23,7 +23,7 @@
         @include('layouts.partials.admin.left_sidebar')
     <!--sidebar Ends-->
 
-    <main class="admin-main">
+    <main class="admin-main" style="margin-left:10%;">
         <!--site header begins-->
             @include('layouts.partials.admin.header')
         <!--site header ends -->
@@ -32,7 +32,7 @@
             <!-- BEGIN PlACE PAGE CONTENT HERE -->
             {{-- @include('sweetalert::cdn')
             @include('sweetalert::view') --}}
-            @include('layouts.partials.admin.breadcrumb')
+            <!-- @include('layouts.partials.admin.breadcrumb') -->
             @yield('content')
             <!-- END PLACE PAGE CONTENT HERE -->
         </section>

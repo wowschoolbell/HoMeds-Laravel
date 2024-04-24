@@ -46,7 +46,12 @@ class StoreDataTable extends dataTable
     public function html()
     {
         $params = $this->getBuilderParameters();
-        $params['buttons'] = [];
+        $params['buttons'] = [[
+            'text' => '<i class="mdi mdi-plus"></i> create',
+            'className' => 'statusmodel',
+            'action' => 'function(e, dt, node, config) {
+                  $(".statusmodel").modal("show");
+             }']];
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()

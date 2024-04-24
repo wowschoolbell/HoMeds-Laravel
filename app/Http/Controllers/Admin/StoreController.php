@@ -12,7 +12,8 @@ class StoreController extends Controller
 {
     public function index(StoreDataTable $dataTable)
     {
-        return $dataTable->render('admin.store.index');
+        $data['title'] = 'Store';
+        return $dataTable->render('admin.store.index', $data);
     }
     public function create() 
     {

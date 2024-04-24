@@ -9,11 +9,11 @@
                     <div class="mx-auto col-md-8">
                         <div class="p-b-20 text-center">
                             <p>
-                                <img src="{{ asset('theme/light/img/GAF-CW-logo.jpeg') }}" width="80" alt="">
+                                <img src="{{ asset('theme/light/img/GAF-CW-logo.png') }}" style="width: 200px; height: 200px;" alt="">
                             </p>
-                            <p class="admin-brand-content">
+                            <!-- <p class="admin-brand-content">
                                 HoMEds
-                            </p>
+                            </p> -->
                         </div>
 
                         {{-- After Reset Password, Then stauts will set in session --}}
@@ -24,7 +24,7 @@
                         @endif
                         {{-- After Reset Password, Then stauts will set in session --}}
 
-                        <h3 class="text-center p-b-20 fw-400">{{ __('Login') }}</h3>
+                        <p class="text-center" style="font-size: 30px;font-weight: 500;margin-bottom: 5px;">{{ __('Login') }}</p>
                         <form class="needs-validation" method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
                             @csrf
                             <div class="form-row">
