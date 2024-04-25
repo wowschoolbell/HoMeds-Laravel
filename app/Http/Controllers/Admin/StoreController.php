@@ -5,15 +5,15 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\DataTables\StoreDataTable;
-use App\Models\store;
 use Illuminate\Support\Facades\Validator;
+use App\Models\store;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class StoreController extends Controller
 {
     public function index(StoreDataTable $dataTable)
     {
-        $data['title'] = 'Store';
-        return $dataTable->render('admin.store.index', $data);
+        return $dataTable->render('admin.store.index');
     }
     public function create() 
     {
@@ -25,12 +25,88 @@ class StoreController extends Controller
         $data['route']      = 'admin.store.store';
         $data['method']     = 'post';
 
-        return view('admin.store.partials.form', $data);
+        return view('admin.store.create', $data);
     }
     public function store(Request $request)
     {
-        $model = new store();
-        $this->_save($request, $model);
+        
+        $data =  $request->store;
+        
+        
+    if($request->id){
+        
+         $validator = Validator::make($data, [
+            'name' => 'required|string|max:255',
+            'contact_person_name'=>"required|string|max:255",
+            'email' => 'required|unique:stores,email,'.$id.',id',
+            'phone' => 'required|string|max:255',
+             'mobile_number' => 'required|string|max:255',
+            'latitude' => 'required|string|max:255',
+            'longtitude' => 'required|string|max:255',
+        ]);
+        
+    } else {
+       $validator = Validator::make($data, [
+            'name' => 'required|string|max:255',
+            'contact_person_name'=>"required|string|max:255",
+            'email' => 'required|string|email|max:255|unique:stores',
+            'phone' => 'required|string|max:255',
+             'mobile_number' => 'required|string|max:255',
+            'latitude' => 'required|string|max:255',
+            'longtitude' => 'required|string|max:255',
+        ]);
+    }
+    
+    if ($validator->fails()) {
+           
+            $response['message'] = json_encode($validator->messages());
+            $response['status'] = 400;
+            $response['statusText'] = 'Failed';
+            return response()->json($response, 500);
+        
+           // return withErrors($validator)
+             //       ->withInput();
+      } else {
+          
+       // dd($data['store_image']);
+             
+        if($request->id){
+            $store = store::findOrFail($request->id);
+        } else {
+            $store = new store();
+        }
+          $store->name = $request->store['name'];
+          $store->contact_person_name = $request->store['contact_person_name'];
+          $store->phone = $request->store['phone'];
+          $store->email = $request->store['email'];
+          $store->latitude = $request->store['latitude'];
+          $store->longtitude = $request->store['longtitude'];
+          $store->mobile_number = $request->store['mobile_number'];
+          $store->gst_number = $request->store['gst_number'];
+          $store->drug_licence = $request->store['drug_licence'];
+          $store->password = bcrypt($request->store['password']);
+          $store->address = $request->store['address'];
+          $store->location = $request->store['location'];
+          $store->area = $request->store['area'];
+          $store->state = $request->store['state'];
+          $store->city = $request->store['city'];
+          $store->pincode = $request->store['pincode'];
+          $store->city = $request->store['city'];
+          $store->bank_name = $request->store['bank_name'];
+          $store->bank_account_number = $request->store['bank_account_number'];
+          $store->ifsc_code = $request->store['ifsc_code'];
+          $store->app_status = $request->store['app_status'];
+          $store->status = $request->store['status'];
+          if(isset($request->store['store_image'])) {
+            $store->store_image = asset('storage/'.$request->store['store_image']->store('shops'));
+          }
+          if(isset($request->store['store_logo'])) {
+            $store->store_logo = asset('storage/'.$request->store['store_logo']->store('shops'));
+          }
+          $store ->save();
+          
+        
+      }
 
         return response()->json([
             'success' => true,
@@ -46,15 +122,16 @@ class StoreController extends Controller
             'category' => store::findOrFail($id)
         ];
         
-        dd($data);
-
+        $store = store::findOrFail($id);
+        
+    
         $data['title']      = 'Edit store';
         $data['route']      = 'admin.store.update';
         $data['method']     = 'put';
         $data['routeIds']   =  $id;
-        $this->_append_variables($data, $id);
+       
 
-        return view('admin.store.partials.form', $data);
+        return view('admin.store.create', $data);
     }
      public function update(Request $request, $id)
     {
@@ -73,4 +150,20 @@ class StoreController extends Controller
         $model->fill($request->get('store'));
         $model->save();
     }
+    
+    //  public function delete($id)
+    // {
+
+        
+    //     $store = store::findOrFail($id);
+        
+    
+    //     $data['title']      = 'Edit store';
+    //     $data['route']      = 'admin.store.update';
+    //     $data['method']     = 'put';
+    //     $data['routeIds']   =  $id;
+       
+
+    //     return view('admin.store.create', $data);
+    // }
 }
