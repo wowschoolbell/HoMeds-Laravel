@@ -3,8 +3,26 @@
 
 @section('content')
 <div class="container " style="margin-top: 3%;">
+
     <div class="row">
         <div class="col-12">
+            @foreach($statuses as $id => $status)
+                <?php
+                    $class = "btn-dark-lavender";
+
+                    if((@request()->status == null && $id == 0)) {
+                        $class = "btn-lavender";
+                    }
+
+                    if (@request()->status == $id) {
+                        $class = "btn-lavender";
+                    }
+                
+                ?>
+                <a href="{{ route('admin.delivery_partner.index')}}?status={{$id}}" class="btn btn-sm {{$class}}" title="Edit"><i class="mdi mdi mdi-triforce"></i> {{$status}}</a>
+            @endforeach
+        </div>
+        <div class="col-12" style="margin-top: 2%;">
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive p-t-10">
@@ -18,6 +36,19 @@
 @php
     $create_route = route('admin.delivery_partner.create');
 @endphp
+@push('stylesheets')
+<style>
+    .btn-dark-lavender {
+        background-color: #5058A7;
+        color: white;
+    }
+
+    .btn-lavender {
+        background-color: #B57EDC;
+        color: white;
+    }
+</style>
+@endpush
 @endsection
 
 @include('layouts.partials.datatable_scripts')

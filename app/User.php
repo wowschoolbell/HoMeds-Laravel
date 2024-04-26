@@ -20,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'username', 'email', 'password',
     ];
 
     /**
@@ -77,5 +77,13 @@ class User extends Authenticatable
         }
 
         return $url;
+    }
+
+    /**
+     * 
+     */
+    public function delivery_partner()
+    {
+        return $this->hasOne('App\Models\DeliveryPartner');
     }
 }

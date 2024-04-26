@@ -2,74 +2,70 @@
 
 namespace App\Helpers;
 
-use Image;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
+use Carbon\Carbon;
+use Storage;
 
 class StorageHelper
 {
+    /**
+     * Upload File
+     *
+     * $type => hw: Homework, sm: Submission, av: Activity, im: Import data
+     */
 
-    public static function clean($string)
+    public static function uploadFile($file, $type)
     {
-        $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
-        return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
-    }
+        $currentdatetime = Carbon::now()->format("Ymd");
 
-    public static function getFileName($file)
-    {
         $fileOriginalName = $file->getClientOriginalName();
         $file_name = pathinfo($fileOriginalName, PATHINFO_FILENAME);
         $file_extension = pathinfo($fileOriginalName, PATHINFO_EXTENSION);
-        return self::clean($file_name) . '_' . time() . '_' . uniqid() .'.' . $file_extension;
+        $cleanedName = CustomHelper::clean($file_name);
+        $filename = $cleanedName . '_' . time() . '.' . $file_extension;
+
+        $directory = "/" . $currentdatetime . "/" . $type;
+
+        $filePath = Storage::putFileAs($directory, $file, $filename);
+
+        return $filePath;
     }
 
     /**
-     * Upload File
+     * Upload File from baseb4
+     *
      */
-    public static function uploadFile($file, $path, $width = null, $thumb_width = null, $height = null,  $thumb_height = null)
+    public static function uploadUri($file, $type)
     {
-        // $agent = new Agent(); // Unhide to solve iPhone image rotate issue
+        list($mime, $data)   = explode(';', $file);
+        list(, $data)       = explode(',', $data);
+        $mime = explode(':',$mime)[1];
+        $file_extension = explode('/',$mime)[1];
+        $cleanedName = str_random(5);
 
-        $filename       = self::getFileName($file);
-        $file_contents  = file_get_contents($file);
-        $file_path      = $path . '/' . $filename;
+        $data = base64_decode($data);
 
-        if($width) {
-            $normal_image = Image::make($file_contents)->resize($width, $height);
-        } else {
-            $normal_image = Image::make($file_contents);
-        }
+        $branchcode = \Auth::user()->branch->branchcode;
+        $currentdatetime = Carbon::now()->format("Ymd");
 
-        // Unhide to solve iPhone image rotate issue
-        // if($agent->device() == 'iPhone') {
-        //     $normal_image = $normal_image->rotate(-90);
-        // }
+        $filename = $cleanedName . "_" . time() . '.' . $file_extension;
+        $directory_path = "/" . $branchcode . "/" . $currentdatetime . "/" . $type . "/" . $filename;
+        Storage::put($directory_path, $data);
 
-        Storage::put($file_path, $normal_image->stream());
-
-        if($thumb_width) {
-            $thumbs_path = $path . "/thumbs/$filename";
-            $thumb_image = Image::make($file_contents)->resize($thumb_width, $thumb_height);
-
-            // Unhide to solve iPhone image rotate issue
-            // if($agent->device() == 'iPhone') {
-            //     $thumb_image = $thumb_image->rotate(-90);
-            // }
-
-            Storage::put($thumbs_path, $thumb_image->stream());
-        }
-
-        return $filename;
+        return ltrim($directory_path,'/');
     }
 
-    public static function uploadFileAs($file, $filePath)
+    public static function deleteFile($filepath)
     {
-        $filename = self::getFileName($file);
+        return Storage::delete($filepath);
+    }
 
-        Storage::putFileAs($filePath, $file, $filename);
-        Storage::setVisibility($filePath."/".$filename, 'public');
+    public static function getFileUrl($filepath)
+    {
+        return Storage::url($filepath);
+    }
 
-        return str_replace('/index.php','', url("storage/".$filePath."/".$filename));
-
+    public static function getFileMimeType($filepath)
+    {
+        return Storage::mimeType($filepath);
     }
 }

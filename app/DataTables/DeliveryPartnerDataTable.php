@@ -4,7 +4,7 @@ namespace App\DataTables;
 
 use App\Models\DeliveryPartner;
 use Yajra\DataTables\Services\DataTable;
-use App\Models\store;
+use Yajra\DataTables\Html\Column;
 
 class DeliveryPartnerDataTable extends dataTable
 {
@@ -17,9 +17,20 @@ class DeliveryPartnerDataTable extends dataTable
     public function dataTable($query)
     {
         return datatables($query)
+            ->addColumn('first_name', function ($model) {
+                $name = $model->first_name;
+
+                if ($model->middle_name) {
+                    $name .= ' '.$model->middle_name;
+                }
+                if ($model->last_name) {
+                    $name .= ' '.$model->last_name;
+                }
+
+                return $name;
+            })
             ->addColumn('action', function($model){
-                $action = '<a href="javascript:void(0)" data-category_id="'.$model->id.'" data-url="'.route('admin.app_status.edit',["$model->id"]).'" data-toggle="modal" data-target="#statusmodel" class="btn btn-sm btn-info" id="trigger-content-'.$model->id.'" title="Edit"><i class="mdi mdi-square-edit-outline"></i></a>&nbsp;';
-                $action .= '<button class="btn btn-sm btn-danger btn-delete" type="button" data-delete-route="'.route('admin.app_status.destroy', $model->id).'" data-redirect="'.route('admin.app_status.index').'" title="Delete"><i class="mdi mdi-trash-can-outline"></i></button>';
+                $action = '<a href="' . route('admin.delivery_partner.edit', $model->user->delivery_partner->id) . '" class="btn btn-sm btn-info" title="Edit"><i class="mdi mdi-square-edit-outline"></i></a>';
 
                 return $action;
             })
@@ -35,8 +46,16 @@ class DeliveryPartnerDataTable extends dataTable
 
     public function query(DeliveryPartner $model)
     {
-        $Query =  $model->newQuery();
-        return $Query;
+        $model = $model::with(['user']);
+
+        if ($status = @request()->status) {
+            if ($status != 0) {
+                $model->where('app_statuses_id', $status);
+            }
+        }
+
+
+        return $model->newQuery();
     }
 
     /**
@@ -63,10 +82,24 @@ class DeliveryPartnerDataTable extends dataTable
     protected function getColumns()
     {
         return [
-            'user_id', 'app_statuses_id', 'first_name', 'middle_name', 'last_name', 'photo',
-            'phone', 'aadhar', 'aadhar_image', 'driving_licence', 'driving_licence_image',
-            'address', 'area', 'state', 'city',	'pincode', 'bank_name', 'bank_account_number',
-            'ifsc', 'area_mapping_state', 'area_mapping_area', 'area_mapping_city', 'area_mapping_pincode'
+            Column::computed('user.username')
+                ->title('Partner ID')
+                ->orderable(true)
+                ->searchable(true),
+            Column::computed('first_name')
+                ->title('Name')
+                ->orderable(true)
+                ->searchable(true),
+            Column::computed('user.email')
+                ->title('Email')
+                ->orderable(true)
+                ->searchable(true),
+            Column::computed('phone')
+                ->orderable(true)
+                ->searchable(true),
+            Column::computed('aadhar')
+                ->orderable(true)
+                ->searchable(true),
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\StorageHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,5 +18,21 @@ class DeliveryPartner extends Model
         'address', 'area', 'state', 'city',	'pincode', 'bank_name', 'bank_account_number',
         'ifsc', 'area_mapping_state', 'area_mapping_area', 'area_mapping_city', 'area_mapping_pincode'
     ];
+
+    /**
+     * 
+     */
+    public function getPhotoAttribute($value)
+    {
+        return ($value) ? StorageHelper::getFileUrl($value) : asset('theme/light/img/default_user.png');
+    }
+
+    /**
+     * 
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 
 }
