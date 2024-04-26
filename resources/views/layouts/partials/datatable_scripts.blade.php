@@ -20,7 +20,7 @@
 <script type="text/javascript">
     var defaultCreateURL = window.location.href.replace(/\/+$/, "") + '/create';
     var defaultPrintURL = window.location.href.replace(/\/+$/, "") + '/print';
-    var customCreateURL = '{{ @$create_route or '' }}';
+    var customCreateURL = '{{ @$create_route}}';
     var customPrintURL =    '{{@$print_route}}';
 
     var xhr;

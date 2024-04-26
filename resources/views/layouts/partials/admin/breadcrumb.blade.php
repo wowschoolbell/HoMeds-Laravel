@@ -6,7 +6,6 @@
             </div>
             <div class="col-md-7 m-auto">
                 <nav aria-label="breadcrumb" class="float-right">
-                    {{ Breadcrumbs::render(\Request::route()->getName()) }}
                 </nav>
             </div>
         </div>

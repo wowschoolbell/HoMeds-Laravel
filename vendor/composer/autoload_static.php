@@ -241,11 +241,11 @@ class ComposerStaticInita6d78ef7934ee091088d630bb5cf5f72
         ),
         'Yajra\\DataTables\\' => 
         array (
-            0 => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src',
-            1 => __DIR__ . '/..' . '/yajra/laravel-datatables-html/src',
+            0 => __DIR__ . '/..' . '/yajra/laravel-datatables-buttons/src',
+            1 => __DIR__ . '/..' . '/yajra/laravel-datatables-editor/src',
             2 => __DIR__ . '/..' . '/yajra/laravel-datatables-fractal/src',
-            3 => __DIR__ . '/..' . '/yajra/laravel-datatables-editor/src',
-            4 => __DIR__ . '/..' . '/yajra/laravel-datatables-buttons/src',
+            3 => __DIR__ . '/..' . '/yajra/laravel-datatables-html/src',
+            4 => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src',
         ),
         'Whoops\\' => 
         array (
@@ -417,8 +417,8 @@ class ComposerStaticInita6d78ef7934ee091088d630bb5cf5f72
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -719,9 +719,13 @@ class ComposerStaticInita6d78ef7934ee091088d630bb5cf5f72
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\DataTables\\AppStatusDataTable' => __DIR__ . '/../..' . '/app/DataTables/AppStatusDataTable.php',
+        'App\\DataTables\\DeliveryPartnerDataTable' => __DIR__ . '/../..' . '/app/DataTables/DeliveryPartnerDataTable.php',
+        'App\\DataTables\\StoreDataTable' => __DIR__ . '/../..' . '/app/DataTables/StoreDataTable.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Helpers\\StorageHelper' => __DIR__ . '/../..' . '/app/Helpers/StorageHelper.php',
         'App\\Http\\Controllers\\Admin\\AppStatusController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AppStatusController.php',
+        'App\\Http\\Controllers\\Admin\\DeliveryPartnerController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/DeliveryPartnerController.php',
+        'App\\Http\\Controllers\\Admin\\StoreController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/StoreController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
@@ -742,6 +746,7 @@ class ComposerStaticInita6d78ef7934ee091088d630bb5cf5f72
         'App\\Http\\Requests\\QuizStoreRequest' => __DIR__ . '/../..' . '/app/Http/Requests/QuizStoreRequest.php',
         'App\\Models\\AppStatus' => __DIR__ . '/../..' . '/app/Models/AppStatus.php',
         'App\\Models\\Course' => __DIR__ . '/../..' . '/app/Models/Course.php',
+        'App\\Models\\store' => __DIR__ . '/../..' . '/app/Models/store.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
