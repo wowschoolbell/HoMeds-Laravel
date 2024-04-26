@@ -11,3 +11,10 @@ Breadcrumbs::for("admin.store.index", function ($trail) {
     $trail->parent('home');
     $trail->push('Store List', route('admin.store.index'));
 });
+
+Breadcrumbs::for('admin.store.create', function ($trail) {
+    $trail->push('Add Store', route('admin.store.create'));
+});
+Breadcrumbs::for('admin.store.edit', function ($trail) {
+    $trail->push('Edit Store', route('admin.store.create'));
+});

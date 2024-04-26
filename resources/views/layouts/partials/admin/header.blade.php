@@ -1,7 +1,7 @@
 <header class="admin-header bg-dark row" style="margin-left: 10%;">
     <a href="#" class="col-md-1" id="left-control" style="color:white;font-size: 22px;text-align: left;"><i class="mdi mdi-format-indent-decrease"></i> </a>
     <div class="d-flex align-items-center col-md-10" style="font-size: 20px; color: white;text-align: right;justify-content: center;">
-        <span class="fw-bold" >{{ $title }}</span>
+        <span class="fw-bold" >{{ $title ?? '' }}</span>
     </div>
     <nav class=" ml-auto col-md-1" style="text-align: right;">
         <ul class="nav align-items-center">
