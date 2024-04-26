@@ -6,6 +6,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/css/intlTelInput.min.css" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/intlTelInput.min.js"></script>
 
+@section('content')
 <div class="bg-dark">
     <div class="container-fluid  m-b-30">
         <div class="row">

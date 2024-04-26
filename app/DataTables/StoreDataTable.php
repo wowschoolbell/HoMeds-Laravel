@@ -65,8 +65,7 @@ class StoreDataTable extends dataTable
         return [
             "id",
             'name',
-            'contact_person_name', 'phone', 'mobile_number', 'email', 'gst_number',
-        'drug_licence', 'address', 'area', 'state', 'city',"pincode","store_image","store_logo","bank_name","bank_account_number","ifsc_code","app_status","status"
+            'contact_person_name', 'phone', 'mobile_number', 'email',"app_status","status"
         ];
     }
 
