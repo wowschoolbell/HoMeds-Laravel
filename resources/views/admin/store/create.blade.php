@@ -120,14 +120,14 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputEmail4">App Status *</label>
-                    {{ Form::select('store[app_status]', old(@$model['category']->app_status,["HoMeds"=>"HoMeds","White Label"=>"White_Label"]), ['class' => "form-control",'required'=>"true"]) }}
+                    {{ Form::select('store[app_status]', old(@$model['category']->app_status?@$model['category']->app_status:"",["HoMeds"=>"HoMeds","White Label"=>"White_Label"]), ['class' => "form-control",'required'=>"true"]) }}
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputEmail4">Status *</label>
                     
                     
-                                        {{ Form::select('store[status]', old(@$model['category']->status,['active'=>'Active','in-active'=>'In-active','hold'=>'Hold','waiting_for_approval'=>'Waiting For Approval']), ['class' => "form-control",'required'=>"true"]) }}
-                     
+                    {{ Form::select('store[status]', old(@$model['category']->status?@$model['category']->status:"",['active'=>'Active','in-active'=>'In-active','hold'=>'Hold','waiting_for_approval'=>'Waiting For Approval']), ['class' => "form-control",'required'=>"true"]) }}
+                 
                    
                 </div>
                 
