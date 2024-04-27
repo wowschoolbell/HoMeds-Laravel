@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Modules\Superadmin\Entities\Role;
 
 class CreateDeliveryPartnersTable extends Migration
 {
@@ -45,6 +46,15 @@ class CreateDeliveryPartnersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('username')->unique()->after('name');
         });
+
+        $roles = Role::$hidden_roles;
+
+        foreach($roles as $value)
+        {
+            Role::firstOrCreate(
+                ['name' => $value]
+            );
+        }
     }
 
     /**

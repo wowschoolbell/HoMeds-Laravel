@@ -22,6 +22,6 @@ class Role extends \Spatie\Permission\Models\Role
     const SUPER_USER    = 'Super user';
     const Viewer        = 'Viewer';
 
-    public static $hidden_roles = ['admin', 'Super user', 'Viewer'];
+    public static $hidden_roles = ['admin', 'Super user', 'Viewer', 'Delivery Partner'];
 
 }

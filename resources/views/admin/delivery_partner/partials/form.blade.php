@@ -43,7 +43,7 @@
                                     {{ Form::text('delivery_partner[first_name]', old('delivery_partner[first_name]'), ['class' => "form-control"]) }}
                                 </div>
                                 <div class="form-group col-md-4">
-                                    {{ Form::label('delivery_partner[middle_name]', __('Middle Name').'*') }}
+                                    {{ Form::label('delivery_partner[middle_name]', __('Middle Name')) }}
                                     {{ Form::text('delivery_partner[middle_name]', old('delivery_partner[middle_name]'), ['class' => "form-control" ]) }}
                                 </div>
                                 <div class="form-group col-md-4">
