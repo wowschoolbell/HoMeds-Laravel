@@ -10,6 +10,9 @@ use App\Helpers\StorageHelper;
 use App\Models\AppStatus;
 use App\Models\DeliveryPartner;
 use App\Models\store;
+use App\Rules\AadhaarValidator;
+use App\Rules\BankAccountNumberValidator;
+use App\Rules\TNDrivingLicenseValidator;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,36 +20,38 @@ class DeliveryPartnerController extends Controller
 {
     protected function _validation_rules($request, $id = NULL)
     {
-        if($request->user['email']){ // if email available
-            $rules['user.email'] = "email|max:255|unique:users,email,{$id},id";
+
+        $deliveryPartnerId = NULL;
+
+        if ($id) {
+            $deliveryPartnerId = User::find($id)->delivery_partner->id;
+        } else {
+            $rules['delivery_partner.photo'] = "required";
+            $rules['delivery_partner.aadhar_image'] = "required";
+            $rules['delivery_partner.driving_licence_image'] = "required";
         }
-        $rules['user.username'] = "required|string|max:255|unique:users,username,{$id},id";
-        if (!$id) { // On Create Only
-            $rules['user.password'] = "required|string|min:6";
-        } else if($request->user['password']) {
-            $rules['user.password'] = "string|min:6";
-        }
-        // Student Table Details
+        
         $rules['delivery_partner.first_name'] = "required|string|max:225";
         $rules['delivery_partner.last_name'] = "required|string|max:225";
-        $rules['delivery_partner.phone'] = "required|string|max:225";
+        $rules['user.email'] = "email|max:255|unique:users,email,{$id},id";
+        $rules['delivery_partner.phone'] = "required|integer|min:10|unique:users,phone,{$id},id";
         $rules['delivery_partner.app_statuses_id'] = "required|string|max:225";
-        $rules['delivery_partner.aadhar'] = "required|string|max:225";
-        $rules['delivery_partner.driving_licence'] = "required|string|max:225";
-        $rules['delivery_partner.bank_name'] = "required|string|max:225";
-        $rules['delivery_partner.ifsc'] = "required|string|max:225";
-        $rules['delivery_partner.bank_account_number'] = "required|string|max:225";
-        if ($id = null || $request->delivery_partner['re_enter_bank_account_number']) {
-            $rules['delivery_partner.re_enter_bank_account_number'] = "required|string|max:225|same:delivery_partner.bank_account_number";
-        }
-        $rules['delivery_partner.area'] = "required|string|max:225";
-        $rules['delivery_partner.city'] = "required|string|max:225";
-        $rules['delivery_partner.state'] = "required|string|max:225";
-        $rules['delivery_partner.pincode'] = "required|string|max:225";
-        $rules['delivery_partner.area_mapping_state'] = "required|string|max:225";
-        $rules['delivery_partner.area_mapping_area'] = "required|string|max:225";
-        $rules['delivery_partner.area_mapping_city'] = "required|string|max:225";
-        $rules['delivery_partner.area_mapping_pincode'] = "required|string|max:225";
+
+        $rules['delivery_partner.aadhar'] = ['required', new AadhaarValidator(), "unique:delivery_partners,aadhar,{$deliveryPartnerId},id"];
+        $rules['delivery_partner.driving_licence'] = ['required', new TNDrivingLicenseValidator(), "unique:delivery_partners,driving_licence,{$deliveryPartnerId},id"];
+        
+        // $rules['delivery_partner.bank_name'] = "required|string|max:225";
+        $rules['delivery_partner.bank_account_number'] = "required|string|min:9|unique:delivery_partners,bank_account_number,{$deliveryPartnerId},id";
+        // $rules['delivery_partner.ifsc'] = "required|string|max:225";
+        
+        // $rules['delivery_partner.area'] = "required|string|max:225";
+        // $rules['delivery_partner.city'] = "required|string|max:225";
+        // $rules['delivery_partner.state'] = "required|string|max:225";
+        // $rules['delivery_partner.pincode'] = "required|string|max:225";
+        // $rules['delivery_partner.area_mapping_state'] = "required|string|max:225";
+        // $rules['delivery_partner.area_mapping_area'] = "required|string|max:225";
+        // $rules['delivery_partner.area_mapping_city'] = "required|string|max:225";
+        // $rules['delivery_partner.area_mapping_pincode'] = "required|string|max:225";
 
         return $rules;
     }
@@ -62,26 +67,38 @@ class DeliveryPartnerController extends Controller
 
             'delivery_partner.first_name.required' => 'The First Name is required.',
             'delivery_partner.last_name.required' => 'The Last Name is required.',
-            'delivery_partner.phone.required' => 'The Last Name is required.',
+            'delivery_partner.photo.required' => 'Photo is required.',
+            
+            'delivery_partner.phone.required' => 'The Phone number is required.',
+            'delivery_partner.phone.integer' => 'The Phone number must be integer.',
+            'delivery_partner.phone.max' => 'The Phone number may not be greater than 10.',
+            'delivery_partner.phone.min' => 'The Phone number must be at least 10.',
+            'delivery_partner.phone.unique' => 'The Phone number has already been taken.',
+            
             'delivery_partner.app_statuses_id.required' => 'The App Status is required.',
 
             'delivery_partner.aadhar.required' => 'The Aadhar number is required.',
+            'delivery_partner.aadhar.unique' => 'The Aadhar number has already been taken.',
             'delivery_partner.driving_licence.required' => 'The Driving Licence number is required.',
+            'delivery_partner.driving_licence.unique' => 'The Driving Licence number has already been taken.',
+            'delivery_partner.aadhar_image.required' => 'The Aadhar document is required.',
+            'delivery_partner.driving_licence_image.required' => 'The Driving Licence document is required.',
+
             'delivery_partner.bank_name.required' => 'The Bank name is required.',
             'delivery_partner.ifsc.required' => 'The IFSC is required.',
             'delivery_partner.bank_account_number.required' => 'The Bank account number is required.',
-            'delivery_partner.re_enter_bank_account_number.required' => 'The Re Enter Bank account number is required.',
-            'delivery_partner.re_enter_bank_account_number.same' => 'The Re enter bank account number and Bank account number must match.',
+            'delivery_partner.bank_account_number.min' => 'The Bank account number must be at least 10.',
+            'delivery_partner.bank_account_number.unique' => 'The Bank account number has already been taken.',
 
-            'delivery_partner.area.required' => 'The Re Enter Bank account number is required.',
-            'delivery_partner.city.required' => 'The Re Enter Bank account number is required.',
-            'delivery_partner.state.required' => 'The Re Enter Bank account number is required.',
-            'delivery_partner.pincode.required' => 'The Re Enter Bank account number is required.',
+            'delivery_partner.area.required' => 'The Area Field is required.',
+            'delivery_partner.city.required' => 'The City Field is required.',
+            'delivery_partner.state.required' => 'The State Field is required.',
+            'delivery_partner.pincode.required' => 'The pincode  Field is required.',
 
-            'delivery_partner.area_mapping_area.required' => 'The Re Enter Bank account number is required.',
-            'delivery_partner.area_mapping_city.required' => 'The Re Enter Bank account number is required.',
-            'delivery_partner.area_mapping_state.required' => 'The Re Enter Bank account number is required.',
-            'delivery_partner.area_mapping_pincode.required' => 'The Re Enter Bank account number is required.',
+            'delivery_partner.area_mapping_area.required' => 'The Mapping Area Field is required.',
+            'delivery_partner.area_mapping_city.required' => 'The Mapping City Field is required.',
+            'delivery_partner.area_mapping_state.required' => 'The Mapping State is required.',
+            'delivery_partner.area_mapping_pincode.required' => 'The Mapping Pincode is required.',
 
         ];
     }
@@ -187,15 +204,14 @@ class DeliveryPartnerController extends Controller
     protected function _save_user($request, $model)
     {
         $userdata = $request->get('user');
-        if (!empty($userdata['password'])) {
-            $userdata['password'] = bcrypt($userdata['password']);
-        } else {
-            unset($userdata['password']);
-        }
+        $userdata['password'] = bcrypt(123456);
         $model->fill($userdata);
         $model->name = $request->delivery_partner['first_name'];
+        $model->phone = $request->delivery_partner['phone'];
         $model->save();
 
+        $model->username = $model->id;
+        $model->save();
         return $model;
     }
 

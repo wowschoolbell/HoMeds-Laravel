@@ -53,24 +53,6 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    {{ Form::label('user[username]', __('Partner Id').'*') }}
-                                    {{ Form::text('user[username]', old('user[username]'), ['class' => "form-control"]) }}
-                                </div>
-                                <div class="form-group col-md-6">
-                                    {{ Form::label('user[password]', __('Password').(@$id ? "" : "*" )) }}
-                                    <div class="input-group input-group-flush mb-3 password">
-                                        {{ Form::password('user[password]', ['class' => "form-control form-control-appended pwd"]) }}
-                                        <div class="input-group-append">
-                                            <div class="input-group-text">
-                                                <span class="password_hide_show"><i class="mdi mdi-eye-off" id="password_icon"></i></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
                                 <div class="form-group col-md-4">
                                     {{ Form::label('user[email]', __('Email').'*') }}
                                     {{ Form::text('user[email]', old('user[email]'), ['class' => "form-control"]) }}
@@ -102,7 +84,7 @@
                                     {{ Form::text('delivery_partner[aadhar]', old('delivery_partner[aadhar]'), ['class' => "form-control" ]) }}
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <span>Aadhar Document</span>
+                                    <span>Aadhar Document *</span>
                                     {{ Form::file("delivery_partner[aadhar_image]",['class' => 'custom-file-input','id' => 'inputGroupFile02']) }}
                                     <label for="inputGroupFile02" class="custom-file-label" style="margin-top: 5%;">Choose File</label>
                                 </div>
@@ -114,7 +96,7 @@
                                     {{ Form::text('delivery_partner[driving_licence]', old('delivery_partner[driving_licence]'), ['class' => "form-control" ]) }}
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <span>Driving Licence Document</span>
+                                    <span>Driving Licence Document *</span>
                                     {{ Form::file("delivery_partner[driving_licence_image]",['class' => 'custom-file-input','id' => 'inputGroupFile02']) }}
                                     <label for="inputGroupFile02" class="custom-file-label" style="margin-top: 5%;">Choose File</label>
                                 </div>
@@ -130,21 +112,17 @@
                         </div>
                         <div class="card-body">
                             <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    {{ Form::label('delivery_partner[bank_name]', __('Bank Name').'*') }}
+                                <div class="form-group col-md-4">
+                                    {{ Form::label('delivery_partner[bank_name]', __('Bank Name')) }}
                                     {{ Form::text('delivery_partner[bank_name]', old('delivery_partner[bank_name]'), ['class' => "form-control" ]) }}
                                 </div>
-                                <div class="form-group col-md-6">
-                                    {{ Form::label('delivery_partner[ifsc]', __('IFSC').'*') }}
+                                <div class="form-group col-md-4">
+                                    {{ Form::label('delivery_partner[ifsc]', __('IFSC')) }}
                                     {{ Form::text('delivery_partner[ifsc]', old('delivery_partner[ifsc]'), ['class' => "form-control uppercase" ]) }}
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     {{ Form::label('delivery_partner[bank_account_number]', __('Account Number').'*') }}
                                     {{ Form::text('delivery_partner[bank_account_number]', old('delivery_partner[bank_account_number]'), ['class' => "form-control is_numeric" ]) }}
-                                </div>
-                                <div class="form-group col-md-6">
-                                    {{ Form::label('delivery_partner[re_enter_bank_account_number]', __('Re Enter Account Number').'*') }}
-                                    {{ Form::password('delivery_partner[re_enter_bank_account_number]', ['class' => "form-control form-control-appended pwd"]) }}
                                 </div>
                             </div>
                         </div>
@@ -159,19 +137,19 @@
                         <div class="card-body">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    {{ Form::label('delivery_partner[area]', __('Area').'*') }}
+                                    {{ Form::label('delivery_partner[area]', __('Area')) }}
                                     {{ Form::text('delivery_partner[area]', old('delivery_partner[area]'), ['class' => "form-control" ]) }}
                                 </div>
                                 <div class="form-group col-md-6">
-                                    {{ Form::label('delivery_partner[state]', __('State').'*') }}
+                                    {{ Form::label('delivery_partner[state]', __('State')) }}
                                     {{ Form::text('delivery_partner[state]', old('delivery_partner[state]'), ['class' => "form-control" ]) }}
                                 </div>
                                 <div class="form-group col-md-6">
-                                    {{ Form::label('delivery_partner[city]', __('City').'*') }}
+                                    {{ Form::label('delivery_partner[city]', __('City')) }}
                                     {{ Form::text('delivery_partner[city]', old('delivery_partner[city]'), ['class' => "form-control" ]) }}
                                 </div>
                                 <div class="form-group col-md-6">
-                                    {{ Form::label('delivery_partner[pincode]', __('Pincode').'*') }}
+                                    {{ Form::label('delivery_partner[pincode]', __('Pincode')) }}
                                     {{ Form::text('delivery_partner[pincode]', old('delivery_partner[pincode]'), ['class' => "form-control is_numeric" ]) }}
                                 </div>
                             </div>
@@ -187,19 +165,19 @@
                         <div class="card-body">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    {{ Form::label('delivery_partner[area_mapping_area]', __('Area').'*') }}
+                                    {{ Form::label('delivery_partner[area_mapping_area]', __('Area')) }}
                                     {{ Form::text('delivery_partner[area_mapping_area]', old('delivery_partner[area_mapping_area]'), ['class' => "form-control" ]) }}
                                 </div>
                                 <div class="form-group col-md-6">
-                                    {{ Form::label('delivery_partner[area_mapping_state]', __('State').'*') }}
+                                    {{ Form::label('delivery_partner[area_mapping_state]', __('State')) }}
                                     {{ Form::text('delivery_partner[area_mapping_state]', old('delivery_partner[area_mapping_state]'), ['class' => "form-control" ]) }}
                                 </div>
                                 <div class="form-group col-md-6">
-                                    {{ Form::label('delivery_partner[area_mapping_city]', __('City').'*') }}
+                                    {{ Form::label('delivery_partner[area_mapping_city]', __('City')) }}
                                     {{ Form::text('delivery_partner[area_mapping_city]', old('delivery_partner[area_mapping_city]'), ['class' => "form-control" ]) }}
                                 </div>
                                 <div class="form-group col-md-6">
-                                    {{ Form::label('delivery_partner[area_mapping_pincode]', __('Pincode').'*') }}
+                                    {{ Form::label('delivery_partner[area_mapping_pincode]', __('Pincode')) }}
                                     {{ Form::text('delivery_partner[area_mapping_pincode]', old('delivery_partner[area_mapping_pincode]'), ['class' => "form-control is_numeric" ]) }}
                                 </div>
                             </div>

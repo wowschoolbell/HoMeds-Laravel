@@ -22,11 +22,27 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/migrate', function() {
    Artisan::call('migrate');
    return "migrate!";
+});
 
+// Migration rollback 
+Route::get('/migrate-rollbak', function() {
+   Artisan::call('migrate:rollback');
+   return "Migration roll back!";
+});
+
+// Application Cache clear
+Route::get('/cache-clear', function() {
+   Artisan::call('optimize:clear');
+   return "Cache cleared!";
+});
+
+// Storage Link
+Route::get('/storage-link', function() {
+   Artisan::call('storage:link');
+   return "Storage liniked Successfully!";
 });
 
 Route::get('/makemodel', function() {
    Artisan::call('make:model store -mc');
    return "migrate!";
-
 });

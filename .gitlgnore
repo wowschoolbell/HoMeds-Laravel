@@ -1,2 +1,23 @@
-.git
-vendor
+#/vendor/
+#node_modules/
+npm-debug.log
+yarn-error.log
+
+# specific
+bootstrap/compiled.php
+app/storage/
+
+# Lumen specific
+public/storage
+public/hot
+
+# Lumen specific with changed public path
+public_html/storage
+public_html/hot
+
+storage/*.key
+.env
+Homestead.yaml
+Homestead.json
+/.vagrant
+.phpunit.result.cache

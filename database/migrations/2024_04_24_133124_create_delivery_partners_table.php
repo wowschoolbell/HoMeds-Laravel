@@ -23,28 +23,29 @@ class CreateDeliveryPartnersTable extends Migration
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('photo')->nullable();
-            $table->integer('phone');
+            $table->string('phone')->nullable();
             $table->string('aadhar')->nullable();
             $table->string('aadhar_image')->nullable();
             $table->string('driving_licence')->nullable();
             $table->string('driving_licence_image')->nullable();
             $table->text('address')->nullable();
-            $table->text('area')->nullable();
-            $table->string('state')->nullable();
+            $table->string('area')->nullable();
             $table->string('city')->nullable();
+            $table->string('state')->nullable();
             $table->string('pincode')->nullable();
             $table->string('bank_name')->nullable();
             $table->string('bank_account_number')->nullable();
             $table->string('ifsc')->nullable();
-            $table->string('area_mapping_state')->nullable();
             $table->string('area_mapping_area')->nullable();
             $table->string('area_mapping_city')->nullable();
+            $table->string('area_mapping_state')->nullable();
             $table->string('area_mapping_pincode')->nullable();
         });
 
 
         Schema::table('users', function (Blueprint $table) {
-            $table->string('username')->unique()->after('name');
+            $table->string('username')->unique()->after('name')->nullable();
+            $table->string('phone')->unique()->after('email')->nullable();
         });
 
         $roles = Role::$hidden_roles;
@@ -68,6 +69,7 @@ class CreateDeliveryPartnersTable extends Migration
 
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('username');
+            $table->dropColumn('phone');
         });
     }
 }
