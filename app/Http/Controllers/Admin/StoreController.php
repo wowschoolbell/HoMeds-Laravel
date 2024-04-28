@@ -102,9 +102,13 @@ class StoreController extends Controller
           $store->mobile_number = $request->store['mobile_number'];
           $store->gst_number = $request->store['gst_number'];
           $store->drug_licence = $request->store['drug_licence'];
-          $store->password = bcrypt($request->store['password']);
+          if(isset($request->store['password'])){
+            $store->password = bcrypt($request->store['password']);
+          }
           $store->address = $request->store['address'];
-          $store->location = $request->store['location'];
+          if(isset($request->store['location'])){
+             $store->location = $request->store['location'];
+          }
           $store->area = $request->store['area'];
           $store->state = $request->store['state'];
           $store->city = $request->store['city'];
