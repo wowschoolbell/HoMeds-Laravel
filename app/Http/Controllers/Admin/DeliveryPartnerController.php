@@ -38,7 +38,7 @@ class DeliveryPartnerController extends Controller
         $rules['delivery_partner.app_statuses_id'] = "required|string|max:225";
 
         $rules['delivery_partner.aadhar'] = ['required', new AadhaarValidator(), "unique:delivery_partners,aadhar,{$deliveryPartnerId},id"];
-        $rules['delivery_partner.driving_licence'] = ['required', new TNDrivingLicenseValidator(), "unique:delivery_partners,driving_licence,{$deliveryPartnerId},id"];
+        $rules['delivery_partner.driving_licence'] = ['required', 'string', "unique:delivery_partners,driving_licence,{$deliveryPartnerId},id"];
         
         // $rules['delivery_partner.bank_name'] = "required|string|max:225";
         $rules['delivery_partner.bank_account_number'] = "required|string|min:9|unique:delivery_partners,bank_account_number,{$deliveryPartnerId},id";

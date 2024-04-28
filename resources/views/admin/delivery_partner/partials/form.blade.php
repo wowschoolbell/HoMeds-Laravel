@@ -93,7 +93,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     {{ Form::label('delivery_partner[driving_licence]', __('Driving Licence Number').'*') }}
-                                    {{ Form::text('delivery_partner[driving_licence]', old('delivery_partner[driving_licence]'), ['class' => "form-control" ]) }}
+                                    {{ Form::text('delivery_partner[driving_licence]', old('delivery_partner[driving_licence]'), ['class' => "form-control uppercase" ]) }}
                                 </div>
                                 <div class="form-group col-md-6">
                                     <span>Driving Licence Document *</span>
@@ -141,12 +141,12 @@
                                     {{ Form::text('delivery_partner[area]', old('delivery_partner[area]'), ['class' => "form-control" ]) }}
                                 </div>
                                 <div class="form-group col-md-6">
-                                    {{ Form::label('delivery_partner[state]', __('State')) }}
-                                    {{ Form::text('delivery_partner[state]', old('delivery_partner[state]'), ['class' => "form-control" ]) }}
-                                </div>
-                                <div class="form-group col-md-6">
                                     {{ Form::label('delivery_partner[city]', __('City')) }}
                                     {{ Form::text('delivery_partner[city]', old('delivery_partner[city]'), ['class' => "form-control" ]) }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    {{ Form::label('delivery_partner[state]', __('State')) }}
+                                    {{ Form::text('delivery_partner[state]', old('delivery_partner[state]'), ['class' => "form-control" ]) }}
                                 </div>
                                 <div class="form-group col-md-6">
                                     {{ Form::label('delivery_partner[pincode]', __('Pincode')) }}
@@ -169,12 +169,12 @@
                                     {{ Form::text('delivery_partner[area_mapping_area]', old('delivery_partner[area_mapping_area]'), ['class' => "form-control" ]) }}
                                 </div>
                                 <div class="form-group col-md-6">
-                                    {{ Form::label('delivery_partner[area_mapping_state]', __('State')) }}
-                                    {{ Form::text('delivery_partner[area_mapping_state]', old('delivery_partner[area_mapping_state]'), ['class' => "form-control" ]) }}
-                                </div>
-                                <div class="form-group col-md-6">
                                     {{ Form::label('delivery_partner[area_mapping_city]', __('City')) }}
                                     {{ Form::text('delivery_partner[area_mapping_city]', old('delivery_partner[area_mapping_city]'), ['class' => "form-control" ]) }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    {{ Form::label('delivery_partner[area_mapping_state]', __('State')) }}
+                                    {{ Form::text('delivery_partner[area_mapping_state]', old('delivery_partner[area_mapping_state]'), ['class' => "form-control" ]) }}
                                 </div>
                                 <div class="form-group col-md-6">
                                     {{ Form::label('delivery_partner[area_mapping_pincode]', __('Pincode')) }}
