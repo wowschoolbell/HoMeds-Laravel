@@ -7,16 +7,25 @@ use App\Http\Controllers\Controller;
 use App\DataTables\StoreDataTable;
 use Illuminate\Support\Facades\Validator;
 use App\Models\store;
+use App\Models\AppStatus;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class StoreController extends Controller
 {
     public function index(StoreDataTable $dataTable)
     {
-        return $dataTable->render('admin.store.index');
+        $data['statuses']["all"] = 'All';
+        $data['statuses']['active']= "Active";
+        $data['statuses']['in-active']= "In-Active";
+        $data['statuses']['waiting_for_the_appproval']= "Waiting for the appproval";
+        $data['statuses']['hold']= "Hold";
+        return $dataTable->render('admin.store.index',$data);
     }
     public function create() 
     {
+    
+       
+        
         $data['model'] = [
             'store' => new store()
         ];
@@ -24,6 +33,15 @@ class StoreController extends Controller
         $data['title']      = 'Add Store';
         $data['route']      = 'admin.store.store';
         $data['method']     = 'post';
+        
+        $data['statuses']["all"] = 'All';
+        $data['statuses']['active']= "Active";
+        $data['statuses']['in-active']= "In-Active";
+        $data['statuses']['waiting_for_the_appproval']= "Waiting for the appproval";
+        $data['statuses']['hold']= "Hold";
+        
+        
+        
 
         return view('admin.store.create', $data);
     }
@@ -133,6 +151,23 @@ class StoreController extends Controller
 
         return view('admin.store.create', $data);
     }
+      public function view($id)
+    {
+        $data['model'] = [
+            'category' => store::findOrFail($id)
+        ];
+        
+        $store = store::findOrFail($id);
+        
+    
+        $data['title']      = 'Edit store';
+        $data['route']      = 'admin.store.update';
+        $data['method']     = 'put';
+        $data['routeIds']   =  $id;
+       
+
+        return view('admin.store.view', $data);
+    }
      public function update(Request $request, $id)
     {
         $model = store::findOrFail($id);
@@ -150,20 +185,4 @@ class StoreController extends Controller
         $model->fill($request->get('store'));
         $model->save();
     }
-    
-    //  public function delete($id)
-    // {
-
-        
-    //     $store = store::findOrFail($id);
-        
-    
-    //     $data['title']      = 'Edit store';
-    //     $data['route']      = 'admin.store.update';
-    //     $data['method']     = 'put';
-    //     $data['routeIds']   =  $id;
-       
-
-    //     return view('admin.store.create', $data);
-    // }
 }

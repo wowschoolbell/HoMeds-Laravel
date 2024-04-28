@@ -1,7 +1,18 @@
 @extends('layouts.master')
 @section('title', '')
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput-jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 @section('content')
+
+<? $view =isset($_GET['view'])?true:false;
+
+
+?>
+
 
 <div class="bg-dark">
     <div class="container-fluid  m-b-30">
@@ -9,25 +20,180 @@
             <div class="col-md-8 text-white p-t-40 p-b-90">
                 <h4 class="">
                     <span class="btn btn-white-translucent">
-                    <i class="mdi mdi-apps"></i></span> Add Store
+                    <i class="mdi mdi-apps"></i></span> {{$view?"View Store":"Add Store"}}
                 </h4>
             </div>
             <div class="col-md-4 text-right p-t-40 p-b-90">
-                <!--<button class="btn btn-md btn-primary btn-add-category" data-toggle="modal" data-target="#statusmodel" data-route="{{ route('admin.store.create')}}" type="button"><i class="mdi mdi-plus"></i>Add Store</button>-->
-                <!--<a href={{ route('admin.store.create')}} class="btn btn-md btn-primary btn-add-category" ><i class="mdi mdi-plus"></i>Add Store</a>-->
+               
+                <a href={{ URL::previous() }} class="btn btn-md btn-primary btn-add-category" ><i class="mdi mdi-back"></i>Back</a>
+               
             </div>
         </div>
     </div>
 </div>
+
 <div class="container-fluid pull-up">
     <div class="row">
+         @if($view)
+         @else
+        <div class="col-12">
+            @foreach($statuses as $id => $status)
+                <?php
+                    $class = "btn-dark-lavender";
+
+                    if((@request()->status == null && $id == 0)) {
+                        $class = "btn-lavender";
+                    }
+
+                    if (@request()->status == $id) {
+                        $class = "btn-lavender";
+                    }
+                
+                ?>
+                <a href="{{ route('admin.store.index')}}?status={{$id}}" class="btn btn-sm {{$class}}" title="Edit"><i class="mdi mdi mdi-triforce"></i> {{$status}}</a>
+            @endforeach
+        </div>
+        @endif
         <div class="col-12">
             <div class="card">
+                @if($view)
+                <div class="card-body">
+                     <div class="table-responsive p-t-30">
+                         <div class="form-row">
+                             <div class="col-md-6 text-">
+                                 Name :
+                             </div>
+                             <div class="col-md-6">
+                                 {{$model['category']->name}}
+                             </div>
+                             <div class="col-md-6">
+                                 Contact Person Name :
+                             </div>
+                             <div class="col-md-6">
+                                 {{$model['category']->contact_person_name}}
+                             </div>
+                             <div class="col-md-6">
+                                 Phone Number :
+                             </div>
+                             <div class="col-md-6">
+                                 {{$model['category']->phone_number}}
+                             </div>
+                             <div class="col-md-6">
+                                 Mobile :
+                             </div>
+                             <div class="col-md-6">
+                                 {{$model['category']->mobile_number}}
+                             </div>
+                             <div class="col-md-6">
+                                 Email :
+                             </div>
+                             <div class="col-md-6">
+                                 {{$model['category']->email}}
+                             </div>
+                              <div class="col-md-6">
+                                 Gst Number :
+                             </div>
+                             <div class="col-md-6">
+                                 {{$model['category']->gst_number}}
+                             </div>
+                             <div class="col-md-6">
+                                Drug Licence :
+                             </div>
+                             <div class="col-md-6">
+                                 {{$model['category']->drug_licence}}
+                             </div>
+                             <div class="col-md-6">
+                                Store Location :
+                             </div>
+                             <div class="col-md-6">
+                                 {{$model['category']->location}}
+                             </div>
+                             <div class="col-md-6">
+                                Address :
+                             </div>
+                             <div class="col-md-6">
+                                 {{$model['category']->address}}
+                             </div>
+                             
+                              <div class="col-md-6">
+                                Area :
+                             </div>
+                             <div class="col-md-6">
+                                 {{$model['category']->area}}
+                             </div>
+                             <div class="col-md-6">
+                                City :
+                             </div>
+                             <div class="col-md-6">
+                                 {{$model['category']->city}}
+                             </div>
+                              <div class="col-md-6">
+                                State :
+                             </div>
+                             <div class="col-md-6">
+                                 {{$model['category']->state}}
+                             </div>
+                              <div class="col-md-6">
+                                Pin Code :
+                             </div>
+                             <div class="col-md-6">
+                                 {{$model['category']->pincode}}
+                             </div>
+                             <div class="col-md-6">
+                               Store Logo :
+                             </div>
+                             <div class="col-md-6">
+                                 
+                                 <img src={{$model['category']->store_logo}} width="60px" height="60px" alt="store Image"/>
+                             </div>
+                             <div class="col-md-6">
+                                Store Image :
+                             </div>
+                             <div class="col-md-6">
+                                 <img src={{$model['category']->store_image}} width="60px" height="60px" alt="store Image"/>
+                             </div>
+                             <div class="col-md-6">
+                                Bank Name :
+                             </div>
+                             <div class="col-md-6">
+                                 {{$model['category']->bank_name}}
+                             </div>
+                             <div class="col-md-6">
+                                Bank Account Number :
+                             </div>
+                             <div class="col-md-6">
+                                {{$model['category']->bank_account_number}}
+                             </div>
+                             <div class="col-md-6">
+                                IFSC Code :
+                             </div>
+                             <div class="col-md-6">
+                                 {{$model['category']->ifsc_code}}
+                             </div>
+                             <div class="col-md-6">
+                                App Status 
+                             </div>
+                             <div class="col-md-6">
+                                 {{$model['category']->app_status}}
+                             </div>
+                             <div class="col-md-6">
+                                status :
+                             </div>
+                             <div class="col-md-6">
+                                 {{$model['category']->status}}
+                             </div>
+                             
+                          </div>
+                     </div>
+                    
+                </div>
+                
+                @else
                 <div class="card-body">
                     <div class="table-responsive p-t-10">
-            {{ Form::model($model, ['route' => [$route, @$routeIds], 'class' => 'ajax_form', 'method' => $method, 'files' => true]) }}
-            <div class="form-row">
-                {{ Form::hidden('id', @$model['category']->id, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Category Name']) }}
+                     {{ Form::model($model, ['route' => [$route, @$routeIds], 'class' => 'ajax_form', 'method' => $method, 'files' => true]) }}
+                 <div class="form-row">
+                        {{ Form::hidden('id', @$model['category']->id, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Category Name']) }}
                 <div class="form-group col-md-4">
                     <label for="inputEmail4">Name *</label>
                     {{ Form::text('store[name]', @$model['category']->name, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Store Name','required'=>"true"]) }}
@@ -40,11 +206,11 @@
                     <label for="inputEmail4">Phone *</label>
                     
                       
-                    {{ Form::text('store[phone]', @$model['category']->phone, ['class' => "form-control","id"=>"phone_number", 'autocomplete' => 'off', 'placeholder' => 'phone','required'=>"true"]) }}
+                    {{ Form::number('store[phone]', @$model['category']->phone, ['class' => "form-control","id"=>"phone_number", 'autocomplete' => 'off', 'placeholder' => 'phone','required'=>"true","pattern"=>"[0-9]{4}[0-9]{4-10}"]) }}
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputEmail4">Mobile Number *</label>
-                    {{ Form::text('store[mobile_number]', @$model['category']->mobile_number, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Mobile Number','required'=>"true"]) }}
+                    {{ Form::number('store[mobile_number]', @$model['category']->mobile_number, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Mobile Number','required'=>"true"]) }}
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputEmail4">Email *</label>
@@ -52,19 +218,19 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputEmail4">GST Number *</label>
-                    {{ Form::text('store[gst_number]', @$model['category']->gst_number, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'GST Number','required'=>"true"]) }}
+                    {{ Form::text('store[gst_number]', @$model['category']->gst_number, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'GST Number','required'=>"true","pattern"=>"[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}"]) }}
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputEmail4">Drug Licence *</label>
-                    {{ Form::text('store[drug_licence]', @$model['category']->drug_licence, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Drug Licence','required'=>"true"]) }}
+                    {{ Form::text('store[drug_licence]', @$model['category']->drug_licence, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Drug Licence','required'=>"true","maxlength"=>"12"]) }}
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="inputEmail4">Password *</label>
-                    {{ Form::text('store[password]', old('store[password]'), ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'password','required'=>"true"]) }}
-                </div>
+                <!--<div class="form-group col-md-4">-->
+                <!--    <label for="inputEmail4">Password *</label>-->
+                <!--    {{ Form::text('store[password]', old('store[password]'), ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'password','required'=>"true"]) }}-->
+                <!--</div>-->
                  <div class="form-group col-md-4">
-                    <label for="inputEmail4">Store Location *</label>
-                    {{ Form::text('store[location]', @$model['category']->location, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'location','required'=>"true"]) }}
+                    <label for="inputEmail4">Store Location</label>
+                    {{ Form::text('store[location]', @$model['category']->location, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'location']) }}
                 </div>
                 <div class="form-group col-md-4">
                     
@@ -120,14 +286,14 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputEmail4">App Status *</label>
-                    {{ Form::select('store[app_status]', old(@$model['category']->app_status?@$model['category']->app_status:"",["HoMeds"=>"HoMeds","White Label"=>"White_Label"]), ['class' => "form-control",'required'=>"true"]) }}
+                    {{ Form::select('store[app_status]', old(@$model['category']->app_status?$model['category']->app_status:"",["HoMeds"=>"HoMeds","White Label"=>"White_Label"]), ['class' => "form-control",'required'=>"true"]) }}
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputEmail4">Status *</label>
                     
                     
-                    {{ Form::select('store[status]', old(@$model['category']->status?@$model['category']->status:"",['active'=>'Active','in-active'=>'In-active','hold'=>'Hold','waiting_for_approval'=>'Waiting For Approval']), ['class' => "form-control",'required'=>"true"]) }}
-                 
+                {{ Form::select('store[status]', old(@$model['category']->status?@$model['category']->status:"",['active'=>'Active','in-active'=>'In-active','hold'=>'Hold','waiting_for_approval'=>'Waiting For Approval']), ['class' => "form-control",'required'=>"true"]) }}
+                     
                    
                 </div>
                 
@@ -140,6 +306,7 @@
         {{ Form::close() }}
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>
@@ -185,9 +352,15 @@ $(document).ready(function () {
             $("#code").val(($("#phone_number").intlTelInput("getSelectedCountryData").dialCode));
 
         });
+        
+        
 
 
     });
+    
+    $(function(){
+    $("#phone_number").mask("999 - 9999999999999");
+});
 
 </script>
 @endpush

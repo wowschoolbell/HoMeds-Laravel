@@ -16,5 +16,12 @@ Breadcrumbs::for('admin.store.create', function ($trail) {
     $trail->push('Add Store', route('admin.store.create'));
 });
 Breadcrumbs::for('admin.store.edit', function ($trail) {
-    $trail->push('Edit Store', route('admin.store.create'));
+     $view =isset($_GET['view'])?true:false; 
+    if($view){
+        $trail->push('View Store', route('admin.store.create'));
+    } else {
+         $trail->push('Edit Store', route('admin.store.create'));
+    }
 });
+
+

@@ -19,7 +19,8 @@ class StoreDataTable extends dataTable
             ->addColumn('action', function($model){
                $action = '<a href="'.route('admin.store.edit',["$model->id"]).'" class="btn btn-sm btn-info" id="trigger-content-'.$model->id.'" title="Edit"><i class="mdi mdi-square-edit-outline"></i></a>&nbsp;';
                
-                $action .= '<button class="btn btn-sm btn-danger btn-delete" type="button" data-delete-route="'.route('admin.store.destroy', $model->id).'" data-redirect="'.route('admin.app_status.index').'" title="Delete"><i class="mdi mdi-trash-can-outline"></i></button>';
+                $action .= '<a href="'.route('admin.store.edit',["$model->id"]).'?view=true" class="btn btn-sm btn-info" id="trigger-content-'.$model->id.'" title="Edit"><i  class="mdi mdi-eye-outline"></i></a>&nbsp;';
+               
 
                 return $action;
             })
@@ -35,6 +36,16 @@ class StoreDataTable extends dataTable
 
     public function query(store $model)
     {
+        $model = $model::with(['user']);
+        
+        if ($status = @request()->status) {
+            if ($status != "all") {
+                $model->where('status', $status);
+            }
+        }
+ 
+
+
         $Query =  $model->newQuery();
         return $Query;
     }
