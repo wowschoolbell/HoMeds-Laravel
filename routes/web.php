@@ -20,9 +20,11 @@ Route::get('/', function () {
 Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
-
 Route::group(['middleware' => ['web', 'auth'], 'as' => 'admin.'], function() {
     Route::resource('app_status', 'Admin\AppStatusController');
     Route::resource('store', 'Admin\StoreController');
     Route::resource('delivery_partner', 'Admin\DeliveryPartnerController');
+    Route::resource('configurations', 'Admin\ConfigurationController');
+    Route::resource('states', 'Admin\StateController');
+    Route::resource('cities', 'Admin\CityController');
 });

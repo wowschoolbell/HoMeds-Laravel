@@ -1234,3 +1234,13 @@ form.popup_form {
 .admin-sidebar-brand {
     color: white;
 }
+
+.btn-dark-lavender {
+    background-color: #5058A7;
+    color: white;
+}
+
+.btn-lavender {
+    background-color: #B57EDC;
+    color: white;
+}

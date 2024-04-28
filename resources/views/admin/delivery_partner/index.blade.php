@@ -36,19 +36,6 @@
 @php
     $create_route = route('admin.delivery_partner.create');
 @endphp
-@push('stylesheets')
-<style>
-    .btn-dark-lavender {
-        background-color: #5058A7;
-        color: white;
-    }
-
-    .btn-lavender {
-        background-color: #B57EDC;
-        color: white;
-    }
-</style>
-@endpush
 @endsection
 
 @include('layouts.partials.datatable_scripts')
