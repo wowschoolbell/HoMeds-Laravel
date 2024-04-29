@@ -9,7 +9,7 @@
 <div class="bg-dark">
     <div class="container-fluid  m-b-30">
         <div class="row">
-            <div class="col-md-8 text-white p-t-40">
+            <div class="col-md-8 text-white p-t-40 p-b-90">
                 <h4 class="">
                     <span class="btn btn-white-translucent">
                     <i class="mdi mdi-apps"></i></span> Store
