@@ -1,9 +1,9 @@
-<header class="admin-header bg-dark row" style="margin-left: 10%;">
-    <a href="#" class="col-md-1" id="left-control" style="color:white;font-size: 22px;text-align: left;"><i class="mdi mdi-format-indent-decrease"></i> </a>
-    <div class="d-flex align-items-center col-md-10" style="font-size: 20px; color: white;text-align: right;justify-content: center;">
+<header class="admin-header bg-dark row media-ml10">
+    <a href="#" class="col-md-1 menu-open-close" id="left-control"><i class="mdi mdi-format-indent-decrease"></i> </a>
+    <div class="col-md-10 menu-title">
         <span class="fw-bold" >{{ $title ?? '' }}</span>
     </div>
-    <nav class=" ml-auto col-md-1" style="text-align: right;">
+    <nav class="col-md-1 menu-logout">
         <ul class="nav align-items-center">
             <li class="nav-item">
                 <div class="dropdown">
@@ -42,25 +42,27 @@
                     </div>
                 </div>
             </li>
-            <li class="nav-item dropdown ">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div class="avatar avatar-sm avatar-online">
-                        <span class="avatar-title rounded-circle" style="background-color:#B57EDC;">
-                            {{ Auth::user()->name[0] }}
-                        </span>
-                    </div>
-                </a>
-                <div class="dropdown-menu  dropdown-menu-right">
-                    {{-- <a class="dropdown-item" href="{{ route('users.view-account') }}"> <i class="mdi mdi-eye"></i>&nbsp; View Account </a>
-                    <a class="dropdown-item" href="{{ route('users.change-password') }}"> <i class="mdi mdi-key-variant"></i>&nbsp; Change Password</a>
-                    <div class="dropdown-divider"></div> --}}
-                    <a class="dropdown-item" href="{{ route('logout') }}"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="mdi mdi-power"></i>&nbsp;{{ __('Logout') }}
+            <li class="nav-item">
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="avatar avatar-sm avatar-online">
+                            <span class="avatar-title rounded-circle" style="background-color:#B57EDC;">
+                                {{ Auth::user()->name[0] }}
+                            </span>
+                        </div>
                     </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
+                    <div class="dropdown-menu  dropdown-menu-right">
+                        {{-- <a class="dropdown-item" href="{{ route('users.view-account') }}"> <i class="mdi mdi-eye"></i>&nbsp; View Account </a>
+                        <a class="dropdown-item" href="{{ route('users.change-password') }}"> <i class="mdi mdi-key-variant"></i>&nbsp; Change Password</a>
+                        <div class="dropdown-divider"></div> --}}
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="mdi mdi-power"></i>&nbsp;{{ __('Logout') }}
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
                 </div>
             </li>
         </ul>
@@ -80,6 +82,12 @@
                     $('.admin-main').css('margin-left','10%');
                 }
             });
+
+            $('.admin-close-sidebar').click(function () {
+                $('.admin-sidebar').hide();
+                $('.admin-header').css('margin-left','0%');
+                $('.admin-main').css('margin-left','0%');
+            })
         });
     </script>
     @endpush

@@ -23,7 +23,7 @@
         @include('layouts.partials.admin.left_sidebar')
     <!--sidebar Ends-->
 
-    <main class="admin-main" style="margin-left:10%;">
+    <main class="admin-main media-ml10">
         <!--site header begins-->
             @include('layouts.partials.admin.header')
         <!--site header ends -->

@@ -1,4 +1,4 @@
-<aside class="admin-sidebar" style="width: 10%;">
+<aside class="admin-sidebar">
     <div class="admin-sidebar-brand">
         <!-- begin sidebar branding-->
         <!-- <img class="admin-brand-logo" src="{{ asset('theme/light/img/GAF-CW-logo.jpeg') }}" width="40" alt="atmos Logo"> -->

@@ -19,7 +19,7 @@
                     }
                 
                 ?>
-                <a href="{{ route('admin.delivery_partner.index')}}?status={{$id}}" class="btn btn-sm {{$class}}" title="Edit"><i class="mdi mdi mdi-triforce"></i> {{$status}}</a>
+                <a href="{{ route('admin.delivery_partner.index')}}?status={{$id}}" class="btn btn-sm {{$class}} sort-option-button" title="Edit"><i class="mdi mdi mdi-triforce"></i> {{$status}}</a>
             @endforeach
         </div>
         <div class="col-12" style="margin-top: 2%;">

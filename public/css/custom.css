@@ -1244,3 +1244,71 @@ form.popup_form {
     background-color: #B57EDC;
     color: white;
 }
+
+.admin-sidebar {
+    width: 10%;
+}
+
+@media only screen and (min-width: 340px) and (max-width: 992px) {
+    .admin-sidebar {
+        width: 40%;
+        display: none;
+        background-color: #B57EDC;
+    }
+
+    .admin-sidebar {
+        transform: translateX(0%);
+    }
+
+    .media-ml10 {
+        margin-left: 0% !important;
+    }
+
+    .col-md-1 .col-md-10{
+        padding: 5px !important;
+        display: flex; /* Reduced padding for smaller screens */
+    }
+
+    .admin-header {
+        flex-wrap: nowrap !important;
+    }
+
+    .sort-option-button {
+        margin-top: 5px;
+    }
+
+    /* div.dt-buttons {
+        text-align: left !important;
+    } */
+}
+
+@media (min-width: 992px) {
+    .media-ml10 {
+        margin-left: 10%;
+    }    
+}
+
+.menu-open-close {
+    color:white;
+    font-size: 22px;
+    text-align: left;
+    display: flex;
+}
+
+.menu-title {
+    font-size: 20px;
+    color: white;
+    text-align: center;
+    justify-content: center;
+}
+
+.menu-logout {
+    text-align: right;
+    text-align: right;
+    justify-content: right;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
