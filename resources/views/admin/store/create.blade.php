@@ -47,126 +47,126 @@
                 <div class="card-body">
                      <div class="table-responsive p-t-30">
                          <div class="form-row">
-                             <div class="col-md-6 text-">
+                             <div class="col-md-6 text- pt-2">
                                  Name :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  {{$model['category']->name}}
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  Contact Person Name :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  {{$model['category']->contact_person_name}}
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  Phone Number :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  {{$model['category']->phone_number}}
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  Mobile :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  {{$model['category']->mobile_number}}
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  Email :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  {{$model['category']->email}}
                              </div>
-                              <div class="col-md-6">
+                              <div class="col-md-6 pt-2">
                                  Gst Number :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  {{$model['category']->gst_number}}
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                 Drug Licence :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  {{$model['category']->drug_licence}}
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                 Store Location :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  {{$model['category']->location}}
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                 Address :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  {{$model['category']->address}}
                              </div>
                              
-                              <div class="col-md-6">
+                              <div class="col-md-6 pt-2">
                                 Area :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  {{$model['category']->area}}
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                 City :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  {{$model['category']->city}}
                              </div>
-                              <div class="col-md-6">
+                              <div class="col-md-6 pt-2">
                                 State :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  {{$model['category']->state}}
                              </div>
-                              <div class="col-md-6">
+                              <div class="col-md-6 pt-2">
                                 Pin Code :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  {{$model['category']->pincode}}
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                Store Logo :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  
                                  <img src={{$model['category']->store_logo}} width="60px" height="60px" alt="store Image"/>
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                 Store Image :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  <img src={{$model['category']->store_image}} width="60px" height="60px" alt="store Image"/>
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                 Bank Name :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  {{$model['category']->bank_name}}
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                 Bank Account Number :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                 {{$model['category']->bank_account_number}}
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                 IFSC Code :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  {{$model['category']->ifsc_code}}
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                 App Status 
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  {{$model['category']->app_status}}
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                 status :
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-md-6 pt-2">
                                  {{$model['category']->status}}
                              </div>
                              
