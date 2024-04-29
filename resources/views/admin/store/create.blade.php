@@ -1,5 +1,11 @@
+
+<? $view =isset($_GET['view'])?true:false;
+
+
+?>
+
 @extends('layouts.master')
-@section('title', '')
+@section('title', $view?"View Store":"Add Store")
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput-jquery.min.js"></script>
@@ -8,20 +14,17 @@
 
 @section('content')
 
-<? $view =isset($_GET['view'])?true:false;
 
-
-?>
 
 
 <div class="bg-dark">
     <div class="container-fluid  m-b-30">
         <div class="row">
             <div class="col-md-8 text-white p-t-40 p-b-90">
-                <h4 class="">
-                    <span class="btn btn-white-translucent">
-                    <i class="mdi mdi-apps"></i></span> {{$view?"View Store":"Add Store"}}
-                </h4>
+                <!--<h4 class="">-->
+                    <!--<span class="btn btn-white-translucent">-->
+                <!--    <i class="mdi mdi-apps"></i></span> {{$view?"View Store":"Add Store"}}-->
+                <!--</h4>-->
             </div>
             <div class="col-md-4 text-right p-t-40 p-b-90">
                
@@ -36,23 +39,7 @@
     <div class="row">
          @if($view)
          @else
-        <div class="col-12">
-            @foreach($statuses as $id => $status)
-                <?php
-                    $class = "btn-dark-lavender";
-
-                    if((@request()->status == null && $id == 0)) {
-                        $class = "btn-lavender";
-                    }
-
-                    if (@request()->status == $id) {
-                        $class = "btn-lavender";
-                    }
-                
-                ?>
-                <a href="{{ route('admin.store.index')}}?status={{$id}}" class="btn btn-sm {{$class}}" title="Edit"><i class="mdi mdi mdi-triforce"></i> {{$status}}</a>
-            @endforeach
-        </div>
+        
         @endif
         <div class="col-12">
             <div class="card">
