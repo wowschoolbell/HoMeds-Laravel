@@ -146,6 +146,11 @@ class StoreController extends Controller
         
         $store = store::findOrFail($id);
         
+        $data['statuses']["all"] = 'All';
+        $data['statuses']['active']= "Active";
+        $data['statuses']['in-active']= "In-Active";
+        $data['statuses']['waiting_for_the_appproval']= "Waiting for the appproval";
+        $data['statuses']['hold']= "Hold";
     
         $data['title']      = 'Edit store';
         $data['route']      = 'admin.store.update';
