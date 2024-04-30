@@ -265,7 +265,7 @@
                                             </div>
                                             <div class="form-group col-md-4">
                                                 {{ Form::label('delivery_partner[app_statuses_id]', __('Status').'*') }}
-                                                {{ Form::select('store[status]', $statuses, old('store[app_status]'), ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Status']) }}
+                                                {{ Form::select('store[status]', $statuses,@$model['category']->app_status, ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Status']) }}
                                             </div>
                                              <div class="form-group col-md-4">
                                                 {{ Form::label('delivery_partner[status]', __('App status').'*') }}
