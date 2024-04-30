@@ -17,9 +17,9 @@ class StoreDataTable extends dataTable
     {
         return datatables($query)
             ->addColumn('action', function($model){
-               $action = '<a href="'.route('admin.store.edit',["$model->id"]).'" class="btn btn-sm btn-info" id="trigger-content-'.$model->id.'" title="Edit"><i class="mdi mdi-square-edit-outline"></i></a>&nbsp;';
+               $action = '<div class="d-flex gap-2"><a href="'.route('admin.store.edit',["$model->id"]).'" class="btn btn-sm btn-info" id="trigger-content-'.$model->id.'" title="Edit"><i class="mdi mdi-square-edit-outline"></i></a>&nbsp;';
                
-                $action .= '<a href="'.route('admin.store.edit',["$model->id"]).'?view=true" class="btn btn-sm btn-info" id="trigger-content-'.$model->id.'" title="Edit"><i  class="mdi mdi-eye-outline"></i></a>&nbsp;';
+                $action .= '<a href="'.route('admin.store.edit',["$model->id"]).'?view=true" class="btn btn-sm btn-info" id="trigger-content-'.$model->id.'" title="Edit"><i  class="mdi mdi-eye-outline"></i></a>&nbsp; </div>';
                
 
                 return $action;
