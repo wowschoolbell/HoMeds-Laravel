@@ -1,16 +1,27 @@
 @extends('layouts.login')
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
 @section('content')
 <main class="admin-main">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-4" style="background-color:#B57EDC;">
+            
+            <div class="col-lg-8 d-none d-md-block bg-cover video-container">
+                
+                 <video autoplay muted loop id="video-background">
+                      <source
+                        src="/public/video/WhatsApp-Video.mp4"
+                        type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+            </div>
+            <div class="col-lg-4">
                 <div class="row align-items-center m-h-100">
                     <div class="mx-auto col-md-8">
                         <div class="p-b-20 text-center">
-                            <p>
-                                <img src="{{ asset('theme/light/img/GAF-CW-logo.png') }}" style="width: 200px; height: 200px;" alt="">
-                            </p>
+                            <!--<p>-->
+                            <!--    <img src="{{ asset('theme/light/img/GAF-CW-logo.png') }}" style="width: 200px; height: 200px;" alt="">-->
+                            <!--</p>-->
                             <!-- <p class="admin-brand-content">
                                 HoMEds
                             </p> -->
@@ -24,7 +35,7 @@
                         @endif
                         {{-- After Reset Password, Then stauts will set in session --}}
 
-                        <p class="text-center" style="font-size: 30px;font-weight: 500;margin-bottom: 5px;">{{ __('Login') }}</p>
+                        <p class="text-center" style="font-size: 30px;font-weight: 500;margin-bottom: 5px;color:black">{{ __('Login') }}</p>
                         <form class="needs-validation" method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
                             @csrf
                             <div class="form-row">
@@ -68,9 +79,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8 d-none d-md-block bg-cover" style="background-image: url('theme/light/img/login-register.jpeg'); background-size: contain;">
-            </div>
         </div>
     </div>
 </main>
 @endsection
+<style>
+    
+</style>
