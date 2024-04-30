@@ -315,15 +315,15 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
                                                 {{ Form::label('delivery_partner[bank_name]', __('Bank Name')) }}
-                                                {{ Form::text('store[bank_name]', old('store[bank_name]'), ['class' => "form-control" ]) }}
+                                                {{ Form::text('store[bank_name]', @$model['category']->bank_name), ['class' => "form-control" ]) }}
                                             </div>
                                             <div class="form-group col-md-4">
                                                 {{ Form::label('delivery_partner[ifsc]', __('IFSC')) }}
-                                                {{ Form::text('store[ifsc_code]', old('store[ifsc_code]'), ['class' => "form-control uppercase" ]) }}
+                                                {{ Form::text('store[ifsc_code]', @$model['category']->ifsc_code'), ['class' => "form-control uppercase" ]) }}
                                             </div>
                                             <div class="form-group col-md-4">
                                                 {{ Form::label('store[bank_account_number]', __('Account Number').'*') }}
-                                                {{ Form::text('store[bank_account_number]', old('store[bank_account_number]'), ['class' => "form-control is_numeric" ]) }}
+                                                {{ Form::text('store[bank_account_number]', @$model['category']->bank_account_number), ['class' => "form-control is_numeric" ]) }}
                                             </div>
                                         </div>
                                     </div>
@@ -361,19 +361,19 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 {{ Form::label('delivery_partner[area]', __('Area')) }}
-                                                {{ Form::text('store[area]', old('store[area]'), ['class' => "form-control" ]) }}
+                                                {{ Form::text('store[area]', @$model['category']->area), ['class' => "form-control" ]) }}
                                             </div>
                                             <div class="form-group col-md-6">
                                                 {{ Form::label('delivery_partner[city]', __('City')) }}
-                                                {{ Form::text('store[city]', old('store[city]'), ['class' => "form-control" ]) }}
+                                                {{ Form::text('store[city]', @$model['category']->city), ['class' => "form-control" ]) }}
                                             </div>
                                             <div class="form-group col-md-6">
                                                 {{ Form::label('delivery_partner[state]', __('State')) }}
-                                                {{ Form::text('store[state]', old('store[state]'), ['class' => "form-control" ]) }}
+                                                {{ Form::text('store[state]',@$model['category']->state), ['class' => "form-control" ]) }}
                                             </div>
                                             <div class="form-group col-md-6">
                                                 {{ Form::label('store[pincode]', __('Pincode')) }}
-                                                {{ Form::text('store[pincode]', old('store[pincode]'), ['class' => "form-control is_numeric" ]) }}
+                                                {{ Form::text('store[pincode]', @$model['category']->pincode), ['class' => "form-control is_numeric" ]) }}
                                             </div>
                                         </div>
                                          <div class="form-row">
