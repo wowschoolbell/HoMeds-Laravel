@@ -264,12 +264,12 @@
                                              {{ Form::number('store[mobile_number]', @$model['category']->mobile_number, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Mobile Number','required'=>"true"]) }}
                                             </div>
                                             <div class="form-group col-md-4">
-                                                {{ Form::label('delivery_partner[app_statuses_id]', __('App Status').'*') }}
-                                                {{ Form::select('store[app_status]', $statuses, old('store[app_status]'), ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Status']) }}
+                                                {{ Form::label('delivery_partner[app_statuses_id]', __('Status').'*') }}
+                                                {{ Form::select('store[status]', $statuses, old('store[app_status]'), ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Status']) }}
                                             </div>
                                              <div class="form-group col-md-4">
-                                                {{ Form::label('delivery_partner[status]', __('Status').'*') }}
-                                                {{ Form::select('store[status]', ["HoMeds"=>"HoMeds","White_Label"=>"White Label"], @$model['category']->status, ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Status']) }}
+                                                {{ Form::label('delivery_partner[status]', __('App status').'*') }}
+                                                {{ Form::select('store[app_status]', ["HoMeds"=>"HoMeds","White_Label"=>"White Label"], @$model['category']->status, ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Status']) }}
                                             </div>
                                                                                         <div class="form-group col-md-4"  style="{{ @$model['category']->id ? 'display: none' : '' }}">
                                                 {{ Form::label('delivery_partner[password]', __('Password').'*') }}
