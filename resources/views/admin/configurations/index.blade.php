@@ -49,7 +49,7 @@
                             <a href="{{ route('admin.cities.index') }}" class="btn btn-primary btn-dark-lavender">
                                 <i class="mdi mdi-view-list"></i> Lists
                             </a>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-dark-lavender">
+                            <a href="{{ route('admin.cities.import') }}" class="btn btn-primary btn-dark-lavender">
                                 <i class="mdi mdi-import"></i> Import
                             </a>
                         </div>

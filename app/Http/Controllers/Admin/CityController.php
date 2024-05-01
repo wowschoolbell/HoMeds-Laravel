@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\DataTables\CityDataTable;
+use App\Helpers\StorageHelper;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\State;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class CityController extends Controller
 {
@@ -97,6 +100,59 @@ class CityController extends Controller
     {
         $model->fill($request->get('cities'));
         $model->save();
+    }
+
+        /**
+     * 
+     */
+    public function import(Request $request) 
+    {
+        
+        if ($file = @$request->file('file')) {
+
+            $filePath = StorageHelper::uploadFile($file, "dp");
+            $file = storage_path('app/public/'.$filePath);
+
+            $spreadsheet = IOFactory::load($file);
+            $worksheet = $spreadsheet->getActiveSheet();
+            // Get the active sheet
+            $sheet = $spreadsheet->getActiveSheet();
+
+            $data = $sheet->toArray(null, true, true, false);
+
+            foreach ($data as $key => $values) {
+                if ($key != 0) {
+                    $stateId = State::where('name', $values[0])->get()->first()->id;
+
+                    if ($stateId) {
+                        $cities = City::where('state_id', $stateId)
+                            ->where('city', $values[1])
+                            ->where('area', $values[2])
+                            ->where('pincode', $values[3])
+                            ->count();
+
+                        if ($cities == 0) {
+
+                            $city           = new City();
+                            $city->state_id = $stateId;
+                            $city->city     = $values[1];
+                            $city->area     = $values[2];
+                            $city->pincode  = $values[3];
+                            $city->save();
+                        }
+                    }
+                }
+            }
+
+            unlink($file);
+            
+            Alert::success('Cities', 'File uploaded successfully');
+            return redirect()->route('admin.cities.index');
+        }
+
+        $data['title'] = 'Import Cities';
+
+        return view('admin.cities.partials.import', $data);
     }
 
 }

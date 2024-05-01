@@ -26,9 +26,9 @@ Route::group(['middleware' => ['web', 'auth'], 'as' => 'admin.'], function() {
     Route::resource('delivery_partner', 'Admin\DeliveryPartnerController');
     Route::resource('configurations', 'Admin\ConfigurationController');
 
-    Route::get('states/import', 'Admin\StateController@import')->name('states.import');
+    Route::match(array('GET','POST'),'states/import', 'Admin\StateController@import')->name('states.import');
     Route::resource('states', 'Admin\StateController');
     
-
+    Route::match(array('GET','POST'),'cities/import', 'Admin\CityController@import')->name('cities.import');
     Route::resource('cities', 'Admin\CityController');
 });

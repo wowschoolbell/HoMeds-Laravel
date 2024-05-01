@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'States')
+@section('title', 'Cities')
 
 @section('content')
 
@@ -8,10 +8,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body" style="text-align: center;">
-                    <form action="{{ route('admin.states.import') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.cities.import') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                             <div>
-                                <span>Import state File *</span>
+                                <span>Import City File *</span>
                                 {{ Form::file("file",['accept' => '.csv, .xlsx, .xls', 'class' => 'custom-file-input','id' => 'inputGroupFile02', 'required' => true]) }}
                                 <label for="inputGroupFile02" class="custom-file-label import-file-page">Choose File</label>
                             </div>
@@ -19,7 +19,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Save') }}
                                 </button>
-                                <a href="{{ route('admin.states.index') }}" class="btn btn-danger">
+                                <a href="{{ route('admin.cities.index') }}" class="btn btn-danger">
                                     {{ __('Cancel') }}
                                 </a>
                             </div>

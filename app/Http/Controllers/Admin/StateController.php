@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\DataTables\StateDataTable;
+use App\Helpers\StorageHelper;
 use App\Http\Controllers\Controller;
 use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class StateController extends Controller
 {
@@ -103,7 +105,45 @@ class StateController extends Controller
     /**
      * 
      */
-    public function import() {
+    public function import(Request $request) 
+    {
+        
+        if ($file = @$request->file('file')) {
 
+            $filePath = StorageHelper::uploadFile($file, "dp");
+            $file = storage_path('app/public/'.$filePath);
+
+            $spreadsheet = IOFactory::load($file);
+            $worksheet = $spreadsheet->getActiveSheet();
+            // Get the active sheet
+            $sheet = $spreadsheet->getActiveSheet();
+
+            $data = $sheet->toArray(null, true, true, true);
+
+            foreach ($data as $key => $values) {
+                if ($key != 1) {
+                    foreach ($values as $value) {
+                        
+                        $count = State::where('name', $value)->count();
+
+                        if ($count == 0) {
+
+                            $state = new State();
+                            $state->name = $value;
+                            $state->save();
+                        }
+                    }
+                }
+            }
+
+            unlink($file);
+            
+            Alert::success('States', 'File uploaded successfully');
+            return redirect()->route('admin.states.index');
+        }
+
+        $data['title'] = 'Import States';
+
+        return view('admin.states.partials.import', $data);
     }
 }

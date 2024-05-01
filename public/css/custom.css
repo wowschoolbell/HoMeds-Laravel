@@ -1334,6 +1334,12 @@ form.popup_form {
     margin-top: 5px;
   }
 
+  .import-file-page {
+    margin-top: 10%;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+
   /* div.dt-buttons {
         text-align: left !important;
     } */
@@ -1343,6 +1349,13 @@ form.popup_form {
   .media-ml10 {
     margin-left: 10%;
   }
+
+  .import-file-page {
+    margin-top: 3%;
+    margin-left: 35%;
+    margin-right: 35%;
+  }
+  
 }
 
 .menu-open-close {
