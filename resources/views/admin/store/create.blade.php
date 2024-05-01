@@ -264,12 +264,12 @@
                                              {{ Form::number('store[mobile_number]', @$model['category']->mobile_number, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Mobile Number','required'=>"true"]) }}
                                             </div>
                                             <div class="form-group col-md-4">
-                                                {{ Form::label('delivery_partner[app_statuses_id]', __('Status').'*') }}
-                                                {{ Form::select('store[status]', $statuses,@$model['category']->app_status, ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Status']) }}
+                                                {{ Form::label('delivery_partner[app_statuses_id]', __('App Status').'*') }}
+                                                {{ Form::select('store[app_status]', $statuses,@$model['category']->app_status, ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Status']) }}
                                             </div>
                                              <div class="form-group col-md-4">
-                                                {{ Form::label('delivery_partner[status]', __('App status').'*') }}
-                                                {{ Form::select('store[app_status]', ["HoMeds"=>"HoMeds","White_Label"=>"White Label"], @$model['category']->status, ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Status']) }}
+                                                {{ Form::label('delivery_partner[status]', __('Status').'*') }}
+                                                {{ Form::select('store[status]', ["HoMeds"=>"HoMeds","White_Label"=>"White Label"], @$model['category']->status, ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Status']) }}
                                             </div>
                                                                                         <div class="form-group col-md-4"  style="{{ @$model['category']->id ? 'display: none' : '' }}">
                                                 {{ Form::label('delivery_partner[password]', __('Password').'*') }}
@@ -291,11 +291,11 @@
                                     <div class="card-body">
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                {{ Form::label('store[gst_number]', __('GST Number').'*') }}
+                                                {{ Form::label('delivery_partner[gst_number]', __('GST Number').'*') }}
                                                 {{ Form::text('store[gst_number]', @$model['category']->gst_number, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'GST Number','required'=>"true","pattern"=>"[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}"]) }}
                                             </div>
                                             <div class="form-group col-md-6">
-                                                 {{ Form::label('store[drug_licence]', __('Drug Licence').'*') }}
+                                                 {{ Form::label('delivery_partner[drug_licence]', __('Drug Licence').'*') }}
                                                 {{ Form::text('store[drug_licence]', @$model['category']->drug_licence, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Drug Licence','required'=>"true","maxlength"=>"12"]) }}
                                                 
                                             </div>
@@ -315,15 +315,15 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
                                                 {{ Form::label('delivery_partner[bank_name]', __('Bank Name')) }}
-                                                {{ Form::text('store[bank_name]', @$model['category']->bank_name, ['class' => "form-control" ]) }}
+                                                {{ Form::text('delivery_partner[bank_name]', old('delivery_partner[bank_name]'), ['class' => "form-control" ]) }}
                                             </div>
                                             <div class="form-group col-md-4">
                                                 {{ Form::label('delivery_partner[ifsc]', __('IFSC')) }}
-                                                {{ Form::text('store[ifsc_code]', @$model['category']->ifsc_code, ['class' => "form-control uppercase" ]) }}
+                                                {{ Form::text('delivery_partner[ifsc]', old('delivery_partner[ifsc]'), ['class' => "form-control uppercase" ]) }}
                                             </div>
                                             <div class="form-group col-md-4">
-                                                {{ Form::label('store[bank_account_number]', __('Account Number').'*') }}
-                                                {{ Form::text('store[bank_account_number]', @$model['category']->bank_account_number, ['class' => "form-control is_numeric" ]) }}
+                                                {{ Form::label('delivery_partner[bank_account_number]', __('Account Number').'*') }}
+                                                {{ Form::text('delivery_partner[bank_account_number]', old('delivery_partner[bank_account_number]'), ['class' => "form-control is_numeric" ]) }}
                                             </div>
                                         </div>
                                     </div>
@@ -338,7 +338,7 @@
                                     <div class="card-body">
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                {{ Form::label('store[store_location]', __('Store Location')) }}
+                                                {{ Form::label('delivery_partner[store_location]', __('Store Location')) }}
                                                 {{ Form::text('store[location]', @$model['category']->location, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'location']) }}
                                             </div>
                                             <div class="form-group col-md-6">
@@ -361,19 +361,19 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 {{ Form::label('delivery_partner[area]', __('Area')) }}
-                                                {{ Form::text('store[area]', @$model['category']->area, ['class' => "form-control" ]) }}
+                                                {{ Form::text('delivery_partner[area]', old('delivery_partner[area]'), ['class' => "form-control" ]) }}
                                             </div>
                                             <div class="form-group col-md-6">
                                                 {{ Form::label('delivery_partner[city]', __('City')) }}
-                                                {{ Form::text('store[city]', @$model['category']->city, ['class' => "form-control" ]) }}
+                                                {{ Form::text('delivery_partner[city]', old('delivery_partner[city]'), ['class' => "form-control" ]) }}
                                             </div>
                                             <div class="form-group col-md-6">
                                                 {{ Form::label('delivery_partner[state]', __('State')) }}
-                                                {{ Form::text('store[state]',@$model['category']->state, ['class' => "form-control" ]) }}
+                                                {{ Form::text('delivery_partner[state]', old('delivery_partner[state]'), ['class' => "form-control" ]) }}
                                             </div>
                                             <div class="form-group col-md-6">
-                                                {{ Form::label('store[pincode]', __('Pincode')) }}
-                                                {{ Form::text('store[pincode]', @$model['category']->pincode, ['class' => "form-control is_numeric" ]) }}
+                                                {{ Form::label('delivery_partner[pincode]', __('Pincode')) }}
+                                                {{ Form::text('delivery_partner[pincode]', old('delivery_partner[pincode]'), ['class' => "form-control is_numeric" ]) }}
                                             </div>
                                         </div>
                                          <div class="form-row">
