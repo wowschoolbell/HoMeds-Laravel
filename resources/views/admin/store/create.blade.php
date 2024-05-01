@@ -382,7 +382,7 @@
                                                 <button type="submit" class="btn btn-primary">
                                                     {{ __('Save') }}
                                                 </button>
-                                                <a href="{{ route('admin.delivery_partner.index') }}" class="btn btn-danger">
+                                                <a href="{{ route('admin.store.index') }}" class="btn btn-danger">
                                                     {{ __('Cancel') }}
                                                 </a>
                                             </div>
