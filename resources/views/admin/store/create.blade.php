@@ -240,21 +240,22 @@
                                     <div class="card-body">
                                         
                                         <div class="form-row">
-                                            <div class="form-group col-md-4">
-                                                {{ Form::label('delivery_partner[first_name]', __('First Name').'*') }}
+                                            <div class="form-group col-md-6">
+                                                {{ Form::label('delivery_partner[store_name]', __('Store Name').'*') }}
                                                 {{ Form::text('store[name]', @$model['category']->name, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Store Name','required'=>"true"]) }}
                                             </div>
-                                            <div class="form-group col-md-4">
+                                            <div class="form-group col-md-6">
                                                 {{ Form::label('delivery_partner[Contact Person Name]', __('Contact Person Name')) }}
                                                 {{ Form::text('store[contact_person_name]', @$model['category']->contact_person_name, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Contact Name','required'=>"true"]) }}
                                             </div>
-                                            <div class="form-group col-md-4">
-                                                {{ Form::label('delivery_partner[phone_number]', __('Phone number').'*') }}
-                                               {{ Form::number('store[phone]', @$model['category']->phone, ['class' => "form-control","id"=>"phone_number", 'autocomplete' => 'off', 'placeholder' => 'phone','required'=>"true","pattern"=>"[0-9]{4}[0-9]{4-10}"]) }}
-                                            </div>
+                                          
                                         </div>
             
                                         <div class="form-row">
+                                              <div class="form-group col-md-4">
+                                                {{ Form::label('delivery_partner[phone_number]', __('Phone number').'*') }}
+                                               {{ Form::number('store[phone]', @$model['category']->phone, ['class' => "form-control","id"=>"phone_number", 'autocomplete' => 'off', 'placeholder' => 'phone','required'=>"true","pattern"=>"[0-9]{4}[0-9]{4-10}"]) }}
+                                            </div>
                                             <div class="form-group col-md-4">
                                                 {{ Form::label('user[email]', __('Email').'*') }}
                                                {{ Form::email('store[email]', @$model['category']->email, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Email','required'=>"true"]) }}
