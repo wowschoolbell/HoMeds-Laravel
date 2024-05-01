@@ -58,7 +58,7 @@ class StoreDataTable extends dataTable
     public function html()
     {
         $params = $this->getBuilderParameters();
-        $params['buttons'] = [];
+        $params['buttons'] = [['customCreate']];
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()

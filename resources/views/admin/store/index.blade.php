@@ -2,41 +2,11 @@
 @section('title', 'Add Store')
 
 @section('content')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/css/intlTelInput.min.css" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/intlTelInput.min.js"></script>
 
-<div class="bg-dark">
-    <div class="container-fluid  m-b-30">
-        <div class="row">
-            <div class="col-md-8 text-white p-t-40 p-b-90">
-                <h4 class="">
-                    <span class="btn btn-white-translucent">
-                    <i class="mdi mdi-apps"></i></span> Store
-                </h4>
-            </div>
-            <div class="col-md-4 text-right p-t-40 p-b-90">
-                <a  class="btn btn-md btn-primary btn-add-category"  href={{ route('admin.store.create')}}  ><i class="mdi mdi-plus"></i>Add Store</a>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade modal-slide-right statusmodel" id="statusmodel" tabindex="-1" role="dialog"
-    aria-labelledby="RouteModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" id="pop-up-modal"></div>
-    </div>
-</div>
+<div class="container " style="margin-top: 1%;">
 
-<div class="container-fluid pull-up">
     <div class="row">
-        
-        
-        
-                <div class="card-body">
-                    <div class="col-12 ">
-            <div class="card">
-                <div class="col-12 pt-2">
+        <div class="col-12">
             @foreach($statuses as $id => $status)
                 <?php
                     $class = "btn-dark-lavender";
@@ -50,10 +20,13 @@
                     }
                 
                 ?>
-                <a href="{{ route('admin.store.index')}}?status={{$id}}" class="btn btn-md {{$class}}" title="Edit"><i class="mdi mdi mdi-triforce"></i> {{$status}}</a>
+                <a href="{{ route('admin.store.index')}}?status={{$id}}" class="btn btn-sm {{$class}}" title="Edit"><i class="mdi mdi mdi-triforce"></i> {{$status}}</a>
             @endforeach
         </div>
-                    <div class="table-responsive p-t-10 p-2">
+        <div class="col-12" style="margin-top: 2%;">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive p-t-10">
                         {!! $dataTable->table() !!}
                     </div>
                 </div>
@@ -61,6 +34,7 @@
         </div>
     </div>
 </div>
+
 @endsection
 
 @include('layouts.partials.datatable_scripts')
