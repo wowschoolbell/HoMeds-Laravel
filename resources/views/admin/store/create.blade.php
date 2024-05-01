@@ -273,8 +273,8 @@
                                                 {{ Form::select('store[app_status]', ["HoMeds"=>"HoMeds","White_Label"=>"White Label"], @$model['category']->app_status, ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Status']) }}
                                             </div>
                                                 <div class="form-group col-md-4"  style="{{ @$model['category']->id ? '' : 'display: none' }}">
-                                                {{ Form::label('delivery_partner[password]', __('Store ID').'*') }}
-                                              {{ Form::number('store[id]', @$model['category']->id, ['class' => "form-control", "readonly"=>true,'autocomplete' => 'off', 'placeholder' => 'Store ID','required'=>"true"]) }}
+                                                {{ Form::label('delivery_partner[password]', __('Store ID')) }}
+                                              {{ Form::number('store[id]', @$model['category']->id, ['class' => "form-control", "readonly"=>true,'autocomplete' => 'off', 'placeholder' => 'Store ID']) }}
                                             </div>
                                             
             
