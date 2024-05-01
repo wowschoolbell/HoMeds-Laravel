@@ -274,7 +274,7 @@
                                             </div>
                                                 <div class="form-group col-md-4"  style="{{ @$model['category']->id ? 'display: none' : '' }}">
                                                 {{ Form::label('delivery_partner[password]', __('Store ID').'*') }}
-                                              {{ Form::number('store[id]', @$model['category']->id, ['class' => "form-control", readonly=>true,'autocomplete' => 'off', 'placeholder' => 'Store ID','required'=>"true"]) }}
+                                              {{ Form::number('store[id]', @$model['category']->id, ['class' => "form-control", "readonly"=>true,'autocomplete' => 'off', 'placeholder' => 'Store ID','required'=>"true"]) }}
                                             </div>
                                             
             
