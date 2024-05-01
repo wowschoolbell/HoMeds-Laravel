@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Store')
 
+
 @section('content')
     <div class="container " style="margin-top: 3%;">
         <div class="row">
@@ -22,7 +23,7 @@
                             <a href="{{ route('admin.states.index') }}" class="btn btn-primary btn-dark-lavender">
                                 <i class="mdi mdi-view-list"></i> Lists
                             </a>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-dark-lavender">
+                            <a href="{{ route('admin.states.import') }}" class="btn btn-primary btn-dark-lavender">
                                 <i class="mdi mdi-import"></i> Import
                             </a>
                         </div>

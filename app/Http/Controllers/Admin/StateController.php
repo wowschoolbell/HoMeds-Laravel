@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class StateController extends Controller
 {
@@ -99,4 +100,10 @@ class StateController extends Controller
         $model->save();
     }
 
+    /**
+     * 
+     */
+    public function import() {
+
+    }
 }

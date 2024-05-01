@@ -46,6 +46,7 @@ return array(
     'Spatie\\Permission\\' => array($vendorDir . '/spatie/laravel-permission/src'),
     'Rize\\' => array($vendorDir . '/rize/uri-template/src/Rize'),
     'Riverline\\MultiPartParser\\' => array($vendorDir . '/riverline/multipart-parser/src'),
+    'RealRashid\\SweetAlert\\' => array($vendorDir . '/realrashid/sweet-alert/src'),
     'Ramsey\\Uuid\\' => array($vendorDir . '/ramsey/uuid/src'),
     'Ramsey\\Collection\\' => array($vendorDir . '/ramsey/collection/src'),
     'Psy\\' => array($vendorDir . '/psy/psysh/src'),

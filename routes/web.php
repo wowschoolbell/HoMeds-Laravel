@@ -25,6 +25,10 @@ Route::group(['middleware' => ['web', 'auth'], 'as' => 'admin.'], function() {
     Route::resource('store', 'Admin\StoreController');
     Route::resource('delivery_partner', 'Admin\DeliveryPartnerController');
     Route::resource('configurations', 'Admin\ConfigurationController');
+
+    Route::get('states/import', 'Admin\StateController@import')->name('states.import');
     Route::resource('states', 'Admin\StateController');
+    
+
     Route::resource('cities', 'Admin\CityController');
 });

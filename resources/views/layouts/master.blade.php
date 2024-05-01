@@ -20,6 +20,7 @@
 <!--body with default sidebar pinned -->
 <body class="sidebar-pinned">
     <!--sidebar Begins-->
+        @include('sweetalert::alert')
         @include('layouts.partials.admin.left_sidebar')
     <!--sidebar Ends-->
 
