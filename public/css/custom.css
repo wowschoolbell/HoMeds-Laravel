@@ -1229,6 +1229,17 @@ form.popup_form {
   color: #b57edc;
   height: 45px;
 }
+.bg-dark {
+  background: #7d5ca8;
+  border-color: #7d5ca8;
+  color: white;
+}
+.bg-dark:hover {
+  background: #7d5ca8;
+  border-color: #7d5ca8;
+  color: white;
+}
+
 .btn-lavender-dark:hover {
   background: #7d5ca8;
   border-color: #7d5ca8;
