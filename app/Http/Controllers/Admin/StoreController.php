@@ -8,7 +8,9 @@ use App\DataTables\StoreDataTable;
 use Illuminate\Support\Facades\Validator;
 use App\Models\store;
 use App\Models\AppStatus;
+use App\Models\PasswordLink;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Support\Facades\Mail;
 
 class StoreController extends Controller
 {
@@ -23,8 +25,10 @@ class StoreController extends Controller
     }
     public function create() 
     {
-    
-       
+        
+        
+        
+        // $this->sendmail();
         
         $data['model'] = [
             'store' => new store()
@@ -116,9 +120,11 @@ class StoreController extends Controller
           $store->city = $request->store['city'];
           $store->bank_name = $request->store['bank_name'];
           $store->bank_account_number = $request->store['bank_account_number'];
-          $store->ifsc_code = $request->store['ifsc_code'];
-          $store->app_status = $request->store['app_status'];
-          $store->status = $request->store['status'];
+          $store->ifsc_code = $request->store['ifsc'];
+          $store->app_status = $request->store['status'];
+          $store->status = $request->store['app_status'];
+          
+          
           if(isset($request->store['store_image'])) {
             $store->store_image = asset('storage/'.$request->store['store_image']->store('shops'));
           }
@@ -126,6 +132,11 @@ class StoreController extends Controller
             $store->store_logo = asset('storage/'.$request->store['store_logo']->store('shops'));
           }
           $store ->save();
+          
+          if($request->store['app_status']=="active"||$request->store['app_status']=="in-active"){
+             
+              $this->sendmail($request->store['email']);
+          }
           
         
       }
@@ -194,4 +205,22 @@ class StoreController extends Controller
         $model->fill($request->get('store'));
         $model->save();
     }
+    
+     public function sendmail($email)
+    {
+        $employee_master = $email;
+        $current_timestamp = now()->timestamp;
+        $PasswordLink = new PasswordLink();
+        $PasswordLink->email=$employee_master;
+        $PasswordLink->hash=$current_timestamp;
+        $PasswordLink->save();
+        Mail::send('admin.store.sendmail', ['link' => "https://homeds.wowschoolbell.in/public/passwordreset/".$current_timestamp], function($message) use($employee_master){
+              $message->to($employee_master);
+              $message->subject('Reset Password');
+         });
+       
+       
+    }
+    
+    
 }

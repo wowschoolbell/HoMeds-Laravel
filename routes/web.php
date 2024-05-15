@@ -32,3 +32,7 @@ Route::group(['middleware' => ['web', 'auth'], 'as' => 'admin.'], function() {
     Route::match(array('GET','POST'),'cities/import', 'Admin\CityController@import')->name('cities.import');
     Route::resource('cities', 'Admin\CityController');
 });
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/passwordreset/{hashid}','HomeController@password_reset')->withoutMiddleware('auth');
+Route::post('/passwordreset','HomeController@password_update')->withoutMiddleware('auth');

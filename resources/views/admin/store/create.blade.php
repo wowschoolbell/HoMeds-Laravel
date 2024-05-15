@@ -240,22 +240,21 @@
                                     <div class="card-body">
                                         
                                         <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                {{ Form::label('delivery_partner[store_name]', __('Store Name').'*') }}
+                                            <div class="form-group col-md-4">
+                                                {{ Form::label('delivery_partner[first_name]', __('First Name').'*') }}
                                                 {{ Form::text('store[name]', @$model['category']->name, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Store Name','required'=>"true"]) }}
                                             </div>
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-4">
                                                 {{ Form::label('delivery_partner[Contact Person Name]', __('Contact Person Name')) }}
                                                 {{ Form::text('store[contact_person_name]', @$model['category']->contact_person_name, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Contact Name','required'=>"true"]) }}
                                             </div>
-                                          
-                                        </div>
-            
-                                        <div class="form-row">
-                                              <div class="form-group col-md-4">
+                                            <div class="form-group col-md-4">
                                                 {{ Form::label('delivery_partner[phone_number]', __('Phone number').'*') }}
                                                {{ Form::number('store[phone]', @$model['category']->phone, ['class' => "form-control","id"=>"phone_number", 'autocomplete' => 'off', 'placeholder' => 'phone','required'=>"true","pattern"=>"[0-9]{4}[0-9]{4-10}"]) }}
                                             </div>
+                                        </div>
+            
+                                        <div class="form-row">
                                             <div class="form-group col-md-4">
                                                 {{ Form::label('user[email]', __('Email').'*') }}
                                                {{ Form::email('store[email]', @$model['category']->email, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Email','required'=>"true"]) }}
@@ -265,17 +264,17 @@
                                              {{ Form::number('store[mobile_number]', @$model['category']->mobile_number, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Mobile Number','required'=>"true"]) }}
                                             </div>
                                             <div class="form-group col-md-4">
-                                                {{ Form::label('delivery_partner[app_statuses_id]', __('Status').'*') }}
-                                                {{ Form::select('store[status]', $statuses,@$model['category']->status, ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Status']) }}
+                                                {{ Form::label('delivery_partner[app_statuses_id]', __('App Status').'*') }}
+                                                {{ Form::select('store[app_status]', $statuses,@$model['category']->status, ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Status']) }}
                                             </div>
                                              <div class="form-group col-md-4">
-                                                {{ Form::label('delivery_partner[status]', __('App status').'*') }}
-                                                {{ Form::select('store[app_status]', ["HoMeds"=>"HoMeds","White_Label"=>"White Label"], @$model['category']->app_status, ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Status']) }}
+                                                {{ Form::label('delivery_partner[status]', __('Status').'*') }}
+                                                {{ Form::select('store[status]', ["HoMeds"=>"HoMeds","White_Label"=>"White Label"], @$model['category']->app_status, ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Status']) }}
                                             </div>
-                                                <div class="form-group col-md-4"  style="{{ @$model['category']->id ? '' : 'display: none' }}">
-                                                {{ Form::label('delivery_partner[password]', __('Store ID')) }}
-                                              {{ Form::number('store[id]', @$model['category']->id, ['class' => "form-control", "readonly"=>true,'autocomplete' => 'off', 'placeholder' => 'Store ID']) }}
-                                            </div>
+                                            <!--                                            <div class="form-group col-md-4"  style="{{ @$model['category']->id ? 'display: none' : '' }}">-->
+                                            <!--    {{ Form::label('delivery_partner[password]', __('Password').'*') }}-->
+                                            <!--  {{ Form::number('store[password]', @$model['category']->password, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Password','required'=>"true"]) }}-->
+                                            <!--</div>-->
                                             
             
             
@@ -316,15 +315,15 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
                                                 {{ Form::label('delivery_partner[bank_name]', __('Bank Name')) }}
-                                                {{ Form::text('delivery_partner[bank_name]', old('delivery_partner[bank_name]'), ['class' => "form-control" ]) }}
+                                                {{ Form::text('store[bank_name]', old('delivery_partner[bank_name]'), ['class' => "form-control" ]) }}
                                             </div>
                                             <div class="form-group col-md-4">
                                                 {{ Form::label('delivery_partner[ifsc]', __('IFSC')) }}
-                                                {{ Form::text('delivery_partner[ifsc]', old('delivery_partner[ifsc]'), ['class' => "form-control uppercase" ]) }}
+                                                {{ Form::text('store[ifsc]', old('delivery_partner[ifsc]'), ['class' => "form-control uppercase" ]) }}
                                             </div>
                                             <div class="form-group col-md-4">
-                                                {{ Form::label('delivery_partner[bank_account_number]', __('Account Number').'*') }}
-                                                {{ Form::text('delivery_partner[bank_account_number]', old('delivery_partner[bank_account_number]'), ['class' => "form-control is_numeric" ]) }}
+                                                {{ Form::label('store[bank_account_number]', __('Account Number').'*') }}
+                                                {{ Form::text('store[bank_account_number]', old('delivery_partner[bank_account_number]'), ['class' => "form-control is_numeric" ]) }}
                                             </div>
                                         </div>
                                     </div>
@@ -362,19 +361,19 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 {{ Form::label('delivery_partner[area]', __('Area')) }}
-                                                {{ Form::text('delivery_partner[area]', old('delivery_partner[area]'), ['class' => "form-control" ]) }}
+                                                {{ Form::text('store[area]', old('delivery_partner[area]'), ['class' => "form-control" ]) }}
                                             </div>
                                             <div class="form-group col-md-6">
                                                 {{ Form::label('delivery_partner[city]', __('City')) }}
-                                                {{ Form::text('delivery_partner[city]', old('delivery_partner[city]'), ['class' => "form-control" ]) }}
+                                                {{ Form::text('store[city]', old('delivery_partner[city]'), ['class' => "form-control" ]) }}
                                             </div>
                                             <div class="form-group col-md-6">
                                                 {{ Form::label('delivery_partner[state]', __('State')) }}
-                                                {{ Form::text('delivery_partner[state]', old('delivery_partner[state]'), ['class' => "form-control" ]) }}
+                                                {{ Form::text('store[state]', old('delivery_partner[state]'), ['class' => "form-control" ]) }}
                                             </div>
                                             <div class="form-group col-md-6">
                                                 {{ Form::label('delivery_partner[pincode]', __('Pincode')) }}
-                                                {{ Form::text('delivery_partner[pincode]', old('delivery_partner[pincode]'), ['class' => "form-control is_numeric" ]) }}
+                                                {{ Form::text('store[pincode]', old('delivery_partner[pincode]'), ['class' => "form-control is_numeric" ]) }}
                                             </div>
                                         </div>
                                          <div class="form-row">
@@ -382,7 +381,7 @@
                                                 <button type="submit" class="btn btn-primary">
                                                     {{ __('Save') }}
                                                 </button>
-                                                <a href="{{ route('admin.store.index') }}" class="btn btn-danger">
+                                                <a href="{{ route('admin.delivery_partner.index') }}" class="btn btn-danger">
                                                     {{ __('Cancel') }}
                                                 </a>
                                             </div>
