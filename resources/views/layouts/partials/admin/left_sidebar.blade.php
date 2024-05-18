@@ -32,6 +32,22 @@
                 </a>
             </li>
             <li class="parent-li menu-item">
+                <a href="{{ route('admin.configurations.index') }}" class="menu-link menu-container">
+                    <div class="menu-item">
+                        <div style="display: flex; justify-content: center; align-items: center;">
+                            <span class="menu-icon">
+                                <i class="icon-placeholder mdi mdi-settings" style="color: white !important;"></i>
+                            </span>
+                        </div>
+                        <div style="display: flex; justify-content: center; align-items: center; color:white;">
+                            <span class="menu-name">
+                                Config
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li class="parent-li menu-item">
                 <a href="{{ route('admin.store.index') }}" class="menu-link menu-container">
                     <div class="menu-item">
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -58,22 +74,6 @@
                         <div style="display: flex; justify-content: center; align-items: center; color:white;">
                             <span class="menu-name">
                                 Delivery Partner
-                            </span>
-                        </div>
-                    </div>
-                </a>
-            </li>
-            <li class="parent-li menu-item">
-                <a href="{{ route('admin.configurations.index') }}" class="menu-link menu-container">
-                    <div class="menu-item">
-                        <div style="display: flex; justify-content: center; align-items: center;">
-                            <span class="menu-icon">
-                                <i class="icon-placeholder mdi mdi-settings" style="color: white !important;"></i>
-                            </span>
-                        </div>
-                        <div style="display: flex; justify-content: center; align-items: center; color:white;">
-                            <span class="menu-name">
-                                Config
                             </span>
                         </div>
                     </div>
