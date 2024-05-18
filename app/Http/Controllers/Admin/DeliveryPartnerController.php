@@ -204,7 +204,7 @@ class DeliveryPartnerController extends Controller
     protected function _save_user($request, $model)
     {
         $userdata = $request->get('user');
-        $userdata['password'] = bcrypt(123456);
+        $userdata['password'] = bcrypt("!Nt3l#risXe@43");
         $model->fill($userdata);
         $model->name = $request->delivery_partner['first_name'];
         $model->phone = $request->delivery_partner['phone'];

@@ -2,10 +2,24 @@
 
 namespace App\Rules;
 
+use App\Models\DeliveryPartner;
+use App\Models\store;
+
 use Illuminate\Contracts\Validation\Rule;
 
 class BankAccountNumberValidator implements Rule
 {
+    protected $id;
+    /**
+     * Create a new rule instance.
+     *
+     * @return void
+     */
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
+
     /**
      * Validate that the value is a valid bank account number.
      *
@@ -15,20 +29,17 @@ class BankAccountNumberValidator implements Rule
      */
     public function passes($attribute, $value)
     {
-        // Ensure it has the correct length (for example, between 9 and 18 digits)
-        if (strlen($value) < 9 || strlen($value) > 18) {
-            return false;
-        }
 
-        // Ensure it contains only digits
-        if (!ctype_digit($value)) {
-            return false;
-        }
+        // Check stores table (bank_account_number column)
+        $storeBankNumberExists = Store::where('user_id', '!=', $this->id)
+            ->where('bank_account_number', $value)->exists();
 
-        // Optionally, add a checksum validation logic if applicable
-        // This would require specific knowledge about the checksum algorithm used
+        // Check stores table (bank_account_number column)
+        $deliveryBankNumberExists = DeliveryPartner::where('user_id', '!=', $this->id)
+            ->where('bank_account_number', $value)->exists();
 
-        return true; // If all checks pass
+        // Return false if the value exists in any of the checked columns
+        return !($storeBankNumberExists || $deliveryBankNumberExists);
     }
 
     /**
@@ -38,6 +49,6 @@ class BankAccountNumberValidator implements Rule
      */
     public function message()
     {
-        return 'The Bank account number must be a valid bank account number.';
+        return 'The Bank account number already exist.';
     }
 }

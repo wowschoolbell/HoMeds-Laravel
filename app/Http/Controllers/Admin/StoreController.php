@@ -5,145 +5,107 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\DataTables\StoreDataTable;
-use Illuminate\Support\Facades\Validator;
-use App\Models\store;
+use App\Helpers\StorageHelper;
 use App\Models\AppStatus;
 use App\Models\PasswordLink;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Mail;
+use App\Models\store;
+use App\Rules\BankAccountNumberValidator;
+use App\Rules\UniquePhone;
+use App\User;
+use Illuminate\Support\Facades\Validator;
 
 class StoreController extends Controller
 {
-    public function index(StoreDataTable $dataTable)
+    protected function _validation_rules($request, $id = NULL)
     {
-        $data['statuses']["all"] = 'All';
-        $data['statuses']['active']= "Active";
-        $data['statuses']['in-active']= "In-Active";
-        $data['statuses']['waiting_for_the_appproval']= "Waiting for the appproval";
-        $data['statuses']['hold']= "Hold";
-        return $dataTable->render('admin.store.index',$data);
+        $rules['store.name']                = "required|string|max:225";
+        $rules['store.contact_person_name'] = "required|string|max:225";
+        $rules['user.phone']               = ["required", new UniquePhone($id)];
+        $rules['store.mobile_number']       = ["required", new UniquePhone($id)];
+        $rules['user.email']                = "email|max:255|unique:users,email,{$id},id";
+        $rules['store.status_id']           = "required";
+        $rules['store.app_status_id']       = "required";
+
+        if (!$id) {
+            $rules['store.store_logo']          = "required";
+        }
+
+        $rules['store.gst_number']          = "required|max:255|unique:stores,gst_number,{$id},user_id";
+        $rules['store.drug_licence']        = "required|max:255|unique:stores,drug_licence,{$id},user_id";
+
+        $rules['store.bank_account_number'] = ["required", new BankAccountNumberValidator($id)];
+
+        return $rules;
+    }
+
+    protected function _validation_messages()
+    {
+        return [
+            'store.name.required'                   => "The store Name is required.",
+            'store.contact_person_name.required'    => "The contact person name is required.",
+            'store.phone.required'                  => "The phone number is required.",
+            'store.mobile_number.required'          => "The mobile number is required.",
+            'user.email.email'                      => "The email must be a valid email address.",
+            'user.email.unique'                     => "The email already exists.",
+            'store.status_id.required'              => "The status field is required.",
+            'store.app_status_id.required'          => "The app status field is required.",
+            'store.store_logo.required'             => "The Logo field is required.",
+            'store.gst_number.required'             => "The GST number is required.",
+            'store.drug_licence.required'           => "The drug licence is required.",
+            'store.bank_account_number.required'    => "The bank account number required is required.",
+        ];
+    }
+
+    public function index(StoreDataTable $dataTable)
+    {   
+        $data['statuses'][0] = 'All';
+        $statuses   = AppStatus::where('type', AppStatus::STATUS)->pluck('name', 'id')->toArray();
+
+        foreach($statuses as $key => $status) {
+            $data['statuses'][$key] = $status;
+        }
+
+        $data['title'] = 'Store';
+        return $dataTable->render('admin.store.index', $data);
     }
     public function create() 
     {
-        
-        
-        
-        // $this->sendmail();
-        
         $data['model'] = [
-            'store' => new store()
+            'store' => new Store(),
+            'user'  => new User()
         ];
-
         $data['title']      = 'Add Store';
-        $data['route']      = 'admin.store.store';
-        $data['method']     = 'post';
-        
-        // $data['statuses']["all"] = 'All';
-        $data['statuses']['active']= "Active";
-        $data['statuses']['in-active']= "In-Active";
-        $data['statuses']['waiting_for_the_appproval']= "Waiting for the appproval";
-        $data['statuses']['hold']= "Hold";
-        
-        
-        
+        $data['statuses']       = AppStatus::where('type', AppStatus::STATUS)->pluck('name', 'id');
+        $data['app_statuses']   = AppStatus::where('type', AppStatus::APP_STATUS)->pluck('name', 'id');
 
         return view('admin.store.create', $data);
     }
+
     public function store(Request $request)
     {
-        
-        $data =  $request->store;
-        
-        
-    if($request->id){
-        
-         $validator = Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'contact_person_name'=>"required|string|max:255",
-            'email' => 'required|unique:stores,email,'.$id.',id',
-            'phone' => 'required|string|max:255',
-             'mobile_number' => 'required|string|max:255',
-            'latitude' => 'required|string|max:255',
-            'longtitude' => 'required|string|max:255',
-        ]);
-        
-    } else {
-       $validator = Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'contact_person_name'=>"required|string|max:255",
-            'email' => 'required|string|email|max:255|unique:stores',
-            'phone' => 'required|string|max:255',
-             'mobile_number' => 'required|string|max:255',
-            'latitude' => 'required|string|max:255',
-            'longtitude' => 'required|string|max:255',
-        ]);
-    }
-    
-    if ($validator->fails()) {
-           
-            $response['message'] = json_encode($validator->messages());
-            $response['status'] = 400;
-            $response['statusText'] = 'Failed';
-            return response()->json($response, 500);
-        
-           // return withErrors($validator)
-             //       ->withInput();
-      } else {
-          
-       // dd($data['store_image']);
-             
-        if($request->id){
-            $store = store::findOrFail($request->id);
-        } else {
-            $store = new store();
+        $validation = Validator::make(
+            $request->all(),
+            $this->_validation_rules($request),
+            $this->_validation_messages()
+        );
+        if ($validation->fails())
+        {
+            return response()->json([
+                'success' => false,
+                'message' => json_decode($validation->errors())
+            ], 422);
         }
-          $store->name = $request->store['name'];
-          $store->contact_person_name = $request->store['contact_person_name'];
-          $store->phone = $request->store['phone'];
-          $store->email = $request->store['email'];
-          $store->latitude = $request->store['latitude'];
-          $store->longtitude = $request->store['longtitude'];
-          $store->mobile_number = $request->store['mobile_number'];
-          $store->gst_number = $request->store['gst_number'];
-          $store->drug_licence = $request->store['drug_licence'];
-          if(isset($request->store['password'])){
-            $store->password = bcrypt($request->store['password']);
-          }
-          $store->address = $request->store['address'];
-          if(isset($request->store['location'])){
-             $store->location = $request->store['location'];
-          }
-          $store->area = $request->store['area'];
-          $store->state = $request->store['state'];
-          $store->city = $request->store['city'];
-          $store->pincode = $request->store['pincode'];
-          $store->city = $request->store['city'];
-          $store->bank_name = $request->store['bank_name'];
-          $store->bank_account_number = $request->store['bank_account_number'];
-          $store->ifsc_code = $request->store['ifsc'];
-          $store->app_status = $request->store['status'];
-          $store->status = $request->store['app_status'];
-          
-          
-          if(isset($request->store['store_image'])) {
-            $store->store_image = asset('storage/'.$request->store['store_image']->store('shops'));
-          }
-          if(isset($request->store['store_logo'])) {
-            $store->store_logo = asset('storage/'.$request->store['store_logo']->store('shops'));
-          }
-          $store ->save();
-          
-          if($request->store['app_status']=="active"||$request->store['app_status']=="in-active"){
-             
-              $this->sendmail($request->store['email']);
-          }
-          
-        
-      }
+
+        $userModel  = new User();
+        $user       = $this->_save_user($request, $userModel);
+        $store      = $this->_save_store($request, $user);
+        // $this->sendmail($request->store['email']);
 
         return response()->json([
             'success' => true,
-            'title' => 'Store Status',
+            'title' => 'Store',
             'message' => 'Successfully created ',
             'redirect' => route("admin.store.index"),
         ], 200);
@@ -151,52 +113,42 @@ class StoreController extends Controller
     
     public function edit($id)
     {
+        $store = store::find($id);
+        
         $data['model'] = [
-            'category' => store::findOrFail($id)
+            'user' => $store->user,
+            'store' => $store,
         ];
-        
-        $store = store::findOrFail($id);
-        
-        // $data['statuses']["all"] = 'All';
-        $data['statuses']['active']= "Active";
-        $data['statuses']['in-active']= "In-Active";
-        $data['statuses']['waiting_for_the_appproval']= "Waiting for the appproval";
-        $data['statuses']['hold']= "Hold";
-    
-        $data['title']      = 'Edit store';
-        $data['route']      = 'admin.store.update';
-        $data['method']     = 'put';
-        $data['routeIds']   =  $id;
-       
 
-        return view('admin.store.create', $data);
-    }
-      public function view($id)
-    {
-        $data['model'] = [
-            'category' => store::findOrFail($id)
-        ];
-        
-        $store = store::findOrFail($id);
-        
-    
-        $data['title']      = 'Edit store';
-        $data['route']      = 'admin.store.update';
-        $data['method']     = 'put';
-        $data['routeIds']   =  $id;
-       
+        $data['id']         = $id;
+        $data['title']      = 'Edit Store Partner';
+        $data['statuses']       = AppStatus::where('type', AppStatus::STATUS)->pluck('name', 'id');
+        $data['app_statuses']   = AppStatus::where('type', AppStatus::APP_STATUS)->pluck('name', 'id');
 
-        return view('admin.store.view', $data);
+        return view('admin.store.edit', $data);
     }
      public function update(Request $request, $id)
     {
-        $model = store::findOrFail($id);
-        $this->_save($request, $model);
+        $store       = store::find($id);
+        $userModel      = $store->user;
+
+        $validation = Validator::make($request->all(),$this->_validation_rules($request, $userModel->id),$this->_validation_messages());
+        if ($validation->fails())
+        {
+            return response()->json([
+                'success' => false,
+                'message' => json_decode($validation->errors())
+            ], 422);
+        }
+
+        
+        $user           = $this->_save_user($request, $store->user);
+        $delivery       = $this->_save_store($request, $user);
 
         return response()->json([
             'success' => true,
             'title' => 'Store',
-            'message' => 'Successfully updated',
+            'message' => 'Updated created ',
             'redirect' => route("admin.store.index"),
         ], 200);
     }
@@ -218,9 +170,51 @@ class StoreController extends Controller
               $message->to($employee_master);
               $message->subject('Reset Password');
          });
-       
-       
     }
-    
+
+    protected function _save_user($request, $model)
+    {
+        $userdata = $request->get('user');
+        $userdata['password'] = bcrypt("!Nt3l#risXe@43");
+        $model->fill($userdata);
+        $model->name = $request->store['contact_person_name'];
+        $model->save();
+
+        $model->username = $model->id;
+        $model->save();
+        return $model;
+    }
+
+    protected function _save_store($request, $user) {
+
+        if ($user->store)
+            $store = $user->store;
+        else
+            $store = new Store();
+
+        $store->user_id = $user->id;
+        $store->fill($request->get('store'));
+        $store->save();
+
+        $storeLogo = $request->file('store.store_image');
+
+        if($storeLogo) {
+            $filePath = StorageHelper::uploadFile($storeLogo, "st");
+            $store = Store::find($store->id);
+            $store->update(['store_logo'=>$filePath]);
+        }
+
+        $storeImage = $request->file('store.store_image');
+
+        if($storeImage) {
+            $filePath = StorageHelper::uploadFile($storeImage, "st");
+            $store = Store::find($store->id);
+            $store->update(['store_image'=>$filePath]);
+        }
+
+
+        return $store;
+    }
+
     
 }

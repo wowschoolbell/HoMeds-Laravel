@@ -86,4 +86,12 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\DeliveryPartner');
     }
+
+    /**
+     * 
+     */
+    public function store()
+    {
+        return $this->hasOne('App\Models\Store');
+    }
 }

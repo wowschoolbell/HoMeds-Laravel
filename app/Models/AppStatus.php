@@ -12,11 +12,13 @@ class AppStatus extends Model
      * @var array
      */
     protected $fillable = [
-        'name'
+        'id', 'name', 'type'
     ];
 
-    const STORE     = 'Store';
-    const PARTNER   = 'Partner';
+    const STORE         = 'Store';
+    const PARTNER       = 'Partner';
+    const APP_STATUS    = 'AS';
+    const STATUS        = 'ST';
 
     public static $category = [
         self::STORE,self::PARTNER
