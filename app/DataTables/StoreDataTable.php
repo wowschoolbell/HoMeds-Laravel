@@ -79,23 +79,26 @@ class StoreDataTable extends dataTable
             Column::computed('id')
                 ->title('Store ID')
                 ->orderable(true)
-                ->searchable(true),
+                ->searchable(true)
+                ->width('10%'),
             Column::computed('name')
-                ->title('Name')
+                ->title('Store Name')
                 ->orderable(true)
-                ->searchable(true),
+                ->searchable(true)
+                ->width('15%'),
             Column::computed('contact_person_name')
                 ->title('Contact Person Name')
                 ->orderable(true)
-                ->searchable(true),
+                ->searchable(true)
+                ->width('20%'),
             Column::computed('user.phone')
-                ->title('Contact Person Name')
+                ->title('Phone')
                 ->orderable(true)
                 ->searchable(true),
-            Column::computed('mobile_number')
-                ->title('Mobile Number')
-                ->orderable(true)
-                ->searchable(true),   
+            // Column::computed('mobile_number')
+            //     ->title('Mobile')
+            //     ->orderable(true)
+            //     ->searchable(true),   
             Column::computed('user.email')
                 ->title('Email')
                 ->orderable(true)

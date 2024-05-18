@@ -1314,7 +1314,7 @@ form.popup_form {
 }
 
 .admin-sidebar {
-  width: 10%;
+  width: 11%;
 }
 
 @media only screen and (min-width: 340px) and (max-width: 992px) {
@@ -1417,10 +1417,12 @@ form.popup_form {
 }
 body {
   font-family: Garamond, serif !important;
-  font-weight: 100 !important;
+  font-weight: 500 !important;
+  /* font-size: large !important; */
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
   font-family: Garamond, serif !important;
   font-weight: 400 !important;
+  /* font-size: larger !important; */
 }
