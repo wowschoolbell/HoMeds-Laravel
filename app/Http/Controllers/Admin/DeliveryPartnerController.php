@@ -105,7 +105,7 @@ class DeliveryPartnerController extends Controller
 
     public function index(DeliveryPartnerDataTable $dataTable)
     {   $data['statuses'][0] = 'All';
-        $statuses   = AppStatus::pluck('name', 'id')->toArray();
+        $statuses   = AppStatus::where('type', AppStatus::STATUS)->pluck('name', 'id')->toArray();
 
         foreach($statuses as $key => $status) {
             $data['statuses'][$key] = $status;
