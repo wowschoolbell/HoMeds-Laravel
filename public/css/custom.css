@@ -1358,7 +1358,7 @@ form.popup_form {
 
 @media (min-width: 992px) {
   .media-ml10 {
-    margin-left: 10%;
+    margin-left: 11%;
   }
 
   .import-file-page {
@@ -1418,11 +1418,11 @@ form.popup_form {
 body {
   font-family: Garamond, serif !important;
   font-weight: 500 !important;
-  /* font-size: large !important; */
+  font-size: large !important;
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
   font-family: Garamond, serif !important;
   font-weight: 400 !important;
-  /* font-size: larger !important; */
+  font-size: larger !important;
 }
