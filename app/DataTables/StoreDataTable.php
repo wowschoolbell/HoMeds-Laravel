@@ -82,10 +82,9 @@ class StoreDataTable extends dataTable
                 ->searchable(true)
                 ->width('10%'),
             Column::computed('name')
-                ->title('Store Name')
+                ->title('Name')
                 ->orderable(true)
-                ->searchable(true)
-                ->width('15%'),
+                ->searchable(true),
             Column::computed('contact_person_name')
                 ->title('Contact Person Name')
                 ->orderable(true)
