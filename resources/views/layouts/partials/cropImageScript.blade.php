@@ -47,5 +47,48 @@
                 $(".avatar-profile").removeClass('d-none').addClass('d-block');
             });
         });
+
+        $("#address-pincode").keyup(function () {
+            $.ajax({
+                url: "{{ route('admin.home.fetch-address') }}",
+                method:"GET",
+                dataType: "json",
+                data: {
+                    value : $(this).val()
+                },
+                success: function(data) {
+                    $('.fetch-address-details').html(data['html']);
+
+                    chooseAddress();
+                }
+            });
+        });
+
+        function chooseAddress() {
+            $('.address-choose').on('change', function () {
+                $('.fetch-address-details').html('');
+
+                $.ajax({
+                    url: "{{ route('admin.home.fetch-address') }}",
+                    method:"GET",
+                    dataType: "json",
+                    data: {
+                        id : $(this).val()
+                    },
+                    success: function(data) {
+                        $('.can-hide').remove();
+                        $('.can-append-address-fetch').append(data['html']);
+
+                        chooseAddress();
+                    }
+                });
+            });
+        }
+
+        $('#remove-address-pincode').on('click', function (ev) {
+            $('#address-pincode').val('');
+            $('.can-hide').remove();
+        });
+        
     </script>
 @endpush
