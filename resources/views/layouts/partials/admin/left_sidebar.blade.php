@@ -73,7 +73,7 @@
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center; color:white;">
                             <span class="menu-name">
-                                Delivery Partner
+                                Pilot
                             </span>
                         </div>
                     </div>

@@ -65,8 +65,10 @@
                                     {{ Form::label('delivery_partner[app_statuses_id]', __('Status').'*') }}
                                     {{ Form::select('delivery_partner[app_statuses_id]', $statuses, old('delivery_partner[app_statuses_id]'), ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Status']) }}
                                 </div>
-
-
+                                <div class="form-group col-md-4">
+                                    {{ Form::label('delivery_partner[gender]', __('Gender').'*') }}
+                                    {{ Form::select('delivery_partner[gender]', $gender, old('delivery_partner[gender]'), ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Gender']) }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -75,30 +77,74 @@
                 <div class="col-md-12">
                     <div class="card m-b-30">
                         <div class="card-header bg-soft-dark">
-                            <h5 class="m-b-0">{{ __('Document Proof') }}</h5>
+                            <h5 class="m-b-0">{{ __('Aadhar Proof') }}</h5>
                         </div>
                         <div class="card-body">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     {{ Form::label('delivery_partner[aadhar]', __('Aadhar Number').'*') }}
-                                    {{ Form::text('delivery_partner[aadhar]', old('delivery_partner[aadhar]'), ['class' => "form-control" ]) }}
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <span>Aadhar Document *</span>
-                                    {{ Form::file("delivery_partner[aadhar_image]",['class' => 'custom-file-input','id' => 'inputGroupFile02']) }}
-                                    <label for="inputGroupFile02" class="custom-file-label" style="margin-top: 5%;">Choose File</label>
+                                    {{ Form::text('delivery_partner[aadhar]', old('delivery_partner[aadhar]'), ['class' => "isnumeric form-control" ]) }}
                                 </div>
                             </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <span>Aadhar Front Side Document *</span>
+                                    {{ Form::file("delivery_partner[aadhar_front_image]",['class' => 'custom-file-input','id' => 'inputGroupFile02']) }}
+                                    <label for="inputGroupFile02" class="custom-file-label" style="margin-top: 5%;">Choose File</label>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <span>Aadhar back Side Document *</span>
+                                    {{ Form::file("delivery_partner[aadhar_back_image]",['class' => 'custom-file-input','id' => 'inputGroupFile03']) }}
+                                    <label for="inputGroupFile03" class="custom-file-label" style="margin-top: 5%;">Choose File</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="col-md-12">
+                    <div class="card m-b-30">
+                        <div class="card-header bg-soft-dark">
+                            <h5 class="m-b-0">{{ __('Driving Licence Proof') }}</h5>
+                        </div>
+                        <div class="card-body">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     {{ Form::label('delivery_partner[driving_licence]', __('Driving Licence Number').'*') }}
-                                    {{ Form::text('delivery_partner[driving_licence]', old('delivery_partner[driving_licence]'), ['class' => "form-control uppercase" ]) }}
+                                    {{ Form::text('delivery_partner[driving_licence]', old('delivery_partner[driving_licence]'), ['class' => "uppercase form-control" ]) }}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <span>Driving Licence Front Side Document *</span>
+                                    {{ Form::file("delivery_partner[driving_licence_front_image]",['class' => 'custom-file-input','id' => 'inputGroupFile04']) }}
+                                    <label for="inputGroupFile04" class="custom-file-label" style="margin-top: 5%;">Choose File</label>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <span>Driving Licence Document *</span>
-                                    {{ Form::file("delivery_partner[driving_licence_image]",['class' => 'custom-file-input','id' => 'inputGroupFile02']) }}
-                                    <label for="inputGroupFile02" class="custom-file-label" style="margin-top: 5%;">Choose File</label>
+                                    <span>Driving Licence back Side Document *</span>
+                                    {{ Form::file("delivery_partner[driving_licence_back_image]",['class' => 'custom-file-input','id' => 'inputGroupFile05']) }}
+                                    <label for="inputGroupFile05" class="custom-file-label" style="margin-top: 5%;">Choose File</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="card m-b-30">
+                        <div class="card-header bg-soft-dark">
+                            <h5 class="m-b-0">{{ __('PAN Card Proof') }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    {{ Form::label('delivery_partner[pan]', __('PAN Number').'*') }}
+                                    {{ Form::text('delivery_partner[pan]', old('delivery_partner[pan]'), ['class' => "form-control uppercase" ]) }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <span>PAN Card Document *</span>
+                                    {{ Form::file("delivery_partner[pan_image]",['class' => 'custom-file-input','id' => 'inputGroupFile06']) }}
+                                    <label for="inputGroupFile06" class="custom-file-label" style="margin-top: 5%;">Choose File</label>
                                 </div>
                             </div>
                         </div>
@@ -121,8 +167,8 @@
                                     {{ Form::text('delivery_partner[ifsc]', old('delivery_partner[ifsc]'), ['class' => "form-control uppercase" ]) }}
                                 </div>
                                 <div class="form-group col-md-4">
-                                    {{ Form::label('delivery_partner[bank_account_number]', __('Account Number').'*') }}
-                                    {{ Form::text('delivery_partner[bank_account_number]', old('delivery_partner[bank_account_number]'), ['class' => "form-control is_numeric" ]) }}
+                                    {{ Form::label('delivery_partner[bank_acc_number]', __('Account Number').'*') }}
+                                    {{ Form::number('delivery_partner[bank_acc_number]', old('delivery_partner[bank_account_number]'), ['class' => "form-control" ]) }}
                                 </div>
                             </div>
                         </div>
@@ -135,23 +181,32 @@
                             <h5 class="m-b-0">{{ __('Address Details') }}</h5>
                         </div>
                         <div class="card-body">
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
+                            <div class="form-row can-append-address-fetch">
+                                <div class="form-group input-group col-md-6" style="margin-top: 34px;">
+                                    {{ Form::text('delivery_partner[pincode]', @$city->pincode, ['class' => "form-control isnumeric", 'id' => 'address-pincode', 'placeholder' => 'Pincode']) }}
+                                    <div class="input-group-append">
+                                    <button class="btn btn-sm btn-danger btn-delete" id="remove-address-pincode" type="button" title="Delete" ><i class="mdi mdi-trash-can-outline"></i></button>
+                                    </div>
+                                </div>
+
+                                @if(@$city)
+                                <div class="form-group col-md-6 can-hide">
                                     {{ Form::label('delivery_partner[area]', __('Area')) }}
-                                    {{ Form::text('delivery_partner[area]', old('delivery_partner[area]'), ['class' => "form-control" ]) }}
+                                    {{ Form::text('delivery_partner[area]', $city->area, ['class' => "form-control", 'disabled' => 'true']) }}
+                                    {{ Form::text('delivery_partner[city_id]', $city->id, ['class' => "form-control", 'hidden' => 'true']) }}
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-6 can-hide">
                                     {{ Form::label('delivery_partner[city]', __('City')) }}
-                                    {{ Form::text('delivery_partner[city]', old('delivery_partner[city]'), ['class' => "form-control" ]) }}
+                                    {{ Form::text('delivery_partner[city]', $city->city, ['class' => "form-control", 'disabled' => 'true' ]) }}
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-6 can-hide">
                                     {{ Form::label('delivery_partner[state]', __('State')) }}
-                                    {{ Form::text('delivery_partner[state]', old('delivery_partner[state]'), ['class' => "form-control" ]) }}
+                                    {{ Form::text('delivery_partner[state]', $city->state->name, ['class' => "form-control", 'disabled' => 'true' ]) }}
                                 </div>
-                                <div class="form-group col-md-6">
-                                    {{ Form::label('delivery_partner[pincode]', __('Pincode')) }}
-                                    {{ Form::text('delivery_partner[pincode]', old('delivery_partner[pincode]'), ['class' => "form-control is_numeric" ]) }}
-                                </div>
+                                @endif
+
+                            </div>
+                            <div class="fetch-address-details">
                             </div>
                         </div>
                     </div>
@@ -178,7 +233,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     {{ Form::label('delivery_partner[area_mapping_pincode]', __('Pincode')) }}
-                                    {{ Form::text('delivery_partner[area_mapping_pincode]', old('delivery_partner[area_mapping_pincode]'), ['class' => "form-control is_numeric" ]) }}
+                                    {{ Form::text('delivery_partner[area_mapping_pincode]', old('delivery_partner[area_mapping_pincode]'), ['class' => "form-control isnumeric" ]) }}
                                 </div>
                             </div>
 
@@ -199,10 +254,12 @@
         </div>
     </div>
 </div>
-<!-- @include('layouts.partials.cropImageScript') -->
+@include('layouts.partials.cropImageScript')
+
 @push('stylesheets')
 <style>
     .modal-body {
         margin-top: -38px !important;
     }
 </style>
+@endpush

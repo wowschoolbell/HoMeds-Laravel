@@ -23,6 +23,8 @@ class User extends Authenticatable
         'name', 'username', 'email', 'phone', 'password',
     ];
 
+    public static $gender =  ['M' =>'Male','F' => 'Female'];
+
     /**
      * The attributes that should be hidden for arrays.
      *
