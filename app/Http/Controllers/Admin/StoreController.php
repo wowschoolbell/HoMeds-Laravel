@@ -16,6 +16,8 @@ use App\Rules\UniquePhone;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Support\Facades\Log;
+
 class StoreController extends Controller
 {
     protected function _validation_rules($request, $id = NULL)
@@ -100,6 +102,23 @@ class StoreController extends Controller
 
         $userModel  = new User();
         $user       = $this->_save_user($request, $userModel);
+
+       
+
+
+       if($request->store['status_id']==2||$request->store['status_id']==3|| $request->store['status_id']=5){
+
+
+            //Log::info($request->store);
+             //Log::info($request->user);
+                $STATUS = AppStatus::where('type', AppStatus::STATUS)->where("id",$request->store['status_id'])->pluck('name', 'id')->first();
+                
+                $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
+            //Log::info($STATUS);
+            //Log::info($APP_STATUS);
+                $this->sendmail($request->user['email'],$STATUS,$APP_STATUS);
+        }
+
         $store      = $this->_save_store($request, $user);
         // $this->sendmail($request->store['email']);
 
@@ -158,15 +177,24 @@ class StoreController extends Controller
         $model->save();
     }
     
-     public function sendmail($email)
+     public function sendmail($email,$status,$appstataus)
     {
         $employee_master = $email;
         $current_timestamp = now()->timestamp;
         $PasswordLink = new PasswordLink();
+        $benefits="";
+        $plan_name = $appstataus;
+        if($appstataus=="HoMeds"){
+            $benefits="HoMEds | 1 Registration | 5 Users | Unlimited Products ,Orders and Delivery | Free Delivery Partner | HoMEds App Name | Free Setup Cost";
+        } else if($appstataus=="White Label") {
+            $benefits="White Label | 1 Registration | 5 Users | Unlimited Products ,Orders and Delivery | Free Delivery Partner | HoMEds App Name | Free Setup Cost";
+        }
+        $futureDate=date('Y-m-d', strtotime('+1 year'));
+
         $PasswordLink->email=$employee_master;
         $PasswordLink->hash=$current_timestamp;
         $PasswordLink->save();
-        Mail::send('admin.store.sendmail', ['link' => "https://homeds.wowschoolbell.in/public/passwordreset/".$current_timestamp], function($message) use($employee_master){
+        Mail::send('admin.store.sendmail', ['link' => "https://homeds.wowschoolbell.in/public/passwordreset/".$current_timestamp,"benefits"=>$benefits,'plan_name'=>$plan_name,'expire_date'=>$futureDate,'email'=>$email], function($message) use($employee_master){
               $message->to($employee_master);
               $message->subject('Reset Password');
          });
@@ -187,10 +215,19 @@ class StoreController extends Controller
 
     protected function _save_store($request, $user) {
 
-        if ($user->store)
+        if ($user->store){
             $store = $user->store;
-        else
+        } 
+        else{
             $store = new Store();
+
+          
+
+
+        }
+            //}
+           // $this->sendmail($request->store['email'],);
+        
 
         $store->user_id = $user->id;
         $store->fill($request->get('store'));
@@ -203,6 +240,9 @@ class StoreController extends Controller
             $store = Store::find($store->id);
             $store->update(['store_logo'=>$filePath]);
         }
+
+       
+
 
         $storeImage = $request->file('store.store_image');
 
