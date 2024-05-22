@@ -48,7 +48,7 @@ font-weight:bold;
 {{$link}} </h4>
 
 
-{{ reason ? <h4> The store account is currently on hold, inactive, or waiting for approval due to the following reason: {{$reason}} </h4> }}
+{{ reason ? <h4> The store account is currently on hold, inactive, or waiting for approval due to the following reason: {{$reason}} </h4>:"" }}
 
 <h3 tyle={{"color:blue"}}>Your {{$plan_name}} Package details </h3>
 
