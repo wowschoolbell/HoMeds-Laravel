@@ -48,7 +48,7 @@ font-weight:bold;
 {{$link}} </h4>
 
 
-<h4>{{ $reason ? 'The store account is currently on hold, inactive, or waiting for approval due to the following reason :' $reason:"" }} </h4>
+<h4>{{ $reason ? 'The store account is currently on hold, inactive, or waiting for approval due to the following reason :'.$reason:"" }} </h4>
 
 
 
