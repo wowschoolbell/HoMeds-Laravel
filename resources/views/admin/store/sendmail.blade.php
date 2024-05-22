@@ -36,7 +36,7 @@ font-weight:bold;
 </head>
 <body>
 
-<img src="https://homeds.wowschoolbell.in/public/images/logo1.png" /> <h4 style={{"color:blue"}}>HoMEds</h4></img>
+<img src={{$domain.'/public/images/logo1.png'}} /> <h4 style={{"color:blue"}}>HoMEds</h4></img>
 
 
 <h3>Dear Sir/Madam</h3>
@@ -58,7 +58,7 @@ font-weight:bold;
 
 <h4>Plan: {{$benefits}}
 </h4>
-<h4>Login URL:  <a href={"https://homeds.wowschoolbell.in/public/login"} >https://homeds.wowschoolbell.in/public/login</a>
+<h4>Login URL:  <a href={$domain."/public/login"} >{{$domain.'/public/login'}}</a>
 </h4>
 <h4>Username: {{$email}}
 </h4>
@@ -70,7 +70,7 @@ font-weight:bold;
 <h4>If you have any questions or would like to activate your account, please contact our Renewal Team for assistance:
 </h4>
 
-<h2>the HoMEds Team</h2>
+<h2>The HoMEds Team</h2>
 <h2>Email: register@homeds.in</h2>
 </body>
 </html>

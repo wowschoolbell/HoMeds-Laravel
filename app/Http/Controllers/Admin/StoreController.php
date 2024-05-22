@@ -74,6 +74,9 @@ class StoreController extends Controller
     }
     public function create() 
     {
+
+
+
         $data['model'] = [
             'store' => new Store(),
             'user'  => new User()
@@ -183,6 +186,7 @@ class StoreController extends Controller
     
      public function sendmail($email,$status,$appstataus,$reason)
     {
+        $domain = request()->getHttpHost();
         $employee_master = $email;
         $current_timestamp = now()->timestamp;
         $PasswordLink = new PasswordLink();
@@ -198,7 +202,7 @@ class StoreController extends Controller
         $PasswordLink->email=$employee_master;
         $PasswordLink->hash=$current_timestamp;
         $PasswordLink->save();
-        Mail::send('admin.store.sendmail', ['link' => "https://homeds.wowschoolbell.in/public/passwordreset/".$current_timestamp,"benefits"=>$benefits,'plan_name'=>$plan_name,'expire_date'=>$futureDate,'email'=>$email,'reason'=>$reason], function($message) use($employee_master){
+        Mail::send('admin.store.sendmail', ['link' => "https://homeds.wowschoolbell.in/public/passwordreset/".$current_timestamp,"benefits"=>$benefits,'plan_name'=>$plan_name,'expire_date'=>$futureDate,'email'=>$email,'reason'=>$reason,'domain'=>$domain], function($message) use($employee_master){
               $message->to($employee_master);
               $message->subject('Reset Password');
          });
