@@ -36,7 +36,7 @@ class BankAccountNumberValidator implements Rule
 
         // Check stores table (bank_account_number column)
         $deliveryBankNumberExists = DeliveryPartner::where('user_id', '!=', $this->id)
-            ->where('bank_account_number', $value)->exists();
+            ->where('bank_acc_number', $value)->exists();
 
         // Return false if the value exists in any of the checked columns
         return !($storeBankNumberExists || $deliveryBankNumberExists);
