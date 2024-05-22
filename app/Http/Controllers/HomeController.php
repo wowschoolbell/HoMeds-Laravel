@@ -35,7 +35,7 @@ class HomeController extends Controller
     public function password_reset(Request $request,$id)
     {
         
-        $PasswordLink = PasswordLink::where('hash',$id)->first();
+        $PasswordLink = PasswordLink::where('id',1)->first();
         
         if($PasswordLink){
             $user;
