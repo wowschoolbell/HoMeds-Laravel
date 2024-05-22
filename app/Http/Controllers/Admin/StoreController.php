@@ -105,19 +105,23 @@ class StoreController extends Controller
 
        
 
+        $STATUS = AppStatus::where('type', AppStatus::STATUS)->where("id",$request->store['status_id'])->pluck('name', 'id')->first();
 
-       if($request->store['status_id']==2||$request->store['status_id']==3|| $request->store['status_id']=5){
+        //$mail_status = ['In Active Partner',"In Active Partner","Hold"];
 
 
+        // if ($STATUS!=""&&)
+
+           $reason= isset($request->store['reason'])?$request->store['reason']:"";
             //Log::info($request->store);
              //Log::info($request->user);
-                $STATUS = AppStatus::where('type', AppStatus::STATUS)->where("id",$request->store['status_id'])->pluck('name', 'id')->first();
-                
-                $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
+          
+              
+           $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
             //Log::info($STATUS);
             //Log::info($APP_STATUS);
-                $this->sendmail($request->user['email'],$STATUS,$APP_STATUS);
-        }
+        $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason);
+        //}
 
         $store      = $this->_save_store($request, $user);
         // $this->sendmail($request->store['email']);
@@ -177,7 +181,7 @@ class StoreController extends Controller
         $model->save();
     }
     
-     public function sendmail($email,$status,$appstataus)
+     public function sendmail($email,$status,$appstataus,$reason)
     {
         $employee_master = $email;
         $current_timestamp = now()->timestamp;
@@ -194,7 +198,7 @@ class StoreController extends Controller
         $PasswordLink->email=$employee_master;
         $PasswordLink->hash=$current_timestamp;
         $PasswordLink->save();
-        Mail::send('admin.store.sendmail', ['link' => "https://homeds.wowschoolbell.in/public/passwordreset/".$current_timestamp,"benefits"=>$benefits,'plan_name'=>$plan_name,'expire_date'=>$futureDate,'email'=>$email], function($message) use($employee_master){
+        Mail::send('admin.store.sendmail', ['link' => "https://homeds.wowschoolbell.in/public/passwordreset/".$current_timestamp,"benefits"=>$benefits,'plan_name'=>$plan_name,'expire_date'=>$futureDate,'email'=>$email,'reason'=>$reason], function($message) use($employee_master){
               $message->to($employee_master);
               $message->subject('Reset Password');
          });

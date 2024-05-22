@@ -1,3 +1,5 @@
+
+
 <div class="container">
     <div class=" p-t-20">
         <div class="col-md-12">
@@ -59,9 +61,12 @@
                                     {{ Form::label('store[mobile_number]', __('Mobile Number').'*') }}
                                     {{ Form::number('store[mobile_number]', @$model['store']->mobile_number, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Mobile Number']) }}
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4 gap-2">
                                     {{ Form::label('store[status_id]', __('Status').'*') }}
-                                    {{ Form::select('store[status_id]', $statuses ,@$model['store']->status, ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Status']) }}
+                                    {{ Form::select('store[status_id]', $statuses ,@$model['store']->status, ['class' => 'form-control check  select2-wos', 'placeholder'=>'Select Status']) }}
+
+                                    <!-- {{ Form::label('store[status_id]', __('Reason').'*') }} -->
+                                   {{ Form::text('store[reason]',"", ['class' => "form-control reason hidden m-2", "id"=>"reason",'autocomplete' => 'off', 'placeholder' => 'Enter Reason']) }}
                                 </div>
                                 <div class="form-group col-md-4">
                                     {{ Form::label('store[app_status_id]', __('App status').'*') }}
@@ -187,6 +192,43 @@
     .modal-body {
         margin-top: -38px !important;
     }
+    .hidden{
+        display:none;
+    }
+    .m-2{
+        margin-top:1rem !important;
+    }
+     
 </style>
+
+@push('scripts')
+<script>
+    $(function(){
+    
+    // $('.check'),trigger('change'); //change to two ? how?
+    
+    $('.check').change(function(){
+      let status=['In Active Partner',"In Active Partner","Hold"]
+      var data= $(this).find("option:selected").text();
+      if(status.includes(data)){
+        $("#reason").removeClass("hidden");
+          $("#reason").value("");
+        
+      } else {
+         $("#reason").addClass("hidden");
+          $("#reason").value("");
+
+      }
+      console.log(data,"data");
+      
+
+   //  var data =  $("#check :selected").text();
+
+      //alert(data);            
+    });
+});
+</script>
+
+@endpush
 
 
