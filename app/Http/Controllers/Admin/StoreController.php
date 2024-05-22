@@ -186,7 +186,7 @@ class StoreController extends Controller
     
      public function sendmail($email,$status,$appstataus,$reason)
     {
-        $domain = request()->getSchemeAndHttpHost();
+        $domain = "https://".request()->getHost();
         $employee_master = $email;
         $current_timestamp = now()->timestamp;
         $PasswordLink = new PasswordLink();
