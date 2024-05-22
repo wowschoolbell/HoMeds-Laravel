@@ -8,6 +8,7 @@ use App\Models\store;
 use App\Models\DeliveryPartner;
 use App\Models\PasswordLink;
 use Illuminate\Support\Facades\Validator;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -38,11 +39,11 @@ class HomeController extends Controller
         
         if($PasswordLink){
             $user;
-            if($PasswordLink->type=="store"){
-                $user = store::where('email',$PasswordLink->email)->first();
-            } else {
-                $user = DeliveryPartner::where('email',$PasswordLink->email)->first();
-            }
+            // if($PasswordLink->type=="store"){
+                $user =  User::where('email',$PasswordLink->email)->first();
+            // } else {
+            //     $user = DeliveryPartner::where('email',$PasswordLink->email)->first();
+            // }
             
             return view('password', compact('user','PasswordLink'));
             
@@ -70,7 +71,7 @@ class HomeController extends Controller
             return back()->withErrors($validator)->withInput();
             
         } else {
-            $store = store::where('email',$request->email)->first();
+            $store = User::where('email',$request->email)->first();
             $store->password = bcrypt($request->password);
             $store->save();
             // return redirect(route('login'))->with('success','You have Password Changed successfully');
