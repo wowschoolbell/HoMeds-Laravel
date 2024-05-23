@@ -110,20 +110,19 @@ class StoreController extends Controller
 
         $STATUS = AppStatus::where('type', AppStatus::STATUS)->where("id",$request->store['status_id'])->pluck('name', 'id')->first();
 
-        //$mail_status = ['In Active Partner',"In Active Partner","Hold"];
+        $mail_status = ['In Active Partner',"In Active Partner","Hold","Waiting for Approval"];
 
 
-        // if ($STATUS!=""&&)
+        if( in_array($STATUS,$mail_status)){
+            $reason= isset($request->store['reason'])?$request->store['reason']:"";
+            $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
+            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name']);
 
-           $reason= isset($request->store['reason'])?$request->store['reason']:"";
-            //Log::info($request->store);
-             //Log::info($request->user);
-          
-              
-           $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
-            //Log::info($STATUS);
-            //Log::info($APP_STATUS);
-        $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason);
+        } else {
+            $reason="";
+            $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
+            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name']);
+        }
         //}
 
         $store      = $this->_save_store($request, $user);
@@ -184,10 +183,11 @@ class StoreController extends Controller
         $model->save();
     }
     
-     public function sendmail($email,$status,$appstataus,$reason)
+     public function sendmail($email,$status,$appstataus,$reason,$name)
     {
         $domain = "https://".request()->getHost();
         $employee_master = $email;
+        $username =$name;
         $current_timestamp = now()->timestamp;
         $PasswordLink = new PasswordLink();
         $benefits="";
@@ -202,10 +202,18 @@ class StoreController extends Controller
         $PasswordLink->email=$employee_master;
         $PasswordLink->hash=$current_timestamp;
         $PasswordLink->save();
-        Mail::send('admin.store.sendmail', ['link' => $domain."/public/passwordreset/".$current_timestamp,"benefits"=>$benefits,'plan_name'=>$plan_name,'expire_date'=>$futureDate,'email'=>$email,'reason'=>$reason,'domain'=>$domain], function($message) use($employee_master){
+
+        if(isset($reason)){
+          Mail::send('admin.store.sendmailreason', ["name"=>$username,'reason'=>$reason,'domain'=>$domain], function($message) use($employee_master){
+            $message->to($employee_master);
+            $message->subject('HoMEds Account '.$status);
+          });
+        } else {
+             Mail::send('admin.store.sendmail', ["name"=>$username,'link' => $domain."/public/passwordreset/".$current_timestamp,"benefits"=>$benefits,'plan_name'=>$plan_name,'expire_date'=>$futureDate,'email'=>$email,'reason'=>$reason,'domain'=>$domain], function($message) use($employee_master){
               $message->to($employee_master);
-              $message->subject('Reset Password');
-         });
+              $message->subject('HoMEds Account '.$status);
+          });
+        }
     }
 
     protected function _save_user($request, $model)
