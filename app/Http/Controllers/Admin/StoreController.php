@@ -119,7 +119,7 @@ class StoreController extends Controller
             $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name']);
 
         } else {
-            $reason="";
+            $reason=null;
             $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
             $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name']);
         }
