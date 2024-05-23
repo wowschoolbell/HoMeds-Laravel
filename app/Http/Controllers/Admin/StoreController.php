@@ -204,12 +204,12 @@ class StoreController extends Controller
         $PasswordLink->save();
 
         if(isset($reason)){
-          Mail::send('admin.store.sendmailreason', ["name"=>$username,'reason'=>$reason,'domain'=>$domain], function($message) use($employee_master){
+          Mail::send('admin.store.sendmailreason', ["name"=>$username,'reason'=>$reason,'domain'=>$domain], function($message) use($employee_master,$status){
             $message->to($employee_master);
             $message->subject('HoMEds Account '.$status);
           });
         } else {
-             Mail::send('admin.store.sendmail', ["name"=>$username,'link' => $domain."/public/passwordreset/".$current_timestamp,"benefits"=>$benefits,'plan_name'=>$plan_name,'expire_date'=>$futureDate,'email'=>$email,'reason'=>$reason,'domain'=>$domain], function($message) use($employee_master){
+             Mail::send('admin.store.sendmail', ["name"=>$username,'link' => $domain."/public/passwordreset/".$current_timestamp,"benefits"=>$benefits,'plan_name'=>$plan_name,'expire_date'=>$futureDate,'email'=>$email,'reason'=>$reason,'domain'=>$domain], function($message) use($employee_master,$status){
               $message->to($employee_master);
               $message->subject('HoMEds Account '.$status);
           });
