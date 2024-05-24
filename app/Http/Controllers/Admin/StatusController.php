@@ -108,9 +108,9 @@ class StatusController extends Controller
      public function update(Request $request, $id)
     {
         $store       = store::find($id);
-        $userModel      = $store->user;
+        //$userModel      = $store->user;
 
-        $validation = Validator::make($request->all(),$this->_validation_rules($request, $userModel->id),$this->_validation_messages());
+        $validation = Validator::make($request->all(),$this->_validation_rules($request),$this->_validation_messages());
         if ($validation->fails())
         {
             return response()->json([
