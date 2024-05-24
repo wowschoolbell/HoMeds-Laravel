@@ -205,7 +205,9 @@ class StoreController extends Controller
         $PasswordLink->hash=$current_timestamp;
         $PasswordLink->save();
 
-        if(isset($reason)){
+        $mail_status = ['In Active Partner',"In Active Partner","Hold","Waiting for Approval"];
+
+       if( in_array($status,$mail_status)){
           Mail::send('admin.store.sendmailreason', ["name"=>$username,'reason'=>$reason,'domain'=>$domain,"status"=>$status], function($message) use($employee_master,$status){
             $message->to($employee_master);
             $message->subject('HoMEds Account '.$status);
