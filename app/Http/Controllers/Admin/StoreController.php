@@ -117,12 +117,12 @@ class StoreController extends Controller
         if( in_array($STATUS,$mail_status)){
             $reason= isset($request->store['reason'])?$request->store['reason']:"";
             $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
-            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['status_id']);
+            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['app_status_id']);
 
         } else {
             $reason="";
             $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
-            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['status_id']);
+            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['app_status_id']);
         }
         //}
 
