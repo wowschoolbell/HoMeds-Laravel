@@ -206,7 +206,7 @@ class StoreController extends Controller
         $PasswordLink->save();
 
         if(isset($reason)){
-          Mail::send('admin.store.sendmailreason', ["name"=>$username,'reason'=>$reason,'domain'=>$domain], function($message) use($employee_master,$status){
+          Mail::send('admin.store.sendmailreason', ["name"=>$username,'reason'=>$reason,'domain'=>$domain,"status"=>$status], function($message) use($employee_master,$status){
             $message->to($employee_master);
             $message->subject('HoMEds Account '.$status);
           });
