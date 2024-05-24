@@ -11,6 +11,7 @@ use App\Models\PasswordLink;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Mail;
 use App\Models\store;
+use App\Models\Package;
 use App\Rules\BankAccountNumberValidator;
 use App\Rules\UniquePhone;
 use App\User;
@@ -116,16 +117,16 @@ class StoreController extends Controller
         if( in_array($STATUS,$mail_status)){
             $reason= isset($request->store['reason'])?$request->store['reason']:"";
             $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
-            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name']);
+            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['status_id']);
 
         } else {
-            $reason=null;
+            $reason="";
             $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
-            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name']);
+            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['status_id']);
         }
         //}
 
-        $store      = $this->_save_store($request, $user);
+        $store  = $this->_save_store($request, $user);
         // $this->sendmail($request->store['email']);
 
         return response()->json([
@@ -183,7 +184,7 @@ class StoreController extends Controller
         $model->save();
     }
     
-     public function sendmail($email,$status,$appstataus,$reason,$name)
+     public function sendmail($email,$status,$appstataus,$reason,$name,$id)
     {
         $domain = "https://".request()->getHost();
         $employee_master = $email;
@@ -192,19 +193,20 @@ class StoreController extends Controller
         $PasswordLink = new PasswordLink();
         $benefits="";
         $plan_name = $appstataus;
-        if($appstataus=="HoMeds"){
-            $benefits="HoMEds | 1 Registration | 5 Users | Unlimited Products ,Orders and Delivery | Free Delivery Partner | HoMEds App Name | Free Setup Cost";
-        } else if($appstataus=="White Label") {
-            $benefits="White Label | 1 Registration | 5 Users | Unlimited Products ,Orders and Delivery | Free Delivery Partner | HoMEds App Name | Free Setup Cost";
+        $benefit = Package::find(id);
+       
+        if(isset($benefits)){
+            $benefits = $benefit->description;
+            $futureDate=date('Y-m-d', strtotime('+1 '.$benefit->plan_type.''));
         }
-        $futureDate=date('Y-m-d', strtotime('+1 year'));
+       
 
         $PasswordLink->email=$employee_master;
         $PasswordLink->hash=$current_timestamp;
         $PasswordLink->save();
 
         if(isset($reason)){
-          Mail::send('admin.store.sendmailreason', ["name"=>$username,'status'=>$status,'reason'=>$reason,'domain'=>$domain], function($message) use($employee_master,$status){
+          Mail::send('admin.store.sendmailreason', ["name"=>$username,'reason'=>$reason,'domain'=>$domain], function($message) use($employee_master,$status){
             $message->to($employee_master);
             $message->subject('HoMEds Account '.$status);
           });

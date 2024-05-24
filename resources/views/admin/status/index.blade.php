@@ -17,7 +17,7 @@
     </div>
 </div>
 @php
-    $create_route = route('admin.store.create');
+    $create_route = route('admin.status.create');
 @endphp
 @endsection
 
