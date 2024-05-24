@@ -193,7 +193,7 @@ class StoreController extends Controller
         $PasswordLink = new PasswordLink();
         $benefits="";
         $plan_name = $appstataus;
-        $benefit = Packages::where("plan_id",$id);
+        $benefit = Packages::where("plan_id",$id)->first();
        
         if(isset($benefits)){
             $benefits = $benefit->description;
