@@ -11,7 +11,7 @@ use App\Models\PasswordLink;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Mail;
 use App\Models\store;
-use App\Models\Package;
+use App\Models\Packages;
 use App\Rules\BankAccountNumberValidator;
 use App\Rules\UniquePhone;
 use App\User;
@@ -193,7 +193,7 @@ class StoreController extends Controller
         $PasswordLink = new PasswordLink();
         $benefits="";
         $plan_name = $appstataus;
-        $benefit = Package::find(id);
+        $benefit = Packages::find(id);
        
         if(isset($benefits)){
             $benefits = $benefit->description;
