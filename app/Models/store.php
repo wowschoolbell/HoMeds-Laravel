@@ -32,6 +32,10 @@ class store extends Model
     {
         return $this->belongsTo('App\Models\AppStatus', 'status_id', 'id');
     }
+     public function plan_details()
+    {
+        return $this->belongsTo('App\Models\Packages', 'plan_id', 'id');
+    }
 
     
 
@@ -44,7 +48,7 @@ class store extends Model
     }
 
     public function getStorelogoAttribute($value)
-    {
+{
         return ($value) ? StorageHelper::getFileUrl($value) : asset('theme/light/img/default_user.png');
     }
 

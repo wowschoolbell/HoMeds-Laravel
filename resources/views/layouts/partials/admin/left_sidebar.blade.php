@@ -80,7 +80,7 @@
                 </a>
             </li>
 
-            <li class="parent-li menu-item">
+            <!-- <li class="parent-li menu-item">
                 <a href="{{ route('admin.status.index') }}" class="menu-link menu-container">
                     <div class="menu-item">
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -95,7 +95,7 @@
                         </div>
                     </div>
                 </a>
-            </li>
+            </li> -->
             <!-- <li class="parent-li menu-item">
                 <a href="" class="open-dropdown menu-link">
                     <span class="menu-label">

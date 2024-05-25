@@ -77,7 +77,6 @@ class StoreController extends Controller
     {
 
 
-
         $data['model'] = [
             'store' => new Store(),
             'user'  => new User()
@@ -85,6 +84,7 @@ class StoreController extends Controller
         $data['title']      = 'Add Store';
         $data['statuses']       = AppStatus::where('type', AppStatus::STATUS)->pluck('name', 'id');
         $data['app_statuses']   = AppStatus::where('type', AppStatus::APP_STATUS)->pluck('name', 'id');
+        $data['packages']   = Packages::get();
 
         return view('admin.store.create', $data);
     }
@@ -150,6 +150,7 @@ class StoreController extends Controller
         $data['title']      = 'Edit Store Partner';
         $data['statuses']       = AppStatus::where('type', AppStatus::STATUS)->pluck('name', 'id');
         $data['app_statuses']   = AppStatus::where('type', AppStatus::APP_STATUS)->pluck('name', 'id');
+        $data['packages']   = Packages::get();
 
         return view('admin.store.edit', $data);
     }
@@ -170,6 +171,22 @@ class StoreController extends Controller
         
         $user           = $this->_save_user($request, $store->user);
         $delivery       = $this->_save_store($request, $user);
+
+        $STATUS = AppStatus::where('type', AppStatus::STATUS)->where("id",$request->store['status_id'])->pluck('name', 'id')->first();
+
+        $mail_status = ['In Active Partner',"In Active Partner","Hold","Waiting for Approval"];
+
+
+        if( in_array($STATUS,$mail_status)){
+            $reason= isset($request->store['reason'])?$request->store['reason']:"";
+            $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
+            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['app_status_id']);
+
+        } else {
+            $reason="";
+            $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
+            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['app_status_id']);
+        }
 
         return response()->json([
             'success' => true,
@@ -251,6 +268,7 @@ class StoreController extends Controller
 
         $store->user_id = $user->id;
         $store->fill($request->get('store'));
+        $store->plan_id = $request->store['plan_id'];
         $store->save();
 
         $storeLogo = $request->file('store.store_image');
