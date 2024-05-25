@@ -57,7 +57,7 @@ font-weight:bold;
 </h4>
 <h4>Username: {{$email}}
 </h4>
-<h4>Plan Type: Monthly & Yearly 
+<h4>Plan Type: {{$benefits->plan_type}}
 </h4>
 <h4>Plan Expiry Date :   {{$expire_date}}
 </h4>
