@@ -213,8 +213,9 @@ class StoreController extends Controller
         $benefit = Packages::where("plan_id",$id)->first();
        
         if(isset($benefits)){
+            $plan_month = $benefit->plan_type=="Yearly"?"year":"month";
             $benefits = $benefit->description;
-            $futureDate=date('Y-m-d', strtotime('+1 '.$benefit->plan_type.''));
+            $futureDate=date('Y-m-d', strtotime('+1 '.$plan_month.''));
         }
        
 
