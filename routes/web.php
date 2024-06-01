@@ -34,6 +34,7 @@ Route::group(['middleware' => ['web', 'auth'], 'as' => 'admin.'], function() {
     Route::resource('cities', 'Admin\CityController');
 
     Route::match(array('GET'),'/fetch-address', 'HomeController@fetchAddressUsingPincode')->name('home.fetch-address');
+    Route::resource('customers', 'Admin\CustomerController');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
