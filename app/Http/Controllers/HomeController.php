@@ -90,21 +90,29 @@ class HomeController extends Controller
         if ($request->id) {
             $data['table']  = 0;
             $data['city']   = City::find($request->id);
+            $data['drop']   = $request->drop;
+
             return response()->json([
                 'html' => view('admin.cities.partials.fetch-cities', $data)->render()
             ]);
         } else {
-            $data['cities'] = City::where('pincode', 'like', $request->value . '%');
 
-            if (strlen($request->value) < 6) {
-                $data['cities']->limit(5);
+            $value = $request->value ? $request->value : $request->drop_value;
+            $data['select_class_name'] = $request->value ? 'address-choose' : 'drop-address-choose';
+            if ($value) {
+                $data['cities'] = City::where('pincode', 'like', $value . '%');
+
+                if (strlen($value) < 6) {
+                    $data['cities']->limit(5);
+                }
+        
+                $data['cities'] = $data['cities']->get();
+        
+                return response()->json([
+                    'html' => view('admin.cities.partials.fetch-cities', $data)->render()
+                ]);
             }
-    
-            $data['cities'] = $data['cities']->get();
-    
-            return response()->json([
-                'html' => view('admin.cities.partials.fetch-cities', $data)->render()
-            ]);
+            
         }
         
     }

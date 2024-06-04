@@ -151,23 +151,30 @@
                                     {{ Form::text('store[address]',@$model['store']->address, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'address']) }}
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    {{ Form::label('store[area]', __('Area')) }}
-                                    {{ Form::text('store[area]', old('store[area]'), ['class' => "form-control" ]) }}
+                            <div class="form-row can-append-address-fetch">
+                                <div class="form-group input-group col-md-6" style="margin-top: 34px;">
+                                    {{ Form::text('store[pincode]', @$city->pincode, ['class' => "form-control isnumeric", 'id' => 'address-pincode', 'placeholder' => 'Pincode']) }}
+                                    <div class="input-group-append">
+                                    <button class="btn btn-sm btn-danger btn-delete" id="remove-address-pincode" type="button" title="Delete" ><i class="mdi mdi-trash-can-outline"></i></button>
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    {{ Form::label('store[city]', __('City')) }}
-                                    {{ Form::text('store[city]', old('store[city]'), ['class' => "form-control" ]) }}
+                                @if(@$city)
+                                <div class="form-group col-md-6 can-hide">
+                                    {{ Form::label('delivery_partner[area]', __('Area')) }}
+                                    {{ Form::text('delivery_partner[area]', $city->area, ['class' => "form-control", 'disabled' => 'true']) }}
+                                    {{ Form::text('store[city_id]', $city->id, ['class' => "form-control", 'hidden' => 'true']) }}
                                 </div>
-                                <div class="form-group col-md-6">
-                                    {{ Form::label('store[state]', __('State')) }}
-                                    {{ Form::text('store[state]', old('store[state]'), ['class' => "form-control" ]) }}
+                                <div class="form-group col-md-6 can-hide">
+                                    {{ Form::label('delivery_partner[city]', __('City')) }}
+                                    {{ Form::text('delivery_partner[city]', $city->city, ['class' => "form-control", 'disabled' => 'true' ]) }}
                                 </div>
-                                <div class="form-group col-md-6">
-                                    {{ Form::label('store[pincode]', __('Pincode')) }}
-                                    {{ Form::text('store[pincode]', old('store[pincode]'), ['class' => "form-control is_numeric" ]) }}
+                                <div class="form-group col-md-6 can-hide">
+                                    {{ Form::label('delivery_partner[state]', __('State')) }}
+                                    {{ Form::text('delivery_partner[state]', $city->state->name, ['class' => "form-control", 'disabled' => 'true' ]) }}
                                 </div>
+                                @endif
+                            </div>
+                            <div class="fetch-address-details">
                             </div>
                                 <div class="form-row">
                                 <div class="form-group">

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\DataTables\StoreDataTable;
 use App\Helpers\StorageHelper;
 use App\Models\AppStatus;
+use App\Models\City;
 use App\Models\PasswordLink;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Mail;
@@ -151,6 +152,10 @@ class StoreController extends Controller
         $data['statuses']       = AppStatus::where('type', AppStatus::STATUS)->pluck('name', 'id');
         $data['app_statuses']   = AppStatus::where('type', AppStatus::APP_STATUS)->pluck('name', 'id');
 
+        if ($store->city_id) {
+            $data['city']       = City::find($store->city_id);
+        }
+
         return view('admin.store.edit', $data);
     }
      public function update(Request $request, $id)
@@ -228,10 +233,6 @@ class StoreController extends Controller
         } 
         else{
             $store = new Store();
-
-          
-
-
         }
             //}
            // $this->sendmail($request->store['email'],);
@@ -239,6 +240,9 @@ class StoreController extends Controller
 
         $store->user_id = $user->id;
         $store->fill($request->get('store'));
+        if ($request->city_id) {
+            $store->city_id = $request->city_id;
+        }
         $store->save();
 
         $storeLogo = $request->file('store.store_image');

@@ -58,7 +58,6 @@
                 },
                 success: function(data) {
                     $('.fetch-address-details').html(data['html']);
-
                     chooseAddress();
                 }
             });
@@ -78,8 +77,6 @@
                     success: function(data) {
                         $('.can-hide').remove();
                         $('.can-append-address-fetch').append(data['html']);
-
-                        chooseAddress();
                     }
                 });
             });
@@ -89,6 +86,76 @@
             $('#address-pincode').val('');
             $('.can-hide').remove();
         });
+
+
+        // -------------- Drop Address Pincode Start ----------------------
+        removeRow();
+
+        $("#drop-address-pincode").keyup(function () {
+            $.ajax({
+                url: "{{ route('admin.home.fetch-address') }}",
+                method:"GET",
+                dataType: "json",
+                data: {
+                    drop_value : $(this).val()
+                },
+                success: function(data) {
+                    $('.fetch-drop-address-details').html(data['html']);
+                    chooseDropAddress();
+                    removeRow();
+                }
+            });
+        });
+
+        function chooseDropAddress() {
+            $('.drop-address-choose').on('change', function () {
+
+                if ($(this).prop('checked')==true){ 
+                    $.ajax({
+                        url: "{{ route('admin.home.fetch-address') }}",
+                        method:"GET",
+                        dataType: "json",
+                        data: {
+                            id : $(this).data('id'),
+                            drop: true
+                        },
+                        success: function(data) {
+                            $('.fetch-append-address-details').append(data['html']);
+                            orderTheDropID();
+                            removeRow();
+                        }
+                    });
+                } else {
+                    $id = $(this).data('id');
+                    $('.drop-address-row-'+$id).remove();
+                    removeRow();
+                }
+            });
+        }
+
+        function removeRow() {
+            $(".remove-drop-address").on('click', function (ev) {
+                $(this).parent().parent().remove();
+                orderTheDropID()
+            });
+        }
+
+        function orderTheDropID() {
+            $i = 0;
+            $(".drop-city-id").each(function() {
+                $(this).attr("name", "delivery_partner[drop_city_id]["+$i+"]"); 
+                $i = $i + 1;
+            });
+        }
+
+        
+        
+        // $('#remove-address-pincode').on('click', function (ev) {
+        //     $('#address-pincode').val('');
+        //     $('.can-hide').remove();
+        // });
+
+        // -------------- Drop Address Pincode End   ---------------------- 
         
     </script>
 @endpush

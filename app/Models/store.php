@@ -15,7 +15,7 @@ class store extends Model
     
     protected $fillable = [
        'id', 'user_id', 'name', 'contact_person_name', 'phone', 'mobile_number', 'email', 'gst_number',
-        'drug_licence', 'address', 'area', 'state', 'city',"pincode","store_image","store_logo","bank_name","bank_account_number","ifsc_code","app_status_id","status_id"
+        'drug_licence', 'address', 'city_id',"store_image","store_logo","bank_name","bank_account_number","ifsc_code","app_status_id","status_id"
     ];
 
     public function user()

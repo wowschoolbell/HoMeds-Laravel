@@ -181,6 +181,10 @@
                             <h5 class="m-b-0">{{ __('Address Details') }}</h5>
                         </div>
                         <div class="card-body">
+                            <div class="form-group col-md-12">
+                                {{ Form::label('delivery_partner[area]', __('Address')) }}
+                                {{ Form::text('delivery_partner[address]', old('delivery_partner[address]'), ['class' => "form-control"]) }}
+                            </div>
                             <div class="form-row can-append-address-fetch">
                                 <div class="form-group input-group col-md-6" style="margin-top: 34px;">
                                     {{ Form::text('delivery_partner[pincode]', @$city->pincode, ['class' => "form-control isnumeric", 'id' => 'address-pincode', 'placeholder' => 'Pincode']) }}
@@ -193,7 +197,7 @@
                                 <div class="form-group col-md-6 can-hide">
                                     {{ Form::label('delivery_partner[area]', __('Area')) }}
                                     {{ Form::text('delivery_partner[area]', $city->area, ['class' => "form-control", 'disabled' => 'true']) }}
-                                    {{ Form::text('delivery_partner[city_id]', $city->id, ['class' => "form-control", 'hidden' => 'true']) }}
+                                    {{ Form::text('city_id', $city->id, ['class' => "form-control", 'hidden' => 'true']) }}
                                 </div>
                                 <div class="form-group col-md-6 can-hide">
                                     {{ Form::label('delivery_partner[city]', __('City')) }}
@@ -218,25 +222,52 @@
                             <h5 class="m-b-0">{{ __('Delivery Location') }}</h5>
                         </div>
                         <div class="card-body">
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    {{ Form::label('delivery_partner[area_mapping_area]', __('Area')) }}
-                                    {{ Form::text('delivery_partner[area_mapping_area]', old('delivery_partner[area_mapping_area]'), ['class' => "form-control" ]) }}
-                                </div>
-                                <div class="form-group col-md-6">
-                                    {{ Form::label('delivery_partner[area_mapping_city]', __('City')) }}
-                                    {{ Form::text('delivery_partner[area_mapping_city]', old('delivery_partner[area_mapping_city]'), ['class' => "form-control" ]) }}
-                                </div>
-                                <div class="form-group col-md-6">
-                                    {{ Form::label('delivery_partner[area_mapping_state]', __('State')) }}
-                                    {{ Form::text('delivery_partner[area_mapping_state]', old('delivery_partner[area_mapping_state]'), ['class' => "form-control" ]) }}
-                                </div>
-                                <div class="form-group col-md-6">
-                                    {{ Form::label('delivery_partner[area_mapping_pincode]', __('Pincode')) }}
-                                    {{ Form::text('delivery_partner[area_mapping_pincode]', old('delivery_partner[area_mapping_pincode]'), ['class' => "form-control isnumeric" ]) }}
+                            <span> Pilot Selected Area </span>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-td-middle">
+                                    <thead>
+                                    <tr>
+                                        <th>Area</th>
+                                        <th>City</th>
+                                        <th>State</th>
+                                        <th>Pincode</th>
+                                        <th>Action</th>
+                                    </tr>
+                                        @if (@$model['delivery_partner']->drop_city_id)
+                                            <?php $i = 0; 
+                                            $cities = json_decode($model['delivery_partner']->drop_city_id)
+                                            ?>
+                                            @foreach($cities as $city_id)
+                                            <?php
+                                                $city = \App\Models\City::find($city_id);
+                                            ?>
+                                            <tr class="<?php echo "drop-address-row-".$city->id ?>">
+                                                <td>{{ $city->area }}</td>
+                                                <td>{{ $city->city }}</td>
+                                                <td>{{ $city->state->name }}</td>
+                                                <td>{{ $city->pincode }}</td>
+                                                <td>
+                                                    {{ Form::text("delivery_partner[drop_city_id][$i]", $city->id, ['class' => "form-control drop-city-id", 'hidden' => 'true']) }}
+                                                    <button class="btn btn-sm btn-danger remove-drop-address" type="button" title="Delete" ><i class="mdi mdi-trash-can-outline"></i></button>
+                                                </td>
+                                            </tr>
+                                            <?php ++$i ?>
+                                            @endforeach
+                                        @endif
+                                    </thead>
+                                    <tbody class="fetch-append-address-details"></tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="form-row can-append-drop-address-fetch">
+                                <div class="form-group input-group col-md-6">
+                                    {{ Form::text('pincode', '', ['class' => "form-control isnumeric", 'id' => 'drop-address-pincode', 'placeholder' => 'Pincode']) }}
+                                    <div class="input-group-append">
+                                    <button class="btn btn-sm btn-danger btn-delete" id="remove-address-pincode" type="button" title="Delete" ><i class="mdi mdi-trash-can-outline"></i></button>
+                                    </div>
                                 </div>
                             </div>
-
+                            <div class="fetch-drop-address-details"></div>
                             <div class="form-row">
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary">

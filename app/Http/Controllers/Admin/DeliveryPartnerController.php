@@ -217,8 +217,13 @@ class DeliveryPartnerController extends Controller
 
         $deliveryPartner->user_id = $user->id;
         $deliveryPartner->fill($request->get('delivery_partner'));
+        if (@$request->get('delivery_partner')['drop_city_id']) {
+            $deliveryPartner->drop_city_id = json_encode($request->get('delivery_partner')['drop_city_id']);
+        }
+        if ($request->city_id) {
+            $deliveryPartner->city_id = $request->city_id;
+        }
         $deliveryPartner->save();
-
         $deliveryPartnerImage = $request->file('delivery_partner.photo');
 
         if($deliveryPartnerImage) {

@@ -17,7 +17,7 @@ class DeliveryPartner extends Model
         'phone', 'aadhar', 'aadhar_image', 'aadhar_front_image', 'aadhar_back_image',
         'driving_licence', 'driving_licence_front_image', 'driving_licence_back_image',
         'pan', 'gender', 'address', 'city_id', 'bank_name', 'bank_acc_number', 'pan_image',
-        'ifsc', 'area_mapping_state', 'area_mapping_area', 'area_mapping_city', 'area_mapping_pincode'
+        'ifsc', 'drop_city_id'
     ];
 
     /**
