@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Store')
+@section('title', 'Customer')
 
 @section('content')
 <div class="container " style="margin-top: 3%;">
@@ -17,7 +17,7 @@
     </div>
 </div>
 @php
-    $create_route = route('admin.store.create');
+    $create_route = route('admin.customers.create');
 @endphp
 @endsection
 

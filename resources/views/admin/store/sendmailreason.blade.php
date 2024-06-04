@@ -41,29 +41,11 @@ font-weight:bold;
 
 <h3>Dear {{$name}}</h3>
 
-<h4>Thank you for registering With {{$plan_name}} plan with YHWH Corporation.  This email will help you get started with using your Account. </h4>
+<h4>The store account is currently on {{strtolower($status)}} due to the following reason: {{$reason}}</h4>
 
-
-<h4 style={{"color:blue"}}>To activate your account, please click on the following url:
-{{$link}} </h4>
-
-
-
-<h3 tyle={{"color:blue"}}>Your {{$plan_name}} Package details </h3>
-
-<h4>Plan: {{$benefits}}
-</h4>
-<h4>Login URL:  <a href={$domain."/public/login"} >{{$domain.'/public/login'}}</a>
-</h4>
-<h4>Username: {{$email}}
-</h4>
-<h4>Plan Type: {{$benefits->plan_type}}
-</h4>
-<h4>Plan Expiry Date :   {{$expire_date}}
-</h4>
-
-<h2>The HoMEds Team</h2>
-<h2>Email: register@homeds.in</h2>
+<h4>If you have any questions or would like to activate your account, please contact our Renewal Team for assistance:</h4>
+<h3>The HoMEds Team</h3>
+<h3>Email: register@homeds.in</h3>
 </body>
 </html>
 

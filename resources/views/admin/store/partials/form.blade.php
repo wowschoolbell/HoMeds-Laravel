@@ -63,20 +63,34 @@
                                 </div>
                                 <div class="form-group col-md-4 gap-2">
                                     {{ Form::label('store[status_id]', __('Status').'*') }}
-                                    {{ Form::select('store[status_id]', $statuses ,@$model['store']->status, ['class' => 'form-control check  select2-wos', 'placeholder'=>'Select Status']) }}
+                                    {{ Form::select('store[status_id]', $statuses ,@$model['store']->status_id, ['class' => 'form-control check  select2-wos', 'placeholder'=>'Select Status']) }}
 
                                     <!-- {{ Form::label('store[status_id]', __('Reason').'*') }} -->
                                    {{ Form::text('store[reason]',"", ['class' => "form-control reason hidden m-2", "id"=>"reason",'autocomplete' => 'off', 'placeholder' => 'Enter Reason']) }}
                                 </div>
                                 <div class="form-group col-md-4">
                                     {{ Form::label('store[app_status_id]', __('App status').'*') }}
-                                    {{ Form::select('store[app_status_id]', $app_statuses, @$model['store']->app_status_id, ['class' => 'form-control  select2-wos', 'placeholder'=>'Select Status']) }}
+                                    {{ Form::select('store[app_status_id]', $app_statuses, @$model['store']->app_status_id, ['class' => 'form-control  select2-wos app_status', 'placeholder'=>'Select Status']) }}
                                 </div>
                                 <div class="form-group col-md-4">
                                     <span>Store Image *</span>
                                     {{ Form::file("store[store_image]",['class' => 'custom-file-input','id' => 'inputGroupFile02']) }}
                                     <label for="inputGroupFile02" class="custom-file-label" style="margin-top: 10%;">Choose File</label>
                                 </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4 plan-details hidden">
+                                    {{ Form::label('user[plan_details]', __('Plan Details').'*') }}
+                                    {{ Form::textarea('user[plan_details]',"", ['class' => "form-control","id"=>"plan_details",'readonly'=>true,'autocomplete' => 'off',"id"=>"plan_details", 'placeholder' => 'phone', "pattern"=>"[0-9]{4}[0-9]{4-10}"]) }}
+                                </div>
+                                <div class="form-group col-md-4 plan-details hidden">
+                                     {{ Form::label('store[plan_id]', __('Plan Type').'*') }}
+                                     {{ Form::select('store[plan_id]', [], @$model['store']->plan_id, ['class' => 'form-control  select2-wos',"id"=>"plan_type", 'placeholder'=>'Select Plan Type']) }}
+                                </div>
+                                <!-- <div class="form-group col-md-4">
+                                    {{ Form::label('user[email]', __('Email').'*') }}
+                                    {{ Form::textarea('user[email]', @$model['user']->email, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Email']) }}
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -112,15 +126,15 @@
                             <div class="form-row">
                                 <div class="form-group col-md-4">
                                     {{ Form::label('store[bank_name]', __('Bank Name')) }}
-                                    {{ Form::text('store[bank_name]', old('store[bank_name]'), ['class' => "form-control" ]) }}
+                                    {{ Form::text('store[bank_name]', @$model['store']->bank_name, ['class' => "form-control" ]) }}
                                 </div>
                                 <div class="form-group col-md-4">
                                     {{ Form::label('store[ifsc]', __('IFSC')) }}
-                                    {{ Form::text('store[ifsc]', old('store[ifsc]'), ['class' => "form-control uppercase" ]) }}
+                                    {{ Form::text('store[ifsc_code]',  @$model['store']->ifsc_code, ['class' => "form-control uppercase" ]) }}
                                 </div>
                                 <div class="form-group col-md-4">
                                     {{ Form::label('store[bank_account_number]', __('Account Number').'*') }}
-                                    {{ Form::text('store[bank_account_number]', old('store[bank_account_number]'), ['class' => "form-control is_numeric" ]) }}
+                                    {{ Form::text('store[bank_account_number]',@$model['store']->bank_account_number, ['class' => "form-control is_numeric" ]) }}
                                 </div>
                             </div>
                         </div>
@@ -212,27 +226,78 @@
 <script>
     $(function(){
     
+
+    var packages = JSON.parse('<?php echo $packages; ?>');
+    var id = '<?php echo $model['store']->id; ?>';
+    var plan_id = '<?php echo $model['store']->app_status_id; ?>';
+    var plan_id_from = '<?php echo $model['store']->plan_id; ?>';
+
+    console.log(plan_id_from,"plan_id_from");
+    
+
+    if(id){
+
+        $('#plan_type').empty();
+        $('#plan_details').val("");
+        const optionElements = packages.map(pkg => {
+            let selected="";
+        if(plan_id==parseInt(pkg.plan_id)){
+            selected=pkg.id==plan_id_from?"selected":false;
+            $('#plan_type').append('<option value="' + pkg.id + '" '+selected+' >' +pkg.plan_type + '</option>');
+            $('#plan_details').val(pkg.description);
+            
+        } 
+        });
+        $(".plan-details").removeClass("hidden");
+    }
     // $('.check'),trigger('change'); //change to two ? how?
     
     $('.check').change(function(){
-      let status=['In Active Partner',"In Active Partner","Hold"]
+      let status=['In Active Partner',"In Active Partner","Hold","Waiting for Approval"]
       var data= $(this).find("option:selected").text();
       if(status.includes(data)){
         $("#reason").removeClass("hidden");
-          $("#reason").value("");
+         $("#reason").value("");
         
       } else {
-         $("#reason").addClass("hidden");
-          $("#reason").value("");
-
-      }
-      console.log(data,"data");
-      
-
-   //  var data =  $("#check :selected").text();
-
-      //alert(data);            
+        $("#reason").addClass("hidden");
+        $("#reason").value("");
+      }           
     });
+
+     $('.app_status').change(function(){
+        
+     
+      var data= $(this).val();
+      if(data){
+
+        $('#plan_type')
+        .empty();
+        $('#plan_details').val("");
+        const optionElements = packages.map(pkg => {
+        if(data==parseInt(pkg.plan_id)){
+            $('#plan_type').append('<option value="' + pkg.id + '">' +pkg.plan_type + '</option>');
+            $('#plan_details').val(pkg.description);
+        } 
+        });
+
+
+
+        $(".plan-details").removeClass("hidden");
+        $(".plan-details").value("");
+
+      } else {
+        $('#plan_type')
+        .empty();
+        $('#plan_details').val("");
+        $(".plan-details").addClass("hidden");
+        $(".plan-details").value("");
+      }
+     
+    });
+
+
+    
 });
 </script>
 

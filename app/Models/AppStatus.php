@@ -24,4 +24,6 @@ class AppStatus extends Model
         self::STORE,self::PARTNER
     ];
 
+   
+
 }

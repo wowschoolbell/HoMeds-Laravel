@@ -12,6 +12,7 @@ use App\Models\PasswordLink;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Mail;
 use App\Models\store;
+use App\Models\Packages;
 use App\Rules\BankAccountNumberValidator;
 use App\Rules\UniquePhone;
 use App\User;
@@ -77,7 +78,6 @@ class StoreController extends Controller
     {
 
 
-
         $data['model'] = [
             'store' => new Store(),
             'user'  => new User()
@@ -85,6 +85,7 @@ class StoreController extends Controller
         $data['title']      = 'Add Store';
         $data['statuses']       = AppStatus::where('type', AppStatus::STATUS)->pluck('name', 'id');
         $data['app_statuses']   = AppStatus::where('type', AppStatus::APP_STATUS)->pluck('name', 'id');
+        $data['packages']   = Packages::get();
 
         return view('admin.store.create', $data);
     }
@@ -111,23 +112,22 @@ class StoreController extends Controller
 
         $STATUS = AppStatus::where('type', AppStatus::STATUS)->where("id",$request->store['status_id'])->pluck('name', 'id')->first();
 
-        //$mail_status = ['In Active Partner',"In Active Partner","Hold"];
+        $mail_status = ['In Active Partner',"In Active Partner","Hold","Waiting for Approval"];
 
 
-        // if ($STATUS!=""&&)
+        if( in_array($STATUS,$mail_status)){
+            $reason= isset($request->store['reason'])?$request->store['reason']:"";
+            $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
+            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['app_status_id']);
 
-           $reason= isset($request->store['reason'])?$request->store['reason']:"";
-            //Log::info($request->store);
-             //Log::info($request->user);
-          
-              
-           $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
-            //Log::info($STATUS);
-            //Log::info($APP_STATUS);
-        $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason);
+        } else {
+            $reason="";
+            $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
+            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['app_status_id']);
+        }
         //}
 
-        $store      = $this->_save_store($request, $user);
+        $store  = $this->_save_store($request, $user);
         // $this->sendmail($request->store['email']);
 
         return response()->json([
@@ -151,6 +151,7 @@ class StoreController extends Controller
         $data['title']      = 'Edit Store Partner';
         $data['statuses']       = AppStatus::where('type', AppStatus::STATUS)->pluck('name', 'id');
         $data['app_statuses']   = AppStatus::where('type', AppStatus::APP_STATUS)->pluck('name', 'id');
+        $data['packages']   = Packages::get();
 
         if ($store->city_id) {
             $data['city']       = City::find($store->city_id);
@@ -176,6 +177,22 @@ class StoreController extends Controller
         $user           = $this->_save_user($request, $store->user);
         $delivery       = $this->_save_store($request, $user);
 
+        $STATUS = AppStatus::where('type', AppStatus::STATUS)->where("id",$request->store['status_id'])->pluck('name', 'id')->first();
+
+        $mail_status = ['In Active Partner',"In Active Partner","Hold","Waiting for Approval"];
+
+
+        if( in_array($STATUS,$mail_status)){
+            $reason= isset($request->store['reason'])?$request->store['reason']:"";
+            $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
+            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['app_status_id']);
+
+        } else {
+            $reason="";
+            $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
+            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['app_status_id']);
+        }
+
         return response()->json([
             'success' => true,
             'title' => 'Store',
@@ -189,28 +206,41 @@ class StoreController extends Controller
         $model->save();
     }
     
-     public function sendmail($email,$status,$appstataus,$reason)
+     public function sendmail($email,$status,$appstataus,$reason,$name,$id)
     {
         $domain = "https://".request()->getHost();
         $employee_master = $email;
+        $username =$name;
         $current_timestamp = now()->timestamp;
         $PasswordLink = new PasswordLink();
         $benefits="";
         $plan_name = $appstataus;
-        if($appstataus=="HoMeds"){
-            $benefits="HoMEds | 1 Registration | 5 Users | Unlimited Products ,Orders and Delivery | Free Delivery Partner | HoMEds App Name | Free Setup Cost";
-        } else if($appstataus=="White Label") {
-            $benefits="White Label | 1 Registration | 5 Users | Unlimited Products ,Orders and Delivery | Free Delivery Partner | HoMEds App Name | Free Setup Cost";
+        $benefit = Packages::where("plan_id",$id)->first();
+       
+        if(isset($benefits)){
+            $plan_month = $benefit->plan_type=="Yearly"?"year":"month";
+            $benefits = $benefit->description;
+            $futureDate=date('Y-m-d', strtotime('+1 '.$plan_month.''));
         }
-        $futureDate=date('Y-m-d', strtotime('+1 year'));
+       
 
         $PasswordLink->email=$employee_master;
         $PasswordLink->hash=$current_timestamp;
         $PasswordLink->save();
-        Mail::send('admin.store.sendmail', ['link' => $domain."/public/passwordreset/".$current_timestamp,"benefits"=>$benefits,'plan_name'=>$plan_name,'expire_date'=>$futureDate,'email'=>$email,'reason'=>$reason,'domain'=>$domain], function($message) use($employee_master){
+
+        $mail_status = ['In Active Partner',"In Active Partner","Hold","Waiting for Approval"];
+
+       if( in_array($status,$mail_status)){
+          Mail::send('admin.store.sendmailreason', ["name"=>$username,'reason'=>$reason,'domain'=>$domain,"status"=>$status], function($message) use($employee_master,$status){
+            $message->to($employee_master);
+            $message->subject('HoMEds Account '.$status);
+          });
+        } else {
+             Mail::send('admin.store.sendmail', ["name"=>$username,'link' => $domain."/public/passwordreset/".$current_timestamp,"benefits"=>$benefits,'plan_name'=>$plan_name,'expire_date'=>$futureDate,'email'=>$email,'reason'=>$reason,'domain'=>$domain], function($message) use($employee_master,$status){
               $message->to($employee_master);
-              $message->subject('Reset Password');
-         });
+              $message->subject('HoMEds Account '.$status);
+          });
+        }
     }
 
     protected function _save_user($request, $model)
@@ -243,6 +273,7 @@ class StoreController extends Controller
         if ($request->city_id) {
             $store->city_id = $request->city_id;
         }
+        $store->plan_id = $request->store['plan_id'];
         $store->save();
 
         $storeLogo = $request->file('store.store_image');

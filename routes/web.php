@@ -22,6 +22,7 @@ Auth::routes();
 
 Route::group(['middleware' => ['web', 'auth'], 'as' => 'admin.'], function() {
     Route::resource('app_status', 'Admin\AppStatusController');
+    Route::resource('status', 'Admin\StatusController');
     Route::resource('store', 'Admin\StoreController');
     Route::resource('delivery_partner', 'Admin\DeliveryPartnerController');
     Route::resource('configurations', 'Admin\ConfigurationController');
@@ -33,6 +34,7 @@ Route::group(['middleware' => ['web', 'auth'], 'as' => 'admin.'], function() {
     Route::resource('cities', 'Admin\CityController');
 
     Route::match(array('GET'),'/fetch-address', 'HomeController@fetchAddressUsingPincode')->name('home.fetch-address');
+    Route::resource('customers', 'Admin\CustomerController');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
