@@ -78,7 +78,7 @@
                                     <label for="inputGroupFile02" class="custom-file-label" style="margin-top: 10%;">Choose File</label>
                                 </div>
                             </div>
-                            <div class="form-row">
+                            <div class="form-row justify-content-end">
                                 <div class="form-group col-md-4 plan-details hidden">
                                     {{ Form::label('user[plan_details]', __('Plan Details').'*') }}
                                     {{ Form::textarea('user[plan_details]',"", ['class' => "form-control","id"=>"plan_details",'readonly'=>true,'autocomplete' => 'off',"id"=>"plan_details", 'placeholder' => 'phone', "pattern"=>"[0-9]{4}[0-9]{4-10}"]) }}

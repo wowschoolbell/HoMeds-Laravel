@@ -118,12 +118,12 @@ class StoreController extends Controller
         if( in_array($STATUS,$mail_status)){
             $reason= isset($request->store['reason'])?$request->store['reason']:"";
             $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
-            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['app_status_id']);
+            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['plan_id']);
 
         } else {
             $reason="";
             $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
-            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['app_status_id']);
+            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['plan_id']);
         }
         //}
 
@@ -185,12 +185,12 @@ class StoreController extends Controller
         if( in_array($STATUS,$mail_status)){
             $reason= isset($request->store['reason'])?$request->store['reason']:"";
             $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
-            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['app_status_id']);
+            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['plan_id']);
 
         } else {
             $reason="";
             $APP_STATUS = AppStatus::where('type', AppStatus::APP_STATUS)->where("id",$request->store['app_status_id'])->pluck('name', 'id')->first();
-            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['app_status_id']);
+            $this->sendmail($request->user['email'],$STATUS,$APP_STATUS,$reason,$request->store['contact_person_name'],$request->store['plan_id']);
         }
 
         return response()->json([
@@ -214,14 +214,20 @@ class StoreController extends Controller
         $current_timestamp = now()->timestamp;
         $PasswordLink = new PasswordLink();
         $benefits="";
+        $benefits_plan="";
         $plan_name = $appstataus;
-        $benefit = Packages::where("plan_id",$id)->first();
+        $benefit = Packages::where("id",$id)->first();
+        $benefits_plan = $benefit->plan_type;
+
+        Log::info("benefits_plan");
+
+    
        
         if(isset($benefits)){
             $plan_month = $benefit->plan_type=="Yearly"?"year":"month";
-            $benefits = $benefit->description;
             $futureDate=date('Y-m-d', strtotime('+1 '.$plan_month.''));
         }
+         //Log::info(print_r($benefit, true));
        
 
         $PasswordLink->email=$employee_master;
@@ -236,7 +242,7 @@ class StoreController extends Controller
             $message->subject('HoMEds Account '.$status);
           });
         } else {
-             Mail::send('admin.store.sendmail', ["name"=>$username,'link' => $domain."/public/passwordreset/".$current_timestamp,"benefits"=>$benefits,'plan_name'=>$plan_name,'expire_date'=>$futureDate,'email'=>$email,'reason'=>$reason,'domain'=>$domain], function($message) use($employee_master,$status){
+             Mail::send('admin.store.sendmail', ["name"=>$username,'link' => $domain."/public/passwordreset/".$current_timestamp,"benefits"=>$benefits,"benefits_plan"=>$benefits_plan,'plan_name'=>$plan_name,'expire_date'=>$futureDate,'email'=>$email,'reason'=>$reason,'domain'=>$domain], function($message) use($employee_master,$status){
               $message->to($employee_master);
               $message->subject('HoMEds Account '.$status);
           });
