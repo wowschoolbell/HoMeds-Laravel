@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\store;
 use App\Models\DeliveryPartner;
 use App\Models\PasswordLink;
+use App\Models\State;
 use Illuminate\Support\Facades\Validator;
 use App\User;
 
@@ -84,8 +85,8 @@ class HomeController extends Controller
     /**
      * 
      */
-    public function fetchAddressUsingPincode(Request $request) {
-        
+    public function fetchAddressUsingPincode(Request $request)
+    {
         $data['table'] = 1;
         if ($request->id) {
             $data['table']  = 0;
@@ -98,6 +99,9 @@ class HomeController extends Controller
         } else {
 
             $value = $request->value ? $request->value : $request->drop_value;
+
+            $this->_save_cities($value);
+
             $data['select_class_name'] = $request->value ? 'address-choose' : 'drop-address-choose';
             if ($value) {
                 $data['cities'] = City::where('pincode', 'like', $value . '%');
@@ -115,5 +119,55 @@ class HomeController extends Controller
             
         }
         
+    }
+
+    protected function _save_cities($pincode) {
+        $apiUrl     = "https://api.data.gov.in/resource/5c2f62fe-5afa-4119-a499-fec9d604d5bd";
+        $apiKey     = "579b464db66ec23bdd000001d3640efb1e0646846203c80f14708228";
+        $format     = "json";
+        $pincode    = $pincode;
+        // Prepare the complete URL with query parameters
+        $url = sprintf("%s?api-key=%s&format=%s&filters[pincode]=%s", $apiUrl, $apiKey, $format, $pincode);
+
+        // Initialize cURL session
+        $ch = curl_init();
+
+        // Set the URL and other options
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // Execute cURL session
+        $response = curl_exec($ch);
+
+        // Check if there was an error
+        if (curl_errno($ch)) {
+            echo 'cURL error: ' . curl_error($ch);
+            return null;
+        }
+
+        // Close cURL session
+        curl_close($ch);
+
+        // Decode the JSON response
+        $responseData = json_decode($response, true);
+
+        if (!empty($responseData['records'])) {
+            foreach ($responseData['records'] as $data) {
+                State::firstOrCreate([
+                    'name' => $data['statename']
+                ]);
+
+                $state = State::where('name', $data['statename'])->first();
+
+                City::firstOrCreate([
+                    'state_id'  => $state->id,
+                    'area'      => $data['officename'],
+                    'city'      => $data['district'],
+                    'latitude'  => $data['latitude'],
+                    'longitude' => $data['longitude'],
+                    'pincode'   => $data['pincode']
+                ]);
+            }
+        }
     }
 }
