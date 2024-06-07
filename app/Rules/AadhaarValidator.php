@@ -16,12 +16,12 @@ class AadhaarValidator implements Rule
     public function passes($attribute, $value)
     {
         // Check if it's 12 digits long
-        if (strlen($value) !== 12) {
+        if (strlen(str_replace(' ', '', $value)) !== 12) {
             return false;
         }
 
         // Check if it's all digits
-        if (!ctype_digit($value)) {
+        if (!ctype_digit(str_replace(' ', '', $value))) {
             return false;
         }
 
