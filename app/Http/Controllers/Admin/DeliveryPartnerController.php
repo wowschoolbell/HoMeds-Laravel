@@ -94,7 +94,7 @@ class DeliveryPartnerController extends Controller
 
     public function index(DeliveryPartnerDataTable $dataTable)
     {   $data['statuses'][0] = 'All';
-        $statuses   = AppStatus::where('type', AppStatus::STATUS)->pluck('name', 'id')->toArray();
+        $statuses   = AppStatus::where('type', AppStatus::PARTNER)->pluck('name', 'id')->toArray();
 
         foreach($statuses as $key => $status) {
             $data['statuses'][$key] = $status;
@@ -111,7 +111,7 @@ class DeliveryPartnerController extends Controller
         ];
 
         $data['title']      = 'Add Pilot';
-        $data['statuses']   = AppStatus::pluck('name', 'id');
+        $data['statuses']   = AppStatus::where('type', AppStatus::PARTNER)->pluck('name', 'id');
         $data['gender']     = User::$gender;
 
         return view('admin.delivery_partner.create', $data);
@@ -155,7 +155,7 @@ class DeliveryPartnerController extends Controller
 
         $data['id']         = $id;
         $data['title']      = 'Edit Pilot';
-        $data['statuses']   = AppStatus::pluck('name', 'id');
+        $data['statuses']   = AppStatus::where('type', AppStatus::PARTNER)->pluck('name', 'id');
         $data['gender']     = User::$gender;
 
         if ($deliveryPartner->city_id) {

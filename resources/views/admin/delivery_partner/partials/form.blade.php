@@ -83,7 +83,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     {{ Form::label('delivery_partner[aadhar]', __('Aadhar Number').'*') }}
-                                    {{ Form::text('delivery_partner[aadhar]', old('delivery_partner[aadhar]'), ['class' => "isnumeric form-control" ]) }}
+                                    {{ Form::number('delivery_partner[aadhar]', old('delivery_partner[aadhar]'), ['class' => "form-control" ]) }}
                                 </div>
                             </div>
                             <div class="form-row">

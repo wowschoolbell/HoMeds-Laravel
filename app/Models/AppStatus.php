@@ -16,14 +16,11 @@ class AppStatus extends Model
     ];
 
     const STORE         = 'Store';
-    const PARTNER       = 'Partner';
     const APP_STATUS    = 'AS';
     const STATUS        = 'ST';
+    const PARTNER       = 'DP';
 
     public static $category = [
         self::STORE,self::PARTNER
     ];
-
-   
-
 }
