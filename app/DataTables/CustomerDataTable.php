@@ -77,11 +77,11 @@ class CustomerDataTable extends dataTable
                 ->title('Mobile Number')
                 ->orderable(true)
                 ->searchable(true),
-            Column::computed('flat_no')
+            Column::computed('address')
                 ->title('Address')
                 ->orderable(true)
                 ->searchable(true),
-            Column::computed('created_at', function($data){ $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $data->created_at)->format('d-m-Y'); return $formatedDate; })
+            Column::computed('status', function($data){  return $data->status?"Active":"In-active" ; })
                 ->title('Address')
                 ->orderable(true)
                 ->searchable(true),
