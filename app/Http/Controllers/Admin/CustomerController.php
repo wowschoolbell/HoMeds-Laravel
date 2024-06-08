@@ -199,7 +199,7 @@ class CustomerController extends Controller
          $store->flat_no =$request->store["flat_no"];
          $store->area =$request->store["area"];
          $store->landmark =$request->store["landmark"];
-        $store->adddress =$request->store["adddress"];
+        $store->address =$request->store["address"];
         $store->state =$request->store["state"];
         $store->city =$request->store["city"];
          $store->status =$request->store["status"];
