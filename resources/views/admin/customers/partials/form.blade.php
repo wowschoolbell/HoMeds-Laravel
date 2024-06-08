@@ -24,12 +24,24 @@
                                     {{ Form::email('store[email]', @$model['store']->email, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Email']) }}
                                 </div>
                                 <div class="form-group col-md-6">
-                                    {{ Form::label('store[details]', __('Flat No | Floor | Housing | Building ').'*') }}
-                                    {{ Form::textarea('store[flat_no]', @$model['store']->flat_no, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Flat No | Floor | Housing | Building']) }}
+                                    {{ Form::label('store[details]', __('Flat No ').'*') }}
+                                    {{ Form::text('store[flat_no]', @$model['store']->flat_no, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Flat No']) }}
                                 </div>
                                  <div class="form-group col-md-6">
-                                    {{ Form::label('store[area]', __('Area | Locality | Sector ').'*') }}
-                                    {{ Form::text('store[area]', @$model['store']->area, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Area | Locality | Sector ']) }}
+                                    {{ Form::label('store[area]', __('Area').'*') }}
+                                    {{ Form::text('store[area]', @$model['store']->area, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Area']) }}
+                                </div>
+                                  <div class="form-group col-md-6">
+                                    {{ Form::label('store[area]', __('Address ').'*') }}
+                                    {{ Form::text('store[address]', @$model['store']->address, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Address']) }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    {{ Form::label('store[area]', __('City ').'*') }}
+                                    {{ Form::text('store[city]', @$model['store']->city, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'City']) }}
+                                </div>
+                                 <div class="form-group col-md-6">
+                                    {{ Form::label('store[area]', __('State ').'*') }}
+                                    {{ Form::text('store[state]', @$model['store']->state, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'State']) }}
                                 </div>
                                  <div class="form-group col-md-6">
                                     {{ Form::label('store[landmark]', __('Landmark').'*') }}
