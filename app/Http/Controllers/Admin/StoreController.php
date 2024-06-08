@@ -234,7 +234,7 @@ class StoreController extends Controller
         $PasswordLink->hash=$current_timestamp;
         $PasswordLink->save();
 
-        $mail_status = ['In Active Partner',"In Active Partner","Hold","Waiting for Approval"];
+        $mail_status = ['In Active Store',"In Active Store","Hold","Waiting for Approval"];
 
        if( in_array($status,$mail_status)){
           Mail::send('admin.store.sendmailreason', ["name"=>$username,'reason'=>$reason,'domain'=>$domain,"status"=>$status], function($message) use($employee_master,$status){
