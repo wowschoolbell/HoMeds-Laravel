@@ -81,7 +81,7 @@ class CustomerDataTable extends dataTable
                 ->title('Address')
                 ->orderable(true)
                 ->searchable(true),
-            Column::computed('status', function($data){  return $data=="1"?"Active":"In-active" ; })
+            Column::computed('status', function($data){  return $data ; })
                 ->title('Status')
                 ->orderable(true)
                 ->searchable(true),
