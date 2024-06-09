@@ -218,7 +218,7 @@ class StoreController extends Controller
         $plan_name = $appstataus;
         $benefit_List = Packages::where("id",$id)->first();
         $benefit = $benefit_List->description;
-        $benefits_plan = $benefit->plan_type;
+        $benefits_plan = $benefit_List->plan_type;
 
         Log::info("benefits_plan");
 
