@@ -222,8 +222,8 @@ class StoreController extends Controller
         ///Log::info($benefit);
     
        
-        if(isset($benefits)){
-            $plan_month = $benefit=="Yearly"?"year":"month";
+        if(isset($benefits_plan)){
+            $plan_month = $benefits_plan=="Yearly"?"year":"month";
             $futureDate=date('Y-m-d', strtotime('+1 '.$plan_month.''));
         }
          //Log::info(print_r($benefit, true));
