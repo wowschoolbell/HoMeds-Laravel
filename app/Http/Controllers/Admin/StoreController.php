@@ -216,16 +216,14 @@ class StoreController extends Controller
         $benefits="";
         $benefits_plan="";
         $plan_name = $appstataus;
-        $benefit_List = Packages::where("id",$id)->get();
-        $benefit = $benefit_List[0]->description;
-        $benefits_plan = $benefit_List[0]->plan_type;
+        $benefit = Packages::where("id",$id)->pluck("description")->first();
+        $benefits_plan = Packages::where("id",$id)->pluck("plan_type")->first();
 
-        Log::info($benefit_List);
-
+        ///Log::info($benefit);
     
        
         if(isset($benefits)){
-            $plan_month = $benefit->plan_type=="Yearly"?"year":"month";
+            $plan_month = $benefit=="Yearly"?"year":"month";
             $futureDate=date('Y-m-d', strtotime('+1 '.$plan_month.''));
         }
          //Log::info(print_r($benefit, true));
