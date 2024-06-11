@@ -3,10 +3,10 @@
 namespace App\DataTables;
 
 use Yajra\DataTables\Services\DataTable;
-use App\Models\customers;
+use App\Models\items;
 use Yajra\DataTables\Html\Column;
 
-class CustomerDataTable extends dataTable
+class ItemDataTable extends dataTable
 {
     /**
      * Build DataTable class.
@@ -18,7 +18,7 @@ class CustomerDataTable extends dataTable
     {
         return datatables($query)
             ->addColumn('action', function($model){
-               $action = '<div class="d-flex gap-2"><a href="'.route('admin.customers.edit',["$model->id"]).'" class="btn btn-sm btn-info" id="trigger-content-'.$model->id.'" title="Edit"><i class="mdi mdi-square-edit-outline"></i></a>&nbsp;';
+               $action = '<div class="d-flex gap-2"><a href="'.route('admin.items.edit',["$model->id"]).'" class="btn btn-sm btn-info" id="trigger-content-'.$model->id.'" title="Edit"><i class="mdi mdi-square-edit-outline"></i></a>&nbsp;';
         
                 return $action;
             })
@@ -32,7 +32,7 @@ class CustomerDataTable extends dataTable
      * @return \Illuminate\Database\Eloquent\Builder
      */
 
-    public function query(customers $model)
+    public function query(items $model)
     {
         $model = $model::with(['user']);        
         $Query =  $model->newQuery();
@@ -64,24 +64,32 @@ class CustomerDataTable extends dataTable
     {
         return [
             Column::computed('id')
-                ->title('Customer ID')
+                ->title('S.NO')
                 ->orderable(true)
                 ->searchable(true)
                 ->width('20%'),
-            Column::computed('name')
-                ->title('Customer Name')
+            Column::computed('item_code')
+                ->title('Item Code')
                 ->orderable(true)
                 ->searchable(true)
                  ->width('20%'),
-            Column::computed('mobile_number')
-                ->title('Mobile Number')
+            Column::computed('store_item_code')
+                ->title('Store Item Code')
                 ->orderable(true)
                 ->searchable(true),
-            Column::computed('address')
-                ->title('Address')
+            Column::computed('category')
+                ->title('Item Category')
                 ->orderable(true)
                 ->searchable(true),
-              Column::computed('created_at', function($data){ $formatedDate = "Active";  return $formatedDate; })
+            Column::computed('name')
+                ->title('Item Name')
+                ->orderable(true)
+                ->searchable(true),
+             Column::computed('cure_disease')
+                ->title('Disease')
+                ->orderable(true)
+                ->searchable(true),
+              Column::computed('status', function($data){ $formatedDate = "Active";  return $formatedDate; })
                 ->title('Status')
                 ->orderable(true)
                 ->searchable(true),
@@ -95,6 +103,6 @@ class CustomerDataTable extends dataTable
      */
     protected function filename()
     {
-        return 'Customer_' . date('YmdHis');
+        return 'Items_' . date('YmdHis');
     }
 }

@@ -65,6 +65,12 @@ class User extends Authenticatable
         return @$this->roles()->pluck('name')->toArray();
     }
 
+    public function getStoreRoleAttribute()
+    {
+        return $this->hasOne('App\Models\Store', 'user_id', 'id');
+        
+    }
+
     /**
      * 
      */
