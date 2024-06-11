@@ -33,7 +33,7 @@
                                 </div>
                                   <div class="form-group col-md-6">
                                     {{ Form::label('store[cure_disease]', __('Cure disease ').'*') }}
-                                    {{ Form::select('store[cure_disease]',["Headache"=>"Aspirin","Cold"=>"benadryl"],@$model['store']->cure_disease, ['class' => "form-control  select2-wos", 'multiple'=>'multiple','autocomplete' => 'off', 'placeholder' => 'Select']) }}
+                                    {{ Form::select('store[cure_disease]',["Headache"=>"Aspirin","Cold"=>"benadryl"],@$model['store']->cure_disease, ['class' => "form-control  select2-wos", 'multiple'=>'multiple','autocomplete' => 'off']) }}
                                 </div>
 
                                   <div class="form-group col-md-6">
