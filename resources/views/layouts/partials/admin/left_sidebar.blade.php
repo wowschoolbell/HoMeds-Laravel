@@ -105,6 +105,7 @@
                 </a>
             </li>
             @endhasAccess
+            @hasAccess('items.index')
              <li class="parent-li menu-item">
                 <a href="{{ route('admin.items.index') }}" class="menu-link menu-container">
                     <div class="menu-item">
@@ -121,7 +122,7 @@
                     </div>
                 </a>
             </li>
-
+            @endhasAccess
             <!-- <li class="parent-li menu-item">
                 <a href="{{ route('admin.status.index') }}" class="menu-link menu-container">
                     <div class="menu-item">

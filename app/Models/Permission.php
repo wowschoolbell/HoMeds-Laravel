@@ -25,6 +25,7 @@ class Permission extends \Spatie\Permission\Models\Permission
         'configurations.index', 'states.index', 'states.create', 'states.edit', 'states.delete',
         'cities.index', 'cities.create', 'cities.edit', 'cities.delete',
         'customers.index', 'customers.create', 'customers.edit', 'customers.delete',
+        'items.index', 'items.create', 'items.edit', 'items.delete'
     ];
 
 
@@ -56,6 +57,11 @@ class Permission extends \Spatie\Permission\Models\Permission
         'Customer.create'   => 'customers.create',
         'Customer.edit'     => 'customers.edit',
         'Customer.delete'   => 'customers.delete',
+
+        'Items.view'        => 'items.index', 
+        'Items.create'      => 'items.create',
+        'Items.edit'        => 'items.edit',
+        'Items.delete'      => 'items.delete',
     ];
     // Disable the labels depend upons the role & permissions
     // public static function disableLabel($route){
