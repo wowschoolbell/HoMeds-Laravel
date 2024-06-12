@@ -19,6 +19,7 @@ use App\User;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Support\Facades\Log;
+use Modules\Superadmin\Entities\Role;
 
 class StoreController extends Controller
 {
@@ -251,13 +252,17 @@ class StoreController extends Controller
     protected function _save_user($request, $model)
     {
         $userdata = $request->get('user');
-        $userdata['password'] = bcrypt("!Nt3l#risXe@43");
+        if (!@$model->id) {
+            $userdata['password'] = bcrypt("!Nt3l#risXe@43");
+        }
         $model->fill($userdata);
         $model->name = $request->store['contact_person_name'];
         $model->save();
 
         $model->username = $model->id;
         $model->save();
+
+        $model->assignRole(Role::STORE);
         return $model;
     }
 
@@ -289,9 +294,6 @@ class StoreController extends Controller
             $store->update(['store_logo'=>$filePath]);
         }
 
-       
-
-
         $storeImage = $request->file('store.store_image');
 
         if($storeImage) {
@@ -299,7 +301,6 @@ class StoreController extends Controller
             $store = Store::find($store->id);
             $store->update(['store_image'=>$filePath]);
         }
-
 
         return $store;
     }
