@@ -216,15 +216,14 @@ class StoreController extends Controller
         $benefits="";
         $benefits_plan="";
         $plan_name = $appstataus;
-        $benefit = Packages::where("id",$id)->first();
-        $benefits_plan = $benefit->plan_type;
+        $benefits = Packages::where("id",$id)->pluck("description")->first();
+        $benefits_plan = Packages::where("id",$id)->pluck("plan_type")->first();
 
-        Log::info("benefits_plan");
-
+        ///Log::info($benefit);
     
        
-        if(isset($benefits)){
-            $plan_month = $benefit->plan_type=="Yearly"?"year":"month";
+        if(isset($benefits_plan)){
+            $plan_month = $benefits_plan=="Yearly"?"year":"month";
             $futureDate=date('Y-m-d', strtotime('+1 '.$plan_month.''));
         }
          //Log::info(print_r($benefit, true));
@@ -234,7 +233,7 @@ class StoreController extends Controller
         $PasswordLink->hash=$current_timestamp;
         $PasswordLink->save();
 
-        $mail_status = ['In Active Partner',"In Active Partner","Hold","Waiting for Approval"];
+        $mail_status = ['In Active Store',"In Active Store","Hold","Waiting for Approval"];
 
        if( in_array($status,$mail_status)){
           Mail::send('admin.store.sendmailreason', ["name"=>$username,'reason'=>$reason,'domain'=>$domain,"status"=>$status], function($message) use($employee_master,$status){

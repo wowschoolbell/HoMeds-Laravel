@@ -13,6 +13,8 @@
             <a href="#" class="admin-close-sidebar"></a>
         </div>
     </div>
+
+
     <div class="admin-sidebar-wrapper js-scrollbar" style="background-color:#B57EDC;">
         <!-- Menu List Begins-->
         <ul class="menu" id="sidebarnav">
@@ -103,6 +105,22 @@
                 </a>
             </li>
             @endhasAccess
+             <li class="parent-li menu-item">
+                <a href="{{ route('admin.items.index') }}" class="menu-link menu-container">
+                    <div class="menu-item">
+                        <div style="display: flex; justify-content: center; align-items: center;">
+                            <span class="menu-icon">
+                                <i class="icon-placeholder mdi mdi-note-plus-outline" style="color: white !important;"></i>
+                            </span>
+                        </div>
+                        <div style="display: flex; justify-content: center; align-items: center; color:white;">
+                            <span class="menu-name">
+                                Items
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </li>
 
             <!-- <li class="parent-li menu-item">
                 <a href="{{ route('admin.status.index') }}" class="menu-link menu-container">

@@ -253,7 +253,7 @@
     // $('.check'),trigger('change'); //change to two ? how?
     
     $('.check').change(function(){
-      let status=['In Active Partner',"In Active Partner","Hold","Waiting for Approval"]
+      let status=['In Active Store',"In Active Store","Hold","Waiting for Approval"]
       var data= $(this).find("option:selected").text();
       if(status.includes(data)){
         $("#reason").removeClass("hidden");

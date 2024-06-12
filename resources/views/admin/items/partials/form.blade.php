@@ -12,43 +12,32 @@
 
                                {{ Form::hidden('id', @$model['store']->id, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Name']) }}
                                 <div class="form-group col-md-6">
-                                    {{ Form::label('store[name]', __('Customer Name').'*') }}
+                                    {{ Form::label('store[Code]', __('Item Code').'*') }}
+                                    {{ Form::text('store[item_code]', @$model['store']->item_code, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Item Code']) }}
+                                </div>
+                                 <div class="form-group col-md-6">
+                                    {{ Form::label('store[store_item_code]', __('Store Item Code').'*') }}
+                                    {{ Form::text('store[store_item_code]', @$model['store']->store_item_code, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Store Item Code']) }}
+                                </div>
+                                  <div class="form-group col-md-6">
+                                    {{ Form::label('store[item_category]', __('Item Category ').'*') }}
+                                    {{ Form::text('store[category]', @$model['store']->category, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Category']) }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    {{ Form::label('store[item_name]', __('Item name ').'*') }}
                                     {{ Form::text('store[name]', @$model['store']->name, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Name']) }}
                                 </div>
                                  <div class="form-group col-md-6">
-                                    {{ Form::label('store[name]', __('Mobile Number ').'*') }}
-                                    {{ Form::text('store[mobile_number]', @$model['store']->mobile_number, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Mobile Number']) }}
+                                    {{ Form::label('store[chemincal_name]', __('Chemincal Name').'*') }}
+                                    {{ Form::text('store[chemincal_name]', @$model['store']->chemincal_name, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Chemincal Name']) }}
                                 </div>
                                   <div class="form-group col-md-6">
-                                    {{ Form::label('store[name]', __('Email ').'*') }}
-                                    {{ Form::email('store[email]', @$model['store']->email, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Email']) }}
+                                    {{ Form::label('store[cure_disease]', __('Cure disease ').'*') }}
+                                    {{ Form::select('store[cure_disease]',["Headache"=>"Aspirin","Cold"=>"benadryl"],@$model['store']->cure_disease, ['class' => "form-control  select2-wos", 'multiple'=>'multiple','autocomplete' => 'off']) }}
                                 </div>
-                                <div class="form-group col-md-6">
-                                    {{ Form::label('store[details]', __('Flat No ').'*') }}
-                                    {{ Form::text('store[flat_no]', @$model['store']->flat_no, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Flat No']) }}
-                                </div>
-                                 <div class="form-group col-md-6">
-                                    {{ Form::label('store[area]', __('Area').'*') }}
-                                    {{ Form::text('store[area]', @$model['store']->area, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Area']) }}
-                                </div>
+
                                   <div class="form-group col-md-6">
-                                    {{ Form::label('store[area]', __('Address ').'*') }}
-                                    {{ Form::text('store[address]', @$model['store']->address, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Address']) }}
-                                </div>
-                                <div class="form-group col-md-6">
-                                    {{ Form::label('store[area]', __('City ').'*') }}
-                                    {{ Form::text('store[city]', @$model['store']->city, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'City']) }}
-                                </div>
-                                 <div class="form-group col-md-6">
-                                    {{ Form::label('store[area]', __('State ').'*') }}
-                                    {{ Form::text('store[state]', @$model['store']->state, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'State']) }}
-                                </div>
-                                 <div class="form-group col-md-6">
-                                    {{ Form::label('store[landmark]', __('Landmark').'*') }}
-                                    {{ Form::text('store[landmark]', @$model['store']->landmark, ['class' => "form-control", 'autocomplete' => 'off', 'placeholder' => 'Landmark ']) }}
-                                </div>
-                                  <div class="form-group col-md-6">
-                                    {{ Form::label('store[landmark]', __('Status').'*') }}
+                                    {{ Form::label('store[status]', __('Status').'*') }}
                                      {{ Form::select('store[status]', [1=>"Active",0=>"In-Active"] ,@$model['store']->status, ['class' => 'form-control check  select2-wos', 'placeholder'=>'Select Status']) }}
                                 </div>
                             </div>
@@ -58,7 +47,7 @@
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Save') }}
                                     </button>
-                                    <a href="{{ route('admin.customers.index') }}" class="btn btn-danger">
+                                    <a href="{{ route('admin.items.index') }}" class="btn btn-danger">
                                         {{ __('Cancel') }}
                                     </a>
                             </div>

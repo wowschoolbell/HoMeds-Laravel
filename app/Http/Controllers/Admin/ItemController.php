@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\DataTables\CustomerDataTable;
+use App\DataTables\ItemDataTable;
 use App\Helpers\StorageHelper;
 use App\Models\AppStatus;
 use App\Models\customers;
@@ -13,6 +13,7 @@ use App\Models\PasswordLink;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Mail;
 use App\Models\store;
+use App\Models\items;
 use App\Rules\BankAccountNumberValidator;
 use App\Rules\UniquePhone;
 use App\User;
@@ -20,16 +21,16 @@ use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Support\Facades\Log;
 
-class CustomerController extends Controller
+class ItemController extends Controller
 {
     protected function _validation_rules($request, $id = NULL)
     {
-        $rules['store.name'] = "required|string|max:225";
-        $rules['store.mobile_number']       = ["required", new UniquePhone($id)];
-        $rules['store.email']               = "email|max:255|unique:customers,email,{$id},id";
-        $rules['store.flat_no']       =   "required";
-        $rules['store.area']       =   "required";
-        $rules['store.landmark']       =   "required";
+        $rules['store.item_code'] = "required|string|max:225";
+        $rules['store.store_item_code']       = "required|string|max:225";
+        $rules['store.category']       = "required|string|max:225";
+        $rules['store.name']       = "required|string|max:225";
+        $rules['store.chemincal_name']       = "required|string|max:225";
+        $rules['store.cure_disease']               = "required|string|max:225";
         $rules['store.status']       =   "required";
         return $rules;
     }
@@ -37,22 +38,21 @@ class CustomerController extends Controller
     protected function _validation_messages()
     {
         return [
-            'store.name.required'                   => "The Customer Name is required.",
-            'store.mobile_number.required'          => "The Customer mobile number is required.",
-            'store.email.email'                      => "The email must be a valid email address.",
-            'store.email.unique'                     => "The email already exists.",
-            'store.flat_no.required'              => "The flat field is required.",
-            'store.area.required'              => "The Area field is required.",
-            'store.landmark.required'              => "The landmark field is required.",
+            'store.item_code.required'                   => "The Item Code is required.",
+            'store.store_item_code.required'          => "The Store Item Code is required.",
+            'store.category.required'                      => "The Category is required",
+            'store.name.required'                     => "The Name is required",
+            'store.chemincal_name.required'              => "The Chemincal Name field is required.",
+            'store.cure_disease.required'              => "The Cure Disease field is required.",
             'store.status.required'              => "The Status field is required.",
         ];
     }
 
-    public function index(CustomerDataTable $dataTable)
+    public function index(ItemDataTable $dataTable)
     {   
         // $data['statuses'][0] = 'All';
-        $data['title'] = 'Customer List';
-        return $dataTable->render('admin.customers.index', $data);
+        $data['title'] = 'Items List';
+        return $dataTable->render('admin.items.index', $data);
     }
     public function create() 
     {
@@ -60,13 +60,13 @@ class CustomerController extends Controller
 
 
         $data['model'] = [
-            'store' => new customers(),
+            'store' => new items(),
         ];
-        $data['title']      = 'Add Customer';
+        $data['title']      = 'Add Items';
         // $data['statuses']       = AppStatus::where('type', AppStatus::STATUS)->pluck('name', 'id');
         // $data['app_statuses']   = AppStatus::where('type', AppStatus::APP_STATUS)->pluck('name', 'id');
 
-        return view('admin.customers.create', $data);
+        return view('admin.items.create', $data);
     }
 
     public function store(Request $request)
@@ -83,35 +83,33 @@ class CustomerController extends Controller
                 'message' => json_decode($validation->errors())
             ], 422);
         }
-
-        $userModel  = new Packages();
         $store      = $this->_save_store($request);
         // $this->sendmail($request->store['email']);
 
         return response()->json([
             'success' => true,
-            'title' => 'Store',
+            'title' => 'items',
             'message' => 'Successfully created ',
-            'redirect' => route("admin.customers.index"),
+            'redirect' => route("admin.items.index"),
         ], 200);
     }
     
     public function edit($id)
     {
-        $store = customers::find($id);
+        $store = items::find($id);
         
         $data['model'] = [
             'store' => $store,
         ];
 
         $data['id']         = $id;
-        $data['title']      = 'Edit Customer';
+        $data['title']      = 'Edit item';
        
-        return view('admin.customers.edit', $data);
+        return view('admin.items.edit', $data);
     }
      public function update(Request $request, $id)
     {
-        $store       = store::find($id);
+        $store       = items::find($id);
         //$userModel      = $store->user;
 
         $validation = Validator::make($request->all(),$this->_validation_rules($request,$id),$this->_validation_messages());
@@ -131,7 +129,7 @@ class CustomerController extends Controller
             'success' => true,
             'title' => 'Status',
             'message' => 'Updated created ',
-            'redirect' => route("admin.customers.index"),
+            'redirect' => route("admin.items.index"),
         ], 200);
     }
     protected function _save($request, $model)
@@ -187,21 +185,18 @@ class CustomerController extends Controller
     protected function _save_store($request) {
 
         if ($request->id){
-           $store = customers::find($request->id);
+           $store = items::find($request->id);
         } 
         else{
-            $store = new customers();
+            $store = new items();
         }
 
+         $store->item_code =$request->store["item_code"];
+         $store->store_item_code =$request->store["store_item_code"];
+         $store->category =$request->store["category"];
          $store->name =$request->store["name"];
-         $store->mobile_number =$request->store["mobile_number"];
-         $store->email =$request->store["email"];
-         $store->flat_no =$request->store["flat_no"];
-         $store->area =$request->store["area"];
-         $store->landmark =$request->store["landmark"];
-        $store->address =$request->store["address"];
-        $store->state =$request->store["state"];
-        $store->city =$request->store["city"];
+         $store->chemincal_name =$request->store["chemincal_name"];
+         $store->cure_disease =$request->store["cure_disease"];
          $store->status =$request->store["status"];
  
         $store->save();
