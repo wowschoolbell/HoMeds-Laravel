@@ -22,13 +22,15 @@ class RoleSeeder extends Seeder
             );
         }
 
-        $users = User::whereHas('roles', function($query) {
-            $query->where('name', '!=', Role::ADMIN);
-        })->get();
         
-        foreach($users as $user) {
-            $user->roles()->detach($user->roles);
-            $user->assignRole(Role::SUPER_USER);
-        }
+
+        // $users = User::whereHas('roles', function($query) {
+        //     $query->where('name', '!=', Role::ADMIN);
+        // })->get();
+        
+        // foreach($users as $user) {
+        //     $user->roles()->detach($user->roles);
+        //     $user->assignRole(Role::SUPER_USER);
+        // }
     }
 }

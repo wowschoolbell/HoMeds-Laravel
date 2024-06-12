@@ -30,6 +30,18 @@ Route::get('/migrate-rollbak', function() {
    return "Migration roll back!";
 });
 
+// Permission Seeder 
+Route::get('/permission-seeder', function() {
+   Artisan::call('db:seed --class=PermissionSeeder');
+   return "Permissions seeded successfully!";
+});
+
+// Permission Seeder 
+Route::get('/role-seeder', function() {
+   Artisan::call('db:seed --class=RoleSeeder');
+   return "Roles seeded successfully!";
+});
+
 // Application Cache clear
 Route::get('/cache-clear', function() {
    Artisan::call('optimize:clear');

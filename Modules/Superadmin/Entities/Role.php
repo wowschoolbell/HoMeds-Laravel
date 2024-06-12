@@ -18,10 +18,8 @@ class Role extends \Spatie\Permission\Models\Role
 
     // Roles
     const ADMIN         = 'admin';
-    const EDITOR        = 'editor';
-    const SUPER_USER    = 'Super user';
-    const Viewer        = 'Viewer';
+    const STORE         = 'Store';
 
-    public static $hidden_roles = ['admin', 'Super user', 'Viewer', 'Pilot'];
+    public static $hidden_roles = ['admin', 'Store'];
 
 }

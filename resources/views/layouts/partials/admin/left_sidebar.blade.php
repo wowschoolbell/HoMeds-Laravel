@@ -31,6 +31,7 @@
                     </div>
                 </a>
             </li>
+            @hasAccess('configurations.index')
             <li class="parent-li menu-item">
                 <a href="{{ route('admin.configurations.index') }}" class="menu-link menu-container">
                     <div class="menu-item">
@@ -47,6 +48,8 @@
                     </div>
                 </a>
             </li>
+            @endhasAccess
+            @hasAccess('store.index')
             <li class="parent-li menu-item">
                 <a href="{{ route('admin.store.index') }}" class="menu-link menu-container">
                     <div class="menu-item">
@@ -63,6 +66,8 @@
                     </div>
                 </a>
             </li>
+            @endhasAccess
+            @hasAccess('delivery_partner.index')
             <li class="parent-li menu-item">
                 <a href="{{ route('admin.delivery_partner.index') }}" class="menu-link menu-container">
                     <div class="menu-item">
@@ -79,6 +84,8 @@
                     </div>
                 </a>
             </li>
+            @endhasAccess
+            @hasAccess('customers.index')
              <li class="parent-li menu-item">
                 <a href="{{ route('admin.customers.index') }}" class="menu-link menu-container">
                     <div class="menu-item">
@@ -95,6 +102,7 @@
                     </div>
                 </a>
             </li>
+            @endhasAccess
 
             <!-- <li class="parent-li menu-item">
                 <a href="{{ route('admin.status.index') }}" class="menu-link menu-container">
