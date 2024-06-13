@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\store;
 use App\Models\DeliveryPartner;
 use App\Models\PasswordLink;
+use App\Models\Permission;
 use App\Models\State;
 use Illuminate\Support\Facades\Validator;
 use App\User;
+use Modules\Superadmin\Entities\Role;
 
 class HomeController extends Controller
 {
@@ -33,6 +35,38 @@ class HomeController extends Controller
         $data['title'] = 'Dashboard';
         return view('home', $data);
     }
+
+    public function updateSeeder() {
+        $roles = Role::$hidden_roles;
+
+        foreach($roles as $value)
+        {
+            Role::firstOrCreate(
+                ['name' => $value]
+            );
+        }
+        
+        $permissions = Permission::$list;
+
+        foreach($permissions as $key => $value)
+        {
+            Permission::firstOrCreate(
+                ['name' => $value],
+                ['slug' => $key]
+            );
+        }
+
+        $admin = Role::where('name', Role::ADMIN)->first();
+        $adminPermissions = Permission::whereIn('name', Permission::$adminPermissionList)->get()->pluck('id');
+        $admin->syncPermissions($adminPermissions);
+
+        $store              = Role::where('name', Role::STORE)->first();
+        $storePermissions   = Permission::whereIn('name', Permission::$storePermissionList)->get()->pluck('id');
+        $store->syncPermissions($storePermissions);
+
+        dd("DoneEverything");
+    }
+
     public function password_reset(Request $request,$id)
     {
         

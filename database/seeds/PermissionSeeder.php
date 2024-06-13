@@ -1,7 +1,6 @@
 <?php
 namespace Database\Seeders;
 
-use App\User;
 use Illuminate\Database\Seeder;
 use App\Models\Permission;
 use Modules\Superadmin\Entities\Role;
@@ -37,6 +36,10 @@ class PermissionSeeder extends Seeder
         $admin = Role::where('name', Role::ADMIN)->first();
         $adminPermissions = Permission::whereIn('name', Permission::$adminPermissionList)->get()->pluck('id');
         $admin->syncPermissions($adminPermissions);
+
+        $store              = Role::where('name', Role::STORE)->first();
+        $storePermissions   = Permission::whereIn('name', Permission::$storePermissionList)->get()->pluck('id');
+        $store->syncPermissions($storePermissions);
         
     }
 }
