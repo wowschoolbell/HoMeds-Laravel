@@ -32,6 +32,12 @@ Route::group(['middleware' => ['web', 'auth'], 'as' => 'admin.'], function() {
     
     Route::match(array('GET','POST'),'cities/import', 'Admin\CityController@import')->name('cities.import');
     Route::resource('cities', 'Admin\CityController');
+    
+    Route::match(array('GET','POST'),'category/import', 'Admin\CategoryController@import')->name('category.import');
+    Route::resource('category', 'Admin\CategoryController');
+
+    Route::match(array('GET','POST'),'disease/import', 'Admin\DiseaseController@import')->name('disease.import');
+    Route::resource('disease', 'Admin\DiseaseController');
 
     Route::match(array('GET'),'/update-seeder', 'HomeController@updateSeeder')->name('home.fetch-address');
     Route::match(array('GET'),'/fetch-address', 'HomeController@fetchAddressUsingPincode')->name('home.fetch-address');

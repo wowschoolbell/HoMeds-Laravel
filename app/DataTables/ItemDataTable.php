@@ -6,6 +6,8 @@ use Yajra\DataTables\Services\DataTable;
 use App\Models\items;
 use Yajra\DataTables\Html\Column;
 
+use Illuminate\Support\Facades\Log;
+
 class ItemDataTable extends dataTable
 {
     /**
@@ -34,7 +36,10 @@ class ItemDataTable extends dataTable
 
     public function query(items $model)
     {
-        $model = $model::with(['user']);        
+        $model = $model::with(['disease',"category"]);   
+
+         Log::info(json_encode($model));
+
         $Query =  $model->newQuery();
         return $Query;
     }
@@ -48,6 +53,7 @@ class ItemDataTable extends dataTable
     {
         $params = $this->getBuilderParameters();
         $params['buttons'] = [['customCreate']];
+        Log::info($this->getColumns());
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
@@ -66,18 +72,17 @@ class ItemDataTable extends dataTable
             Column::computed('id')
                 ->title('S.NO')
                 ->orderable(true)
-                ->searchable(true)
-                ->width('20%'),
+                ->searchable(true),
+                
             Column::computed('item_code')
                 ->title('Item Code')
                 ->orderable(true)
-                ->searchable(true)
-                 ->width('20%'),
+                ->searchable(true),
             Column::computed('store_item_code')
                 ->title('Store Item Code')
                 ->orderable(true)
                 ->searchable(true),
-            Column::computed('category')
+            Column::computed('category.name')
                 ->title('Item Category')
                 ->orderable(true)
                 ->searchable(true),
@@ -85,7 +90,7 @@ class ItemDataTable extends dataTable
                 ->title('Item Name')
                 ->orderable(true)
                 ->searchable(true),
-             Column::computed('cure_disease')
+             Column::computed('cure_disease_name')
                 ->title('Disease')
                 ->orderable(true)
                 ->searchable(true),

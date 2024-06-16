@@ -18,19 +18,22 @@ use App\Rules\BankAccountNumberValidator;
 use App\Rules\UniquePhone;
 use App\User;
 use Illuminate\Support\Facades\Validator;
+use App\Models\cure_disease;
 
 use Illuminate\Support\Facades\Log;
+use App\Models\category;
+use DB;
 
 class ItemController extends Controller
 {
     protected function _validation_rules($request, $id = NULL)
     {
-        $rules['store.item_code'] = "required|string|max:225";
+        // $rules['store.item_code'] = "required|string|max:225";
         $rules['store.store_item_code']       = "required|string|max:225";
         $rules['store.category']       = "required|string|max:225";
         $rules['store.name']       = "required|string|max:225";
         $rules['store.chemincal_name']       = "required|string|max:225";
-        $rules['store.cure_disease']               = "required|string|max:225";
+        $rules['store.cure_disease']               = "required|array|max:225";
         $rules['store.status']       =   "required";
         return $rules;
     }
@@ -48,10 +51,27 @@ class ItemController extends Controller
         ];
     }
 
+
+   protected function generateSequenceNumber($tablename, array $conditions = [], string $prefix, int $length = 5): string
+{
+    $model = DB::table($tablename);
+
+    if (is_array($conditions) && count($conditions) > 0) {
+        $model = $model->where($conditions);
+    }
+
+    return $prefix . str_pad(
+            ($model->count()) + 1,
+            $length,
+            '0',
+            STR_PAD_LEFT
+        );
+}
     public function index(ItemDataTable $dataTable)
     {   
         // $data['statuses'][0] = 'All';
         $data['title'] = 'Items List';
+        //Log::info(json_encode($dataTable));
         return $dataTable->render('admin.items.index', $data);
     }
     public function create() 
@@ -63,8 +83,8 @@ class ItemController extends Controller
             'store' => new items(),
         ];
         $data['title']      = 'Add Items';
-        // $data['statuses']       = AppStatus::where('type', AppStatus::STATUS)->pluck('name', 'id');
-        // $data['app_statuses']   = AppStatus::where('type', AppStatus::APP_STATUS)->pluck('name', 'id');
+        $data['category']   =[null=>'Select Category'] + category::pluck('name', 'id')->toArray();;
+        $data['disease']   = cure_disease::pluck('name','id')->toArray();;;
 
         return view('admin.items.create', $data);
     }
@@ -101,7 +121,8 @@ class ItemController extends Controller
         $data['model'] = [
             'store' => $store,
         ];
-
+        $data['category']   =[null=>'Select Category'] + category::pluck('name', 'id')->toArray();;
+        $data['disease']   = cure_disease::pluck('name','id')->toArray();
         $data['id']         = $id;
         $data['title']      = 'Edit item';
        
@@ -189,14 +210,25 @@ class ItemController extends Controller
         } 
         else{
             $store = new items();
+            $store->item_code = $this->generateSequenceNumber('items',[],'ITEM_',3);
         }
 
-         $store->item_code =$request->store["item_code"];
+        $name = "";
+
+        foreach ($request->store["cure_disease"] as $item) {
+
+            $cname = cure_disease::where('id',$item)->first();
+
+            $name .= $cname->name.",";
+        }
+
+        //  Log::info($request);
          $store->store_item_code =$request->store["store_item_code"];
          $store->category =$request->store["category"];
          $store->name =$request->store["name"];
          $store->chemincal_name =$request->store["chemincal_name"];
          $store->cure_disease =$request->store["cure_disease"];
+         $store->cure_disease_name =$name;
          $store->status =$request->store["status"];
  
         $store->save();

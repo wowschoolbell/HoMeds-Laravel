@@ -3,10 +3,10 @@
 namespace App\DataTables;
 
 use Yajra\DataTables\Services\DataTable;
-use App\Models\customers;
+use App\Models\category;
 use Yajra\DataTables\Html\Column;
 
-class CustomerDataTable extends dataTable
+class CategoryDataTable extends dataTable
 {
     /**
      * Build DataTable class.
@@ -18,9 +18,7 @@ class CustomerDataTable extends dataTable
     {
         return datatables($query)
             ->addColumn('action', function($model){
-               $action = '<div class="d-flex gap-2"><a href="'.route('admin.customers.edit',["$model->id"]).'" class="btn btn-sm btn-info" id="trigger-content-'.$model->id.'" title="Edit"><i class="mdi mdi-square-edit-outline"></i></a>&nbsp;';
-        
-                return $action;
+                return '<a href="javascript:void(0)" data-category_id="'.$model->id.'" data-url="'.route('admin.category.edit',["$model->id"]).'" data-toggle="modal" data-target="#citymodel" class="btn btn-sm btn-info" id="trigger-content-'.$model->id.'" title="Edit"><i class="mdi mdi-square-edit-outline"></i></a>';
             })
             ->escapeColumns([]);
     }
@@ -32,11 +30,9 @@ class CustomerDataTable extends dataTable
      * @return \Illuminate\Database\Eloquent\Builder
      */
 
-    public function query(customers $model)
+    public function query(category $model)
     {
-        $model = $model::with(['user']);        
-        $Query =  $model->newQuery();
-        return $Query;
+        return $model::with(['state'])->newQuery();
     }
 
     /**
@@ -47,7 +43,12 @@ class CustomerDataTable extends dataTable
     public function html()
     {
         $params = $this->getBuilderParameters();
-        $params['buttons'] = [['customCreate']];
+        $params['buttons'] = [[
+            'text' => '<i class="mdi mdi-plus"></i> create',
+            'className' => 'citymodel',
+            'action' => 'function(e, dt, node, config) {
+                  $(".citymodel").modal("show");
+             }']];
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
@@ -62,25 +63,12 @@ class CustomerDataTable extends dataTable
      */
     protected function getColumns()
     {
-        return [
+        return [ 
             Column::computed('id')
-                ->title('Customer ID')
+                ->title('S.no')
                 ->orderable(true)
                 ->searchable(true),
             Column::computed('name')
-                ->title('Customer Name')
-                ->orderable(true)
-                ->searchable(true),
-            Column::computed('mobile_number')
-                ->title('Mobile Number')
-                ->orderable(true)
-                ->searchable(true),
-            Column::computed('address')
-                ->title('Address')
-                ->orderable(true)
-                ->searchable(true),
-              Column::computed('created_at', function($data){ $formatedDate = "Active";  return $formatedDate; })
-                ->title('Status')
                 ->orderable(true)
                 ->searchable(true),
         ];
@@ -93,6 +81,6 @@ class CustomerDataTable extends dataTable
      */
     protected function filename()
     {
-        return 'Customer_' . date('YmdHis');
+        return 'City_' . date('YmdHis');
     }
 }
