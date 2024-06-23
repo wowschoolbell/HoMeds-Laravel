@@ -214,24 +214,30 @@ class ItemController extends Controller
         }
 
         $name = "";
-        $cure_disease="";
 
-        foreach ($request->store["cure_disease"] as $item) {
 
-            $cname = cure_disease::where('id',$item)->first();
+        //$last_key = end(array_keys($request->store["cure_disease"]));
 
-            $name .= $cname->name.",";
+        foreach ($request->store["cure_disease"] as $key => $value) {
 
-            $cure_disease .= $item.",";
+            $cname = cure_disease::where('id',$value)->first();
+            if($key==0){
+                $name .= $cname->name;
+            } else if($key+1==count($request->store["cure_disease"])){
+                $name .= ",".$cname->name;
+            } else {
+               $name .= ",".$cname->name.",";
+            }
+
         }
 
-        //  Log::info($request);
+         Log::info($request);
          $store->store_item_code =$request->store["store_item_code"];
          $store->category =$request->store["category"];
          $store->name =$request->store["name"];
          $store->chemincal_name =$request->store["chemincal_name"];
-         $store->cure_disease =$request->store["cure_disease"];
-         $store->cure_disease_name =$cure_disease;
+         $store->cure_disease =implode(',',$request->store["cure_disease"]);
+         $store->cure_disease_name =$name;
          $store->status =$request->store["status"];
  
         $store->save();
