@@ -219,7 +219,7 @@ class ItemController extends Controller
 
             $cname = cure_disease::where('id',$item)->first();
 
-            $name .= $cname->name.",";
+            //$name .= $cname->name.",";
         }
 
         //  Log::info($request);
