@@ -70,7 +70,7 @@ class HomeController extends Controller
     public function password_reset($hashid)
     {
 ;
-        $PasswordLink = PasswordLink::where('id',$hashid)->first();
+        $PasswordLink = PasswordLink::where('hash',$hashid)->first();
 
         dd($PasswordLink);
         
