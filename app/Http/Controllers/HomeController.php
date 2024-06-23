@@ -72,7 +72,6 @@ class HomeController extends Controller
 ;
         $PasswordLink = PasswordLink::where('hash',$hashid)->first();
 
-        dd($PasswordLink);
         
         if($PasswordLink){
             $user;
