@@ -79,10 +79,7 @@ class CustomerDataTable extends dataTable
                 ->title('Address')
                 ->orderable(true)
                 ->searchable(true),
-              Column::computed('created_at', function($data){ $formatedDate = "Active";  return $formatedDate; })
-                ->title('Status')
-                ->orderable(true)
-                ->searchable(true),
+    
         ];
     }
 
