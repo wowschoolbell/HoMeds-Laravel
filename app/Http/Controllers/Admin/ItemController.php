@@ -214,12 +214,15 @@ class ItemController extends Controller
         }
 
         $name = "";
+        $cure_disease="";
 
         foreach ($request->store["cure_disease"] as $item) {
 
             $cname = cure_disease::where('id',$item)->first();
 
-            //$name .= $cname->name.",";
+            $name .= $cname->name.",";
+
+            $cure_disease .= $item.",";
         }
 
         //  Log::info($request);
@@ -228,7 +231,7 @@ class ItemController extends Controller
          $store->name =$request->store["name"];
          $store->chemincal_name =$request->store["chemincal_name"];
          $store->cure_disease =$request->store["cure_disease"];
-         $store->cure_disease_name =$name;
+         $store->cure_disease_name =$cure_disease;
          $store->status =$request->store["status"];
  
         $store->save();
