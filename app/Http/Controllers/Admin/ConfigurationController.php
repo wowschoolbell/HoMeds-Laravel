@@ -13,7 +13,6 @@ class ConfigurationController extends Controller
     public function index()
     {   
         $data['title'] = 'Configuration';
-
         $data['statesCount'] = State::count();
         $data['citiesCount'] = City::count();
         $data['categoryCount'] = category::count();

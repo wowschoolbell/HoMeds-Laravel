@@ -55,7 +55,7 @@ if(@$model['store']->id){
 
                                   <div class="form-group col-md-6">
                                     {{ Form::label('store[status]', __('Status').'*') }}
-                                     {{ Form::select('store[status]', [1=>"Active",0=>"In-Active"] ,@$model['store']->status, ['class' => 'form-control check  select2-wos', 'placeholder'=>'Select Status']) }}
+                                     {{ Form::select('store[status]', [1=>"Active",0=>"In-Active"] ,@$model['store']->status, ['class' => 'form-control check  select2-wos']) }}
                                 </div>
                             </div>
 

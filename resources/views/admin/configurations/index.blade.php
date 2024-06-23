@@ -62,7 +62,7 @@
                 <div class="card m-b-30">
                     <div class="card-body">
                         <div class="text-center" >
-                            <img src="{{ url('images/city.webp')}}" class="rounded-circle" width="80" alt="">
+                            <img src="{{ url('images/apps.png')}}" class="rounded-circle" width="80" alt="">
                         </div>
                         <h4 class="text-center m-t-20">
                             Category
@@ -87,7 +87,7 @@
                 <div class="card m-b-30">
                     <div class="card-body">
                         <div class="text-center" >
-                            <img src="{{ url('images/city.webp')}}" class="rounded-circle" width="80" alt="">
+                            <img src="{{ url('images/disease.jpg')}}" class="rounded-circle" width="80" alt="">
                         </div>
                         <h4 class="text-center m-t-20">
                             Cure Disease
@@ -97,10 +97,10 @@
                         </div>
                         <div class="text-center p-b-20">
 
-                            <a href="{{ route('admin.cities.index') }}" class="btn btn-primary btn-dark-lavender">
+                            <a href="{{ route('admin.disease.index') }}" class="btn btn-primary btn-dark-lavender">
                                 <i class="mdi mdi-view-list"></i> Lists
                             </a>
-                            <a href="{{ route('admin.cities.import') }}" class="btn btn-primary btn-dark-lavender">
+                            <a href="{{ route('admin.disease.import') }}" class="btn btn-primary btn-dark-lavender">
                                 <i class="mdi mdi-import"></i> Import
                             </a>
                         </div>
