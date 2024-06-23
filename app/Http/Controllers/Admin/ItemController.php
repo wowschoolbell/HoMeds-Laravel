@@ -236,7 +236,7 @@ class ItemController extends Controller
          $store->category =$request->store["category"];
          $store->name =$request->store["name"];
          $store->chemincal_name =$request->store["chemincal_name"];
-         $store->cure_disease =implode(',',$request->store["cure_disease"]);
+         $store->cure_disease =json_encode($request->store["cure_disease"]);
          $store->cure_disease_name =$name;
          $store->status =$request->store["status"];
  
