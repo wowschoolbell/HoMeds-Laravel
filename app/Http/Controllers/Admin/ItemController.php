@@ -232,6 +232,7 @@ class ItemController extends Controller
         }
 
          Log::info($request);
+         $store->store_id =Auth::user()->id;
          $store->store_item_code =$request->store["store_item_code"];
          $store->category =$request->store["category"];
          $store->name =$request->store["name"];
