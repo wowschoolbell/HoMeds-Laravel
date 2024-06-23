@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Log;
 use App\Models\category;
 use DB;
 
+use Auth;
+
 class ItemController extends Controller
 {
     protected function _validation_rules($request, $id = NULL)
